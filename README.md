@@ -15,7 +15,7 @@ Well, Hit The Green Square!
 
 # To Play
 
-(It Should Work)
+(It Should Work) (Actually, it doesn't work) 
 
 Download and extract the entire project and create a Python SimpleHTTPServer in that Directory.
 
