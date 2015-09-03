@@ -16,5 +16,7 @@ Well, Hit The Green Square!
 # To Play
 
 (It Should Work)
+
 Download and extract the entire project and create a Python SimpleHTTPServer in that Directory.
+
 Run the index.html file afterwards.
