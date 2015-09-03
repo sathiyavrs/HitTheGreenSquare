@@ -46,8 +46,10 @@ var DevelopmentScene = cc.Scene.extend({
 		this.light = friendlySprite;
 		
 		var sprite = null;
-		// var sprite = new EnemySprite(res.BrownEnemy, res.WhiteEnemy, this.space, 
-		// 								cc.p(cc.winSize.width / 2 - 50, cc.winSize.height / 2), 30, -1, this.debugDrawNode);
+		sprite = new EnemySprite(res.WhiteEnemy, res.WhiteEnemyShaded, this.space, 
+		 								cc.p(cc.winSize.width / 2 - 50, cc.winSize.height / 2), 
+										30, -1, this.debugDrawNode,
+										EnemySprite.TYPE_WHITE);
 		
 		/*
 		cc.eventManager.addListener({
@@ -62,13 +64,13 @@ var DevelopmentScene = cc.Scene.extend({
 		*/ 
 		
 		
-		// this.addChild(sprite);
+		this.addChild(sprite);
 		var TwoPath = new FollowPath([cc.p(100, 200), cc.p(400, 400), cc.p(300, 100)], FollowPath.LOOP, FollowPath.FORWARD);
-		// sprite.setPathToFollow(TwoPath, Movement.CONSTANT, 300);
+		sprite.setPathToFollow(TwoPath, Movement.CONSTANT, 300);
 		// sprite.Shape.setElasticity(1.5);
 		
-		sprite = new EnemySprite(res.BrownEnemy, res.BrownEnemyShaded, this.space, 
-										cc.p(cc.winSize.width / 2 - 1000, cc.winSize.height / 2 + 50), 25, -1, this.debugDrawNode, EnemySprite.TYPE_BROWN);
+		sprite = new EnemySprite(res.WhiteEnemy, res.WhiteEnemyShaded, this.space, 
+										cc.p(cc.winSize.width / 2 - 1000, cc.winSize.height / 2 + 50), 25, -1, this.debugDrawNode, EnemySprite.TYPE_WHITE);
 		this.addChild(sprite);
 		
 		

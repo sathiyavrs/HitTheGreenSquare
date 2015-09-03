@@ -301,10 +301,11 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	},
 	
 	once: 0,
+	
 	update: function(dt) {
 		if(this.Attraction) {
 			
-			if(this.distanceBetweenPoints(this.getPosition(), this.AttractedToPosition) < 15 && 
+			if(this.distanceBetweenPoints(this.getPosition(), this.AttractedToPosition) < 30 && 
 										Math.abs(this.getPosition().y - this.AttractedToPosition.y) < 2) {
 			
 				this.getBody().setVel(cp.v(0, 0));
@@ -372,14 +373,9 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	},
 	
 	updateTexture: function() {
-		if(this.Health != this.once) {
-			console.log(this.HealthValues);
-			this.once = this.Health;
-		}
 		for(var i = 0; i < this.HealthValues.length; i++) {
 			if(this.Health == this.HealthValues[i]) {
 				this.setTexture(this.Textures[i]);
-				console.log(i);
 				break;
 			}
 		}
@@ -597,7 +593,6 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 				this.getParent().removeChild(this);	
 				
 				this.DetectedOnDeath = this.DetectedBodies;
-				this.DetectedBodies = [];
 				
 				this.DeathParticleSystem.setPosition(this.getPosition());
 				this.Parent.addChild(this.DeathParticleSystem);
@@ -605,7 +600,8 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 		
 				cc.Director._getInstance()._scheduler.scheduleCallbackForTarget(this, function() {
 					this.InitializeForDetection();
-					
+					this.DetectedOnDeath = this.DetectedBodies;
+				
 					for(var i = 0; i < this.DetectedOnDeath.length; i++) {
 						if(this.DetectedOnDeath.Sprite)
 							this.DetectedOnDeath.Sprite.Detected = false;

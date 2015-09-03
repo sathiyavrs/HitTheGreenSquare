@@ -68,9 +68,6 @@ var Paddle = cc.Sprite.extend({
 							cc.color(200, 200, 200, 200), 10);
 							
 		this.AimDrawNode = new cc.DrawNode();
-		console.log(this);
-		
-		
 	},
 	
 	setInitialPosition(position) {
