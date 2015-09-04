@@ -67,6 +67,7 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 		Speed: 40,
 		Color: cc.color(255, 255, 0, 255),
 		ColorWhite: cc.color(225, 255, 225, 255),
+		ColorGreen: cc.color(0, 255, 10, 255),
 		InitialSize: 20
 	},
 	
@@ -140,7 +141,7 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	
 	ConfigureCollisionParticle: function(particleEffect) {
 		particleEffect.startColorVar = cc.color(50, 50, 0, 0);
-		particleEffect.endColorVar = cc.color(25, 25, 0, 0);
+		particleEffect.endColorVar = cc.color(50, 50, 0, 0);
 	},
 	
 	OnCollisionEnter: function(arbiter, shape) {
@@ -149,30 +150,46 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 		var pointOfContact = arbiter.getPoint(0);
 		
 		var isWhite = false;
+		var isGreen = false;
+		
 		for(var i = 0; i < shapes.length; i++) {
 			if(shapes[i].Sprite) {
-				if(shapes[i].Sprite.EnemyType) {
+				if(shapes[i].Sprite.EnemyType != null) {
 					if(shapes[i].Sprite.EnemyType == EnemySprite.TYPE_WHITE)
 						isWhite = true;
+					
+					if(shapes[i].Sprite.EnemyType == EnemySprite.TYPE_GREEN)
+						isGreen = true;
+						
+					break;
 				}
 			}
 		}
 		
-		if(!isWhite)
-			var particleEffect = new BurstEffect(res.WhiteParticle, 
-				this.CollisionParticleSystemAttributes.Speed,
-				cc.p(0, 0),
-				this.CollisionParticleSystemAttributes.Color,
-				this.CollisionParticleSystemAttributes.InitialSize
-				);
-		else
+		console.log(isWhite);
+		console.log(isGreen);
+		
+		if(isWhite)
 			var particleEffect = new BurstEffect(res.WhiteParticle, 
 				this.CollisionParticleSystemAttributes.Speed,
 				cc.p(0, 0),
 				this.CollisionParticleSystemAttributes.ColorWhite,
 				this.CollisionParticleSystemAttributes.InitialSize
 				);
-		
+		else if(isGreen)
+			var particleEffect = new BurstEffect(res.WhiteParticle, 
+				this.CollisionParticleSystemAttributes.Speed,
+				cc.p(0, 0),
+				this.CollisionParticleSystemAttributes.ColorGreen,
+				this.CollisionParticleSystemAttributes.InitialSize
+				);
+		else
+			var particleEffect = new BurstEffect(res.WhiteParticle, 
+				this.CollisionParticleSystemAttributes.Speed,
+				cc.p(0, 0),
+				this.CollisionParticleSystemAttributes.Color,
+				this.CollisionParticleSystemAttributes.InitialSize
+				);
 		
 		this.ConfigureCollisionParticle(particleEffect);
 		particleEffect.setPosition(pointOfContact);
@@ -351,6 +368,7 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	
 	updateForBounds: function() {
 		var position = this.getPosition();
+		
 		if(position.x + this.Radius < 0) {
 			this.Health = -1;
 			return;
@@ -361,7 +379,7 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 			return;
 		}
 		
-		if(position.x - this.radius > cc.winSize.width) {
+		if(position.x - this.Radius > cc.winSize.width) {
 			this.Health = -1;
 			return;
 		}
@@ -601,7 +619,7 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 				cc.Director._getInstance()._scheduler.scheduleCallbackForTarget(this, function() {
 					this.InitializeForDetection();
 					this.DetectedOnDeath = this.DetectedBodies;
-				
+					alert("You've lost!");
 					for(var i = 0; i < this.DetectedOnDeath.length; i++) {
 						if(this.DetectedOnDeath.Sprite)
 							this.DetectedOnDeath.Sprite.Detected = false;

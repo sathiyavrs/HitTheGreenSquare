@@ -73,13 +73,6 @@ var EnemySprite = cc.Sprite.extend({
 		
 		this.setVisible(false);
 		
-		this.DeathParticleSystem = new BurstEffect(res.WhiteParticle,
-							this.DEATH_PARTICLE_SPEED,
-							cc.p(0, 0),
-							this.DEATH_PARTICLE_COLOR,
-							this.DEATH_PARTICLE_SIZE);
-							
-		this.DeathParticleSystem.setPosition(this.currentTransform.position);
 		
 		/*
 			this.setPosition(position);
@@ -124,6 +117,47 @@ var EnemySprite = cc.Sprite.extend({
 		
 		this.EnemyType = enemyType;
 		this.setEnemyProperties();
+		this.initDeathParticleSystem();
+	},
+	
+	initDeathParticleSystem: function() {
+		switch(this.EnemyType) {
+			case EnemySprite.TYPE_BROWN: 
+				this.DeathParticleSystem = new BurstEffect(res.WhiteParticle,
+							this.DEATH_PARTICLE_SPEED,
+							cc.p(0, 0),
+							this.DEATH_PARTICLE_COLOR,
+							this.DEATH_PARTICLE_SIZE);
+							
+				this.DeathParticleSystem.setPosition(this.currentTransform.position);
+				break;
+				
+			case EnemySprite.TYPE_WHITE:
+				this.DEATH_PARTICLE_COLOR = cc.color(180, 180, 180, 255);
+			
+				this.DeathParticleSystem = new BurstEffect(res.WhiteParticle,
+							this.DEATH_PARTICLE_SPEED,
+							cc.p(0, 0),
+							this.DEATH_PARTICLE_COLOR,
+							this.DEATH_PARTICLE_SIZE);
+							
+				this.DeathParticleSystem.setPosition(this.currentTransform.position);
+				
+				break;
+				
+			case EnemySprite.TYPE_GREEN:
+				this.DEATH_PARTICLE_COLOR = cc.color(10, 100, 0, 255);
+			
+				this.DeathParticleSystem = new BurstEffect(res.WhiteParticle,
+							this.DEATH_PARTICLE_SPEED,
+							cc.p(0, 0),
+							this.DEATH_PARTICLE_COLOR,
+							this.DEATH_PARTICLE_SIZE);
+							
+				this.DeathParticleSystem.setPosition(this.currentTransform.position);
+				
+				break;
+		}
 	},
 	
 	setEnemyProperties: function() {
@@ -238,6 +272,10 @@ var EnemySprite = cc.Sprite.extend({
 				if(this.EnemyType == EnemySprite.TYPE_GREEN) {
 					/*****************************************************************************/
 					// MATCH_WIN LOGIC
+					
+					alert("You've won!");
+					
+					/*****************************************************************************/
 				}
 				
 				this.Space.removeShape(this.Shape);
