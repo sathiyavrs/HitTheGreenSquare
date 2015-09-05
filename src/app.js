@@ -43,14 +43,14 @@ var DevelopmentScene = cc.Scene.extend({
 		friendlySprite.getBody().applyImpulse(cp.v(0, -70), cp.v(0, 0));
 		
 		
-		this.addChild(friendlySprite);
+		this.addChild(friendlySprite, 2);
 		this.light = friendlySprite;
 		
 		var sprite = null;
-		sprite = new EnemySprite(res.WhiteEnemy, res.WhiteEnemyShaded, this.space, 
+		sprite = new EnemySprite(res.GreenEnemy, res.GreenEnemyShaded, this.space, 
 		 								cc.p(cc.winSize.width / 2 - 50, cc.winSize.height / 2), 
-										30, -1, this.debugDrawNode,
-										EnemySprite.TYPE_WHITE);
+										0, -1, this.debugDrawNode,
+										EnemySprite.TYPE_GREEN);
 		
 		/*
 		cc.eventManager.addListener({
@@ -91,8 +91,8 @@ var DevelopmentScene = cc.Scene.extend({
 										cc.p(cc.winSize.width / 2 + 50, cc.winSize.height / 2 - 50), 25, -1, this.debugDrawNode, EnemySprite.TYPE_BROWN);
 		this.addChild(sprite);
 		
-		sprite = new EnemySprite(res.GreenEnemy, res.GreenEnemyShaded, this.space, 
-										cc.p(cc.winSize.width / 2 + 80, cc.winSize.height / 2), -25, -1, this.debugDrawNode, EnemySprite.TYPE_GREEN);
+		sprite = new EnemySprite(res.WhiteEnemy, res.WhiteEnemyShaded, this.space, 
+										cc.p(cc.winSize.width / 2 + 80, cc.winSize.height / 2), -25, -1, this.debugDrawNode, EnemySprite.TYPE_WHITE);
 		this.addChild(sprite);
 		
 		sprite = new EnemySprite(res.BrownEnemy, res.BrownEnemyShaded, this.space, 

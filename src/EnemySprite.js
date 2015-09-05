@@ -49,7 +49,7 @@ var EnemySprite = cc.Sprite.extend({
 	OriginalPosition: false,
 	
 	VibrationAttributes: {
-		Amplitude: 7	
+		Amplitude: 15	
 	},
 	
 	TakeDamage: function() {
@@ -260,6 +260,8 @@ var EnemySprite = cc.Sprite.extend({
 	
 	die: function() {
 		this.setVisible(false);
+		
+		this.Path = null;
 		
 		if(this.DeathNotScheduled) {
 			this.DeathParticleSystem.setPosition(this.currentTransform.position);

@@ -166,9 +166,6 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 			}
 		}
 		
-		console.log(isWhite);
-		console.log(isGreen);
-		
 		if(isWhite)
 			var particleEffect = new BurstEffect(res.WhiteParticle, 
 				this.CollisionParticleSystemAttributes.Speed,
@@ -319,11 +316,14 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	
 	once: 0,
 	
+	/*Math.abs(this.getPosition().y - this.AttractedToPosition.y) < 2 &&
+										this.getPosition().y - this.AttractedToPosition.y >= 0)*/
+	
 	update: function(dt) {
 		if(this.Attraction) {
 			
-			if(this.distanceBetweenPoints(this.getPosition(), this.AttractedToPosition) < 30 && 
-										Math.abs(this.getPosition().y - this.AttractedToPosition.y) < 2) {
+			if(this.distanceBetweenPoints(this.getPosition(), this.AttractedToPosition) < 10)
+										 {
 			
 				this.getBody().setVel(cp.v(0, 0));
 				// this.setPosition(this.AttractedToPosition);
@@ -332,7 +332,7 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 				
 				var direction = GetDirection(this.getPosition(), this.AttractedToPosition);
 				direction = cc.p(direction.x * this.AttractionMagnitude * dt, direction.y * this.AttractionMagnitude * dt);
-				this.setPosition(cc.pAdd(this.getPosition(), direction));	
+				this.setPosition(cc.pAdd(this.getPosition(), direction));
 			
 			}
 		}
