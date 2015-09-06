@@ -24,6 +24,7 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	
 	isEnemy: false,
 	isFriendly: true,
+	isDay: false,
 	
     Space: null,
     Shape: null,
@@ -36,8 +37,10 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	SonarDetectedShapes: [],
 	
 	Resources: [],
+	SonarResources: [],
 	Textures: [],
 	HealthValues: [],
+	SonarTextures: [],
 	
 	DebugDraw: null,
 	
@@ -62,6 +65,11 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	Attraction: false,
 	AttractedToPosition: null,
 	AttractionMagnitude: 0,
+	
+	SmashHitNumber: 2,
+	SmashHit: false,
+	SunParticleSystem: null,
+	OriginalEmissionRate: 0,
 	
 	CollisionParticleSystemAttributes: {
 		Speed: 40,
@@ -88,13 +96,59 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 		this.EnemyHurt = enemyHurtAmount;
 	},
 	
-    ctor: function (resources, position, space, layerMask, radius, detectionType, drawNode, healthValues) {
+	initializeInputHandler: function() {
+		cc.eventManager.addListener({
+			event: cc.EventListener.KEYBOARD,
+			
+			onKeyPressed:  function(keyCode, event){
+				if(keyCode == cc.KEY.b) {
+					if(this.SmashHit) {
+						this.SmashHit = false;
+						this.SunParticleSystem.setEmissionRate(0);
+					
+					} else if(this.SmashHitNumber > 0) {
+					
+						this.SmashHit = true;
+						this.SunParticleSystem.setEmissionRate(this.OriginalEmissionRate);
+					}
+				}
+				
+				if(this.isDay) {
+					return;
+				}
+				
+				if(keyCode == cc.KEY.r) {
+					this.DetectionType = FriendlySprite.DETECTION_SONAR;
+				}
+			}.bind(this),
+			
+			onKeyReleased: function(keyCode, event){
+				if(this.isDay)
+					return;
+				
+				if(keyCode == cc.KEY.r) {
+					this.DetectionType = FriendlySprite.DETECTION_OCCLUSION;
+					
+					for(var i = 0; i < this.SonarDetectedShapes.length; i++) {
+						this.SonarDetectedShapes[i].Sprite.Detected = false;
+					}
+				}
+			}.bind(this)
+		}, this);
+		
+	},
+	
+    ctor: function (resources, sonarResources, position, space, layerMask, radius, detectionType, drawNode, healthValues) {
         this._super(resources[0], cc.Rect(0, 0, 0, 0));
 		
+		this.initializeInputHandler();
+		
 		this.Resources = resources;
+		this.SonarResources = sonarResources;
 		this.HealthValues = healthValues;
 		for(var i = 0; i < this.Resources.length; i++) {
 			this.Textures.push(cc.textureCache.getTextureForKey(this.Resources[i]));
+			this.SonarTextures.push(cc.textureCache.getTextureForKey(this.SonarResources[i]));
 		}
 		
 		this.LayerMask = layerMask;
@@ -120,9 +174,7 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 		this.CalculateMinAngle();
 		this.scheduleUpdate();
 		
-		if(detectionType == FriendlySprite.DETECTION_SONAR) {
-			this.InitiateSonar();
-		}
+		this.InitiateSonar();
 		
 		this.DeathParticleSystem = new BurstEffect(res.WhiteParticle, 
 							this.PARTICLE_SPEED, 
@@ -137,7 +189,24 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 		
 		this.Space.addCollisionHandler(GlobalConstant.FRIENDLY_COLLISION_TYPE, GlobalConstant.ENEMY_COLLISION_TYPE, 
 			this.OnCollisionEnter.bind(this), null, null, null);
+			
+		
+		this.initializeSunParticleSystem();
+		
     },
+	
+	initializeSunParticleSystem: function() {
+		this.SunParticleSystem = cc.ParticleSun.create();
+		this.SunParticleSystem.setStartSize(30);
+		this.SunParticleSystem.setEndSize(20);
+		this.SunParticleSystem.setPosition(cc.p(this.getContentSize().width / 2, this.getContentSize().height / 2));
+		this.SunParticleSystem.setTexture(cc.textureCache.getTextureForKey(res.WhiteParticle));
+		this.SunParticleSystem.setDuration(-1);
+		this.OriginalEmissionRate = this.SunParticleSystem.getEmissionRate();
+		this.SunParticleSystem.setEmissionRate(0);
+		
+		this.addChild(this.SunParticleSystem);
+	},
 	
 	ConfigureCollisionParticle: function(particleEffect) {
 		particleEffect.startColorVar = cc.color(50, 50, 0, 0);
@@ -195,17 +264,42 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 		
 		for(var i = 0; i < shapes.length; i++) {
 			if(!shapes[i].Sprite.isEnemy) {
-				shapes[i].Sprite.TakeDamage();
+				
+				if(this.SmashHit)
+					shapes[i].Sprite.TakeDamage(25);
+				else
+					shapes[i].Sprite.TakeDamage();
+				
 				continue;
 			}
 			
-			shapes[i].Sprite.TakeDamage();
+			if(this.SmashHit) {
+				shapes[i].Sprite.TakeDamage(100);
+				
+			}
+			else {
+				shapes[i].Sprite.TakeDamage();
+				
+			}
+			// shapes[i].Sprite.TakeDamage();
 		}
 		
+		if(this.SmashHit) {
+
+			this.SmashHit = false;
+			this.SunParticleSystem.setEmissionRate(0);
+			this.SmashHitNumber -= 1;
+		}
 		return true;
 	},
 	
-	TakeDamage: function() {
+	TakeDamage: function(override) {
+		this.Health -= this.HurtAmountPerHit;
+		
+		if(override == undefined) {
+			return;
+		}
+		
 		this.Health -= this.HurtAmountPerHit;
 	},
 	
@@ -230,7 +324,7 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	SonarCollisionEnter: function(arbiter, shape) {
 		var shapes = arbiter.getShapes();
 		for(var i = 0; i < shapes.length; i++) {
-			if(!shapes[i].Sprite) {
+			if(shapes[i].Sprite == null) {
 				continue;
 			}
 			
@@ -238,16 +332,40 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 			
 			if(sprite.isEnemy) {
 				
+				if(sprite.Detected == null) {
+						continue;
+				}
+				
 				if(shapes[i].isLKP) {
-					// shapes[i].Sprite.setDetectedOnce(false);
+					
+					var alreadyIn = false;
+					for(var j = 0; j < this.SonarLKPShapes.length; j++) {
+						if(this.SonarLKPShapes[j].Sprite === shapes[i].Sprite){
+							alreadyIn = true;
+							break;
+						}
+					}
+					
+					if(alreadyIn)
+						continue;
+					
 					this.SonarLKPShapes.push(shapes[i]);
+				
 				} else {
 					
-					if(sprite.Detected == null) {
-						continue;
+					var alreadyIn = false;
+					for(var j = 0; j < this.SonarDetectedShapes.length; j++) {
+						if(this.SonarDetectedShapes[j].Sprite === shapes[i].Sprite){
+							alreadyIn = true;
+							break;
+						}
 					}
+					
+					if(alreadyIn)
+						continue;
+					
 					this.SonarDetectedShapes.push(shapes[i]);
-					sprite.Detected = true;
+					// console.log(this.SonarDetectedShapes);
 				}
 			}
 		}
@@ -257,7 +375,6 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	
 	SonarCollisionExit: function(arbiter, shape) {
 		var shapes = arbiter.getShapes();
-		
 		for(var i = 0; i < shapes.length; i++) {
 			if(!shapes[i].Sprite) {
 				continue;
@@ -269,7 +386,11 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 				
 				if(shapes[i].isLKP) {
 					// shapes[i].Sprite.setDetectedOnce(false);
-					this.SonarLKPShapes.push(shapes[i]);
+					var index = this.SonarLKPShapes.indexOf(shapes[i]);
+					if(index > -1) {
+						this.SonarLKPShapes.splice(index, 1);
+						// sprite.setDetectedOnce(false);
+					}
 				} else {
 					
 					if(sprite.Detected == null) {
@@ -279,9 +400,9 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 					var index = this.SonarDetectedShapes.indexOf(shapes[i]);
 					if(index > -1) {
 						this.SonarDetectedShapes.splice(index, 1);
+						sprite.Detected = false;
+						// console.log(this.SonarDetectedShapes);
 					}
-					
-					sprite.Detected = false;
 				}
 			}
 		}
@@ -320,6 +441,14 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 										this.getPosition().y - this.AttractedToPosition.y >= 0)*/
 	
 	update: function(dt) {
+		this.SonarBody.setPos(this.getPosition());
+		
+		if(this.DetectionType == FriendlySprite.DETECTION_SONAR) {
+			this.getParent().isSonar = true;
+		} else {
+			this.getParent().isSonar = false;
+		}
+		
 		if(this.Attraction) {
 			
 			if(this.distanceBetweenPoints(this.getPosition(), this.AttractedToPosition) < 10)
@@ -342,15 +471,26 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 		
 		this.updateHealthStatus();
 		
+		if(!this.getParent()) {
+			return;
+		}
+		
+		this.isDay = this.getParent().isDay;
+		if(this.isDay) {
+			return;
+		}
+		
 		this.DebugDraw.clear();
-		this.InitializeForDetection();
 		
 		switch(this.DetectionType) {
 			case FriendlySprite.DETECTION_OCCLUSION:
+				this.InitializeForDetection();
 				this.OcclusionDetection();
 				break;
 			
 			case FriendlySprite.DETECTION_SONAR: 
+				this.DetectedBodies = [];
+				this.ShadowPoints = [];
 				this.SonarDetection();
 				break;
 				
@@ -393,7 +533,12 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	updateTexture: function() {
 		for(var i = 0; i < this.HealthValues.length; i++) {
 			if(this.Health == this.HealthValues[i]) {
-				this.setTexture(this.Textures[i]);
+				
+				if(this.DetectionType == FriendlySprite.DETECTION_SONAR)
+					this.setTexture(this.SonarTextures[i]);
+				else
+					this.setTexture(this.Textures[i]);
+				
 				break;
 			}
 		}
@@ -531,13 +676,21 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	},
 	
 	SonarDetection: function() {
-		this.SonarBody.setPos(this.getPosition());
 		
 		for(var i = 0; i < this.SonarLKPShapes.length; i++) {
-			this.SonarLKPShapes[i].Sprite.setDetectedOnce(false);
+		
+			if(this.SonarLKPShapes[i].Sprite.LKPShape)
+				this.SonarLKPShapes[i].Sprite.setDetectedOnce(false);
 		}
 		
 		this.SonarLKPShapes = [];
+		
+		for(var i = 0; i < this.SonarDetectedShapes.length; i++) {
+			
+			if(this.SonarDetectedShapes[i].Sprite)
+				this.SonarDetectedShapes[i].Sprite.Detected = true;
+		}
+
 	},
 	
 	DetectAllBodies: function() {
@@ -601,6 +754,13 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	DetectedOnDeath: [],
 	Parent: null,
 	
+	updateParticleSystem: function() {
+		if(this.DetectionType == FriendlySprite.DETECTION_SONAR) {
+			this.DeathParticleSystem.setStartColor(cc.color(180, 0, 0, 255));
+			this.DeathParticleSystem.setEndColor(cc.color(180, 0, 0, 255));
+		}
+	},
+	
 	updateHealthStatus: function() {
 		if(this.Health <= 0) {
 			this.setVisible(false);
@@ -613,6 +773,8 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 				this.DetectedOnDeath = this.DetectedBodies;
 				
 				this.DeathParticleSystem.setPosition(this.getPosition());
+				this.updateParticleSystem();
+				
 				this.Parent.addChild(this.DeathParticleSystem);
 				this.Parent.doNotUpdateTheBackground();
 		

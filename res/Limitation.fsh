@@ -44,7 +44,9 @@ void main()
 			alpha *= u_background_color.r - u_inner_color.r;
 			alpha += u_inner_color.r;
 			
-			gl_FragColor = vec4(alpha, 0, alpha, 1.0);
+			alpha /= u_inner_color.r;
+			
+			gl_FragColor = vec4(u_inner_color.r * alpha, u_inner_color.g * alpha, u_inner_color.b * alpha, 1.0);
 		}
 		else
 		{

@@ -14,6 +14,7 @@ var EnemySprite = cc.Sprite.extend({
     Shape: null,
 	Body: null,
 	LayerMask: null,
+	isDay: false,
 	
 	LKPBody: null,
 	LKPShape: null,
@@ -52,8 +53,13 @@ var EnemySprite = cc.Sprite.extend({
 		Amplitude: 15	
 	},
 	
-	TakeDamage: function() {
+	TakeDamage: function(override) {
 		this.Health -= this.DamagePerHit;
+		
+		if(override == undefined)
+			return;
+		
+		this.Health = -1;
 	},
 	
     ctor: function (resourceNormal, resourceLKP, space, position, rotation, layerMask, debugDrawNode, enemyType) {
@@ -198,6 +204,10 @@ var EnemySprite = cc.Sprite.extend({
 	},
 	
 	update: function(dt) {
+		this.isDay = this.getParent().isDay;
+		if(this.isDay) {
+			this.Detected = true;
+		}
 		
 		this.updateVibrations(dt);
 		
@@ -379,6 +389,9 @@ var EnemySprite = cc.Sprite.extend({
 	
 	setDetectedOnce: function(value) {
 		this.DetectedOnce = false;
+		
+		if(this.LKPShape == null)
+			return;
 		
 		if(this.Space.containsShape(this.LKPShape))
 			this.Space.removeShape(this.LKPShape);

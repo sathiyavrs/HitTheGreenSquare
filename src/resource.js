@@ -8,6 +8,11 @@ var res = {
 	WhiteFriendly_2 : "res/FriendlyBall_34X34_2.png",
 	WhiteFriendly_3 : "res/FriendlyBall_34X34_3.png",
 	
+	RedFriendly : "res/RedBall_34X34.png",
+	RedFriendly_1 : "res/RedBall_34X34_1.png",
+	RedFriendly_2 : "res/RedBall_34X34_2.png",
+	RedFriendly_3 : "res/RedBall_34X34_3.png",
+	
 	
 	WhiteEnemy : "res/White_Enemy_40X40.png",
 	WhiteEnemyShaded: "res/WhiteEnemyShaded_40X40.png",

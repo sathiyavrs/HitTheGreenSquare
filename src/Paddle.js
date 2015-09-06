@@ -388,6 +388,11 @@ var Paddle = cc.Sprite.extend({
 			 					this.PARTICLE_COLOR, 
 								this.PARTICLE_SIZE);
 			
+			if(this.getParent().isSonar) {
+				this.FriendlyCollisionParticleSystem.setStartColor(cc.color(200, 0, 0, 255));
+				this.FriendlyCollisionParticleSystem.setEndColor(cc.color(200, 0, 0, 255));
+			}
+			
 			this.FriendlyCollisionParticleSystem.setPosition(position);
 			
 			this.getParent().addChild(this.FriendlyCollisionParticleSystem);	

@@ -5,6 +5,8 @@ var DevelopmentScene = cc.Scene.extend({
 	background: null,
 	light: null,
 	updateTheBackground: true,
+	isDay: false,
+	isSonar: false,
 	
 	LIGHT_RADIUS: 120,
 	
@@ -22,9 +24,10 @@ var DevelopmentScene = cc.Scene.extend({
 	},
 	
 	onEnter: function () {
-        this._super();
+		this._super();
         this.initPhysics();
 		this.setDebugMode(this.PhysicsDebug);
+		this.isDay = false;
 		
 		this.debugDrawNode = new cc.DrawNode();
 		this.addChild(this.debugDrawNode);
@@ -34,6 +37,7 @@ var DevelopmentScene = cc.Scene.extend({
 		
 		var friendlySprite = new FriendlySprite(
 					[res.WhiteFriendly, res.WhiteFriendly_1, res.WhiteFriendly_2, res.WhiteFriendly_3],
+					[res.RedFriendly, res.RedFriendly_1, res.RedFriendly_2, res.RedFriendly_3],
 					cc.p(cc.winSize.width/2, cc.winSize.height / 2 - 120), 
 					this.space, -1, this.LIGHT_RADIUS, 
 					FriendlySprite.DETECTION_OCCLUSION, 
@@ -66,7 +70,7 @@ var DevelopmentScene = cc.Scene.extend({
 		
 		
 		this.addChild(sprite);
-		var TwoPath = new FollowPath([cc.p(100, 200), cc.p(400, 400), cc.p(300, 100)], FollowPath.LOOP, FollowPath.FORWARD);
+		var TwoPath = new FollowPath([cc.p(150, 200), cc.p(400, 300), cc.p(300, 150)], FollowPath.LOOP, FollowPath.FORWARD);
 		sprite.setPathToFollow(TwoPath, Movement.CONSTANT, 300);
 		// sprite.Shape.setElasticity(1.5);
 		
@@ -92,7 +96,7 @@ var DevelopmentScene = cc.Scene.extend({
 		this.addChild(sprite);
 		
 		sprite = new EnemySprite(res.WhiteEnemy, res.WhiteEnemyShaded, this.space, 
-										cc.p(cc.winSize.width / 2 + 80, cc.winSize.height / 2), -25, -1, this.debugDrawNode, EnemySprite.TYPE_WHITE);
+										cc.p(cc.winSize.width / 2 + 80, cc.winSize.height / 2), 0, -1, this.debugDrawNode, EnemySprite.TYPE_WHITE);
 		this.addChild(sprite);
 		
 		sprite = new EnemySprite(res.BrownEnemy, res.BrownEnemyShaded, this.space, 

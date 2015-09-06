@@ -12,6 +12,7 @@ var Background = cc.GLNode.extend({
 	BLURRING_RADIUS: 20,
 	ALPHA_FINAL: 0.7,
 	INNER_COLOR: [0.4, 0.0, 0.4, 1.0],
+	INNER_COLOR_SONAR: [0.4, 0.0, 0.0, 1.0],
 	SHADOW_COLOR: [0.10, 0, 0.10, 1.0],
 	LIMITATION_BACKGROUND_COLOR: [0.10, 0.0, 0.10, 1.0],
 	BACKGROUND_RADIUS_OFFSET: 8,
@@ -34,6 +35,9 @@ var Background = cc.GLNode.extend({
 	ShadowAttributes: null,
 	ShadowProgram: null,
 	ShadowVertexBuffer: null,
+	
+	isDay: false,
+	isSonar: false,
 	
 	ctor: function(lightLocation, radiusValue, shadowObjectPositions) {
 		this._super();
@@ -190,8 +194,13 @@ var Background = cc.GLNode.extend({
 		
 		this.LimitationProgram.setUniformLocationWith1f(this.LimitationAttributes.Blurring, this.BLURRING_RADIUS);
 		
-		this.LimitationProgram.setUniformLocationWith4fv(this.LimitationAttributes.InnerColor, 
+		if(!this.isSonar) {
+			this.LimitationProgram.setUniformLocationWith4fv(this.LimitationAttributes.InnerColor, 
 																				new Float32Array(this.INNER_COLOR));
+		} else {
+			this.LimitationProgram.setUniformLocationWith4fv(this.LimitationAttributes.InnerColor, 
+																				new Float32Array(this.INNER_COLOR_SONAR));
+		}
 																				
 		this.LimitationProgram.setUniformLocationWith4fv(this.LimitationAttributes.BackgroundColor, 
 																new Float32Array(this.LIMITATION_BACKGROUND_COLOR));
@@ -268,17 +277,8 @@ var Background = cc.GLNode.extend({
 		gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 		// gl.disable(gl.DEPTH_TEST);
 		
+		this.drawBackground();
 		
-		this.BackgroundProgram.use();
-		this.BackgroundProgram.setUniformsForBuiltins();
-		
-		gl.bindBuffer(gl.ARRAY_BUFFER, this.BackgroundVertexBuffer);
-		gl.vertexAttribPointer(this.BackgroundPositionLocation, this.BackgroundVertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
-		
-		var color = this.BACKGROUND_COLOR;
-		this.BackgroundProgram.setUniformLocationWith4f(this.BackgroundColorLocation, color[0], color[1], color[2], color[3]);
-		
-		gl.drawArrays(gl.TRIANGLES, 0, this.BackgroundVertexBuffer.numberOfItems);
 		// gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
 		// gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA); // Look up!
@@ -294,11 +294,31 @@ var Background = cc.GLNode.extend({
 	
 		gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 		this.drawShadows();
+		
+		if(this.isDay) {
+			this.drawBackground();
+		}
+	},
+	
+	drawBackground: function() {
+		this.BackgroundProgram.use();
+		this.BackgroundProgram.setUniformsForBuiltins();
+		
+		gl.bindBuffer(gl.ARRAY_BUFFER, this.BackgroundVertexBuffer);
+		gl.vertexAttribPointer(this.BackgroundPositionLocation, this.BackgroundVertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
+		
+		var color = this.BACKGROUND_COLOR;
+		this.BackgroundProgram.setUniformLocationWith4f(this.BackgroundColorLocation, color[0], color[1], color[2], color[3]);
+		
+		gl.drawArrays(gl.TRIANGLES, 0, this.BackgroundVertexBuffer.numberOfItems);
 	},
 	
 	once: 0,
 	
 	update: function(dt) {
+		this.isDay = this.getParent().isDay;
+		this.isSonar = this.getParent().isSonar;
+		
 		this.updateShadowProgram();
 		this.updateLimitation();
 	}
