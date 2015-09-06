@@ -18,6 +18,8 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	***********************************************************************************************/
 	
 	SPEED: 270,
+	SMASH_SPEED: 400,
+	NORMAL_SPEED: 270,
 	PARTICLE_SPEED: 40,
 	PARTICLE_SIZE: 30,
 	PARTICLE_COLOR: cc.color(180, 180, 180, 255),
@@ -487,7 +489,16 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	
 	DrawNodeAdded: false,
 	
+	updateSpeed: function() {
+		if(this.SmashHit)
+			this.SPEED = this.SMASH_SPEED;
+		else
+			this.SPEED = this.NORMAL_SPEED;
+	},
+	
 	update: function(dt) {
+		
+		this.updateSpeed();
 		this.SonarBody.setPos(this.getPosition());
 		this.updateSonar(dt);
 		
