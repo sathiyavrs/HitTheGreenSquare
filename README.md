@@ -5,6 +5,8 @@ Controls:
 
 WASD or Arrow Keys to control the paddle horizontally and vertically.
 Q & E or Z & C to control the paddle's clockwise and Anti-clockwise movement.
+R to activate Sonar for a brief Period of time.
+B to Smash Hit through walls.
 
 Any mouse button in the specified Direction will Fire the ball from the paddle.
 
