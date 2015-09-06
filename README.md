@@ -1,5 +1,5 @@
 # Hit The Green Square
-Alpha Version of the Festember Game I want to make.
+Alpha Version Source Code
 
 Controls:
 
@@ -9,7 +9,7 @@ Q & E or Z & C to control the paddle's clockwise and Anti-clockwise movement.
 
 R to activate Sonar for a brief Period of time.
 
-B to Smash Hit through walls.
+B to Smash Hit through walls (Limited number of times)
 
 Any mouse button in the specified Direction will Fire the ball from the paddle.
 
