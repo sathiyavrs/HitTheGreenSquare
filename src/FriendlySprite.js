@@ -22,6 +22,11 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	PARTICLE_SIZE: 30,
 	PARTICLE_COLOR: cc.color(180, 180, 180, 255),
 	
+	MAX_SONAR_TIME: 1.5,
+	SONAR_DECREMENT_PER_SECOND: 1,
+	SONAR_INCREMENT_PER_SECOND: 0.2,
+	CurrentSonarTime: 2,
+	
 	isEnemy: false,
 	isFriendly: true,
 	isDay: false,
@@ -118,6 +123,9 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 				}
 				
 				if(keyCode == cc.KEY.r) {
+					if(this.CurrentSonarTime < 0)
+						return;
+					
 					this.DetectionType = FriendlySprite.DETECTION_SONAR;
 				}
 			}.bind(this),
@@ -140,6 +148,8 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	
     ctor: function (resources, sonarResources, position, space, layerMask, radius, detectionType, drawNode, healthValues) {
         this._super(resources[0], cc.Rect(0, 0, 0, 0));
+		
+		this.CurrentSonarTime = this.MAX_SONAR_TIME;
 		
 		this.initializeInputHandler();
 		
@@ -440,8 +450,25 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	/*Math.abs(this.getPosition().y - this.AttractedToPosition.y) < 2 &&
 										this.getPosition().y - this.AttractedToPosition.y >= 0)*/
 	
+	updateSonar: function(dt) {
+		if(this.DetectionType == FriendlySprite.DETECTION_SONAR) {
+			this.CurrentSonarTime -= dt * this.SONAR_DECREMENT_PER_SECOND;
+			
+			if(this.CurrentSonarTime < 0) 
+				this.DetectionType = FriendlySprite.DETECTION_OCCLUSION;
+		
+		} else {
+			this.CurrentSonarTime += dt * this.SONAR_INCREMENT_PER_SECOND;
+		
+			if(this.CurrentSonarTime > this.MAX_SONAR_TIME) {
+				this.CurrentSonarTime = this.MAX_SONAR_TIME;
+			}
+		}
+	},
+	
 	update: function(dt) {
 		this.SonarBody.setPos(this.getPosition());
+		this.updateSonar(dt);
 		
 		if(this.DetectionType == FriendlySprite.DETECTION_SONAR) {
 			this.getParent().isSonar = true;
