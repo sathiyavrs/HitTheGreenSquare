@@ -15,7 +15,6 @@
         "src/app.js",
 		"src/FollowPath.js",
 		"src/EnemySprite.js",
-		"src/MyPhysicsSprite.js",
 		"src/RectangularLightingHelper.js",
 		"src/FriendlySprite.js",
 		"src/Background.js",
