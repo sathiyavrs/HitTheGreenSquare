@@ -19,6 +19,12 @@
 		"src/FriendlySprite.js",
 		"src/Background.js",
 		"src/ShortCircularBurst.js",
-		"src/Paddle.js"
+		"src/Paddle.js",
+		"src/LevelOneResources.js",
+		"src/LevelOne.js",
+		"src/LevelTwoResources.js",
+		"src/LevelTwo.js",
+		"src/LevelThree.js",
+		"src/LevelThreeResources.js"
     ]
 }

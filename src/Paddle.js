@@ -4,6 +4,9 @@ var Paddle = cc.Sprite.extend({
 	
 	isPaddle: true,
 	
+	SPEED_FAST: 600,
+	SPEED_SLOW: 200,
+	
 	MOVEMENT_SPEED: 600,
 	DISTANCE_FROM_EDGE_VERTICAL: 40,
 	DISTANCE_FROM_EDGE_HORIZONTAL: 40,
@@ -169,6 +172,10 @@ var Paddle = cc.Sprite.extend({
 			event: cc.EventListener.KEYBOARD,
 			
 			onKeyPressed:  function(keyCode, event){
+				
+				if(keyCode == cc.KEY.shift) {
+					this.MOVEMENT_SPEED = this.SPEED_SLOW;
+				}
 				
 				if(keyCode == cc.KEY.f) {
 					if(this.FriendlyPlayer != null)
@@ -369,6 +376,11 @@ var Paddle = cc.Sprite.extend({
 			
 			onKeyReleased: function(keyCode, event){
 				this.IsMoving = false;
+				
+				if(keyCode == cc.KEY.shift) {
+					this.MOVEMENT_SPEED = this.SPEED_FAST;
+				}
+				
 			}.bind(this)
 		}, this);
 		

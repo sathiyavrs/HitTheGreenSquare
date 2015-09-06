@@ -93,6 +93,17 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	SunParticleSystem: null,
 	OriginalEmissionRate: 0,
 	
+	SonarEnable: true,
+	SmashHitEnable: true,
+	
+	DisableSonar: function() {
+		this.SonarEnable = false;
+	},
+	
+	DisableSmashHit: function() {
+		this.SmashHitEnable = false;
+	},
+	
 	CollisionParticleSystemAttributes: {
 		Speed: 40,
 		Color: cc.color(255, 255, 0, 255),
@@ -124,12 +135,15 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 			
 			onKeyPressed:  function(keyCode, event){
 				if(keyCode == cc.KEY.b) {
+					if(!this.SmashHitEnable)
+						return;
+					
 					if(this.SmashHit) {
 						this.SmashHit = false;
 						this.SunParticleSystem.setEmissionRate(0);
 					
 					} else if(this.SmashHitNumber > 0) {
-					
+						
 						this.SmashHit = true;
 						this.SunParticleSystem.setEmissionRate(this.OriginalEmissionRate);
 					}
@@ -141,6 +155,9 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 				
 				if(keyCode == cc.KEY.r) {
 					if(this.CurrentSonarTime < 0)
+						return;
+					
+					if(!this.SonarEnable)
 						return;
 					
 					this.DetectionType = FriendlySprite.DETECTION_SONAR;
@@ -570,8 +587,11 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 		this.updateForBounds();
 		
 		this.DrawNode.clear();
-		this.DrawSonarBar();
-		this.DrawSmashBar();
+		if(!this.isDay && this.SonarEnable)
+			this.DrawSonarBar();
+		
+		if(this.SmashHitEnable)
+			this.DrawSmashBar();
 	},
 	
 	DrawSmashBar: function() {
@@ -710,6 +730,11 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 			raycastHit.shape.Sprite.Detected = true;
 			var points = raycastHit.shape.Sprite.LightingHelper.GetLightingCoordinates(this.getPosition());
 			
+			if(points == undefined) {
+				angle += this.MinAngle;
+				continue;
+			}
+			
 			var angle1 = angleWith_plusYClockWise(points[0], this.getPosition());
 			var angle2 = angleWith_plusYClockWise(points[1], this.getPosition());
 			var angles = DetermineLowerAndHigherAmongAngles(angle1, angle2);
@@ -755,6 +780,10 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 			return;
 		}
 		
+		if(points == undefined) {
+			return;
+		}
+		
 		var angle1 = angleWith_plusYClockWise(points[0], this.getPosition());
 		var angle2 = angleWith_plusYClockWise(points[1], this.getPosition());
 		var angles = DetermineLowerAndHigherAmongAngles(angle1, angle2);
@@ -791,6 +820,11 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 		if(!this.AddToDetectedBodies(raycastHit.shape)) {
 			return 360;
 		}
+		
+		if(points == undefined) {
+			return angle;
+		}
+
 		
 		var angle1 = angleWith_plusYClockWise(points[0], this.getPosition());
 		var angle2 = angleWith_plusYClockWise(points[1], this.getPosition());
@@ -849,7 +883,10 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 			case FriendlySprite.DETECTION_OCCLUSION:
 				for(var i = 0; i < this.DetectedBodies.length; i++) {
 					points = this.DetectedBodies[i].Sprite.LightingHelper.GetLightingCoordinates(this.getPosition());
-
+					
+					if(points == undefined)
+						continue;
+					
 					this.ShadowPoints.push(points[0]);
 					this.ShadowPoints.push(points[1]);
 				}

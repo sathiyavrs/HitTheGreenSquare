@@ -50,7 +50,7 @@ var EnemySprite = cc.Sprite.extend({
 	OriginalPosition: false,
 	
 	VibrationAttributes: {
-		Amplitude: 15	
+		Amplitude: 0
 	},
 	
 	TakeDamage: function(override) {
