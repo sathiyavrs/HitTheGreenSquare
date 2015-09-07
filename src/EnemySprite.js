@@ -49,9 +49,7 @@ var EnemySprite = cc.Sprite.extend({
 	
 	OriginalPosition: false,
 	
-	VibrationAttributes: {
-		Amplitude: 0
-	},
+	VibrationAmplitude: 0,
 	
 	TakeDamage: function(override) {
 		this.Health -= this.DamagePerHit;
@@ -118,7 +116,6 @@ var EnemySprite = cc.Sprite.extend({
 		if(this.DebugHealth)
 			this.Health = 0;
 		
-		this.initVibrationMovements();
 		this.OriginalPosition = this.currentTransform.position;
 		
 		this.EnemyType = enemyType;
@@ -242,7 +239,7 @@ var EnemySprite = cc.Sprite.extend({
 		
 		var position = cc.p(0, 0);
 		var angle = Math.random() * Math.PI * 2;
-		var amplitude = this.VibrationAttributes.Amplitude
+		var amplitude = this.VibrationAmplitude
 		
 		position.x = Math.cos(angle) * dt * amplitude;
 		position.y = Math.sin(angle) * dt * amplitude;
@@ -255,17 +252,6 @@ var EnemySprite = cc.Sprite.extend({
 		}
 		
 		this.currentTransform.position = currentPosition;
-	},
-	
-	initVibrationMovements: function() {
-		var position = cc.p(0, 0);
-		var angle = Math.random() * Math.PI * 2;
-		position.x = Math.cos(angle) * this.VibrationAttributes.Amplitude;
-		position.y = Math.sin(angle) * this.VibrationAttributes.Amplitude;
-		
-		this.VibrationAttributes.Position = position;
-		this.VibrationAttributes.ToPoint = position;
-		this.VibrationAttributes.OriginalPosition = this.currentTransform.position;
 	},
 	
 	die: function() {

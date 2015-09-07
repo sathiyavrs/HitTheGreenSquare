@@ -25,6 +25,8 @@
 		"src/LevelTwoResources.js",
 		"src/LevelTwo.js",
 		"src/LevelThree.js",
-		"src/LevelThreeResources.js"
+		"src/LevelThreeResources.js",
+		"src/LevelFour.js",
+		"src/LevelFourResources.js"
     ]
 }
