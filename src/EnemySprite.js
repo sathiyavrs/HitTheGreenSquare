@@ -51,6 +51,10 @@ var EnemySprite = cc.Sprite.extend({
 	
 	VibrationAmplitude: 0,
 	
+	PermanentDetection: false,
+	NewDrawNode: null,
+	DrawNodeAdded: false,
+	
 	TakeDamage: function(override) {
 		this.Health -= this.DamagePerHit;
 		
@@ -64,6 +68,7 @@ var EnemySprite = cc.Sprite.extend({
 		this._super(resourceNormal, cc.Rect(0, 0, 0, 0));
 		this.scheduleUpdate();
 		
+		this.NewDrawNode = new cc.DrawNode();
 		this.Space = space;
 		this.LayerMask = layerMask;
 		this.LKPLayerMask = layerMask;
@@ -200,13 +205,22 @@ var EnemySprite = cc.Sprite.extend({
 		path.goToNextPoint();
 	},
 	
+	setPermanentDetection: function(value) {
+		this.PermanentDetection = true;
+	},
+	
 	update: function(dt) {
+		if(!this.DrawNodeAdded) {
+			this.getParent().addChild(this.NewDrawNode, 3);
+			this.DrawNodeAdded = true;
+		}
+		
 		this.isDay = this.getParent().isDay;
 		if(this.isDay) {
 			this.Detected = true;
 		}
 		
-		this.updateVibrations(dt);
+		
 		
 		if(this.DebugHealth)
 			this.Health -= dt;
@@ -214,6 +228,8 @@ var EnemySprite = cc.Sprite.extend({
 		if(this.Health <= 0) {
 			this.die();
 		}
+		
+		
 		
 		this.setVisible(true);
 		var path = this.Path;
@@ -223,13 +239,37 @@ var EnemySprite = cc.Sprite.extend({
 		} else {
 			this.updateMovement(dt);
 		}
+		this.updateVibrations(dt);
 		
 		// this.updateVibrationMovements();
+		this.LightingHelper.update(dt);
+		
+		this.NewDrawNode.clear();
+		if(this.PermanentDetection) {
+			this.Detected = true;
+			this.DrawMarkAndTrackSystems();
+		}
 		
 		this.setDetectionTextures();
 		this.updatePhysics();
 		this.updateSprite();
-		this.LightingHelper.update(dt);
+		
+		
+	},
+	
+	DrawMarkAndTrackSystems: function() {
+		// TODO: Fill in this method later.
+		var points = this.LightingHelper.getPoints();
+		var lineWidth = Math.random() * 1 + 1;
+		var lineColorComponent = Math.random() * 75 + 175;
+		var lineColor = cc.color(lineColorComponent, lineColorComponent, lineColorComponent, 255);
+		
+		for(var i = 0; i < points.length - 1; i++) {
+			this.NewDrawNode.drawSegment(points[i], points[i + 1], lineWidth, lineColor);
+		}
+		this.NewDrawNode.drawSegment(points[3], points[0], lineWidth, lineColor);
+		
+		// this.DrawNode.drawSegment(lowerPosition, upperPosition, this.SMASH_BAR_LINE_WIDTH, this.MARK_AND_TRACK_COLOR);
 		
 	},
 	

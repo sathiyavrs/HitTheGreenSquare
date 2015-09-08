@@ -11,6 +11,10 @@ var RectLightingHelper = cc.Class.extend({
 	centerPosition: null,
 	width: null,
 	height: null,
+
+	getPoints: function() {
+		return this.points;
+	},
 	
 	ctor: function(sprite, drawNode) {
 		this.Sprite = sprite;

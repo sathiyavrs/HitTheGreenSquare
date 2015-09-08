@@ -53,18 +53,22 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	DrawNode: null,
 	
 	DRAW_NODE_SONAR_COLOR_MID: cc.color(150, 150, 0, 255),
-	DRAW_NODE_SONAR_COLOR_END: cc.color(150, 0, 0, 255),
-	DRAW_NODE_SONAR_COLOR_START: cc.color(0, 150, 0, 255),
+	DRAW_NODE_SONAR_COLOR_END: cc.color(100, 0, 0, 255),
+	DRAW_NODE_SONAR_COLOR_START: cc.color(0, 100, 0, 255),
 	SONAR_FULL_LENGTH: 40,
 	SONAR_BAR_POSITION: cc.p(20, 20),
 	SONAR_BAR_LINE_WIDTH: 2,
 	
 	DRAW_NODE_SMASH_COLOR: cc.color(200, 200, 200, 255),
-	DRAW_NODE_SMASH_USING_COLOR: cc.color(225, 0, 0, 255),
+	DRAW_NODE_SMASH_USING_COLOR: cc.color(0, 0, 75, 255),
 	SMASH_BAR_DASH_LENGTH: 32,
 	SMASH_BAR_LENGTH_BETWEEN_DASHES: 20,
 	SMASH_BAR_POSITION: 20,
 	SMASH_BAR_LINE_WIDTH: 3,
+	
+	HEALTH_BAR_LENGTH: 500,
+	HEALTH_BAR_POSITION: cc.p(40, 20),
+	HEALTH_BAR_LINE_WIDTH: 4,
 	
 	Radius: null,
 	DetectionType: null,
@@ -81,8 +85,11 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	DebugHealth: false,
 	DeathNotScheduled: true,
 	DeathParticleSystem: null,
-	HurtAmountPerHit: 25,
+	
+	HurtAmountPerHit: 17,
 	EnemyHurt: 50,
+	TimeBeforeNextTakeDamage: 0.017,
+	_currentTimeForNext: -0.1,
 	
 	Attraction: false,
 	AttractedToPosition: null, 
@@ -93,8 +100,16 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	SunParticleSystem: null,
 	OriginalEmissionRate: 0,
 	
+	MarkNumber: 3,
+	MarkNow: false,
+	
 	SonarEnable: true,
 	SmashHitEnable: true,
+	MarkAndTrackEnable: true,
+	
+	DisableMarkAndTrack: function() {
+		this.MarkAndTrackEnable = false;
+	},
 	
 	DisableSonar: function() {
 		this.SonarEnable = false;
@@ -134,7 +149,7 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 			event: cc.EventListener.KEYBOARD,
 			
 			onKeyPressed:  function(keyCode, event){
-				if(keyCode == cc.KEY.b) {
+				if(keyCode == cc.KEY.g) {
 					if(!this.SmashHitEnable)
 						return;
 					
@@ -151,6 +166,15 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 				
 				if(this.isDay) {
 					return;
+				}
+				
+				if(keyCode == cc.KEY.m) {
+					if(this.MarkNumber < 0) {
+						
+					} else {
+						this.MarkNow = !this.MarkNow;
+					}
+					
 				}
 				
 				if(keyCode == cc.KEY.r) {
@@ -329,6 +353,10 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 				shapes[i].Sprite.TakeDamage();
 				
 			}
+			
+			if(this.MarkNow) {
+				shapes[i].Sprite.setPermanentDetection(true);
+			}
 			// shapes[i].Sprite.TakeDamage();
 		}
 		
@@ -338,11 +366,22 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 			this.SunParticleSystem.setEmissionRate(0);
 			this.SmashHitNumber -= 1;
 		}
+		
+		if(this.MarkNow) {
+			this.MarkNow = false;
+			this.MarkNumber -= 1;
+			
+		}
 		return true;
 	},
 	
 	TakeDamage: function(override) {
+		
+		if(this._currentTimeForNext > 0)
+			return;
+		
 		this.Health -= this.HurtAmountPerHit;
+		this._currentTimeForNext = this.TimeBeforeNextTakeDamage;
 		
 		if(override == undefined) {
 			return;
@@ -513,6 +552,16 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 			this.SPEED = this.NORMAL_SPEED;
 	},
 	
+	DrawMarkCircleAroundPlayer: function() {
+		// this.DebugDraw.drawCircle(this.getPosition(), this.Radius, 2 * Math.PI, 60, true, 1, new cc.Color(0, 0, 255, 255));
+		
+		var componentValue = Math.random() * 75 + 160;
+		var color = cc.color(255 - componentValue, 255 - componentValue, 255 - componentValue, 255);
+		var radius = this.getContentSize().width / 2 - 2 * Math.random();
+		var original = this.getContentSize().width / 2 - 1;
+		this.DrawNode.drawCircle(this.getPosition(), radius, 2 * Math.PI, 60, false, 4, color);
+	},
+	
 	update: function(dt) {
 		
 		this.updateSpeed();
@@ -520,8 +569,13 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 		this.updateSonar(dt);
 		
 		if(!this.DrawNodeAdded) {
-			this.getParent().addChild(this.DrawNode);
+			this.getParent().addChild(this.DrawNode, 3);
 			this.DrawNodeAdded = true;
+		}
+		
+		this._currentTimeForNext -= dt;
+		if(this._currentTimeForNext < 0) {
+			this._currentTimeForNext = -0.1;
 		}
 		
 		if(this.DetectionType == FriendlySprite.DETECTION_SONAR) {
@@ -529,6 +583,8 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 		} else {
 			this.getParent().isSonar = false;
 		}
+		this.DrawNode.clear();
+		
 		
 		if(this.Attraction) {
 			
@@ -586,12 +642,116 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 		this.updateTexture();
 		this.updateForBounds();
 		
-		this.DrawNode.clear();
 		if(!this.isDay && this.SonarEnable)
 			this.DrawSonarBar();
 		
+		if(!this.isDay && this.MarkAndTrackEnable)
+			this.DrawMarkAndTrackMeter();
+		
 		if(this.SmashHitEnable)
 			this.DrawSmashBar();
+		
+		this.DrawHealthBar();
+		
+		if(!this.isDay && this.MarkNow) {
+			this.DrawMarkCircleAroundPlayer();
+		}
+		
+	},
+	
+	MARK_AND_TRACK_POSITION: cc.p(40, 40),
+	MARK_AND_TRACK_LENGTH_BETWEEN_DASHES: 20,
+	MARK_AND_TRACK_DASH_LENGTH: 30,
+	MARK_AND_TRACK_COLOR: cc.color(255, 255, 0, 255),
+	MARK_AND_TRACK_COLOR_ON: cc.color(255, 0, 0, 255),
+	MARK_AND_TRACK_LINE_WIDTH: 3,
+	
+	DrawMarkAndTrackMeter: function() {
+		/*
+			var number = this.SmashHitNumber;
+			var lowerPosition = this.SMASH_BAR_POSITION;
+			var width = this.SMASH_BAR_LENGTH_BETWEEN_DASHES;
+			var upperPosition = cc.pAdd(lowerPosition, cc.p(0, this.SMASH_BAR_DASH_LENGTH));
+			
+			for(var i = 0; i < number; i++) {
+				this.DrawNode.drawSegment(lowerPosition, upperPosition, this.SMASH_BAR_LINE_WIDTH, this.DRAW_NODE_SMASH_COLOR);
+				
+				if(i == number - 1 && this.SmashHit) {
+					this.DrawNode.drawSegment(lowerPosition, upperPosition,
+													this.SMASH_BAR_LINE_WIDTH, this.DRAW_NODE_SMASH_USING_COLOR);
+				}
+				
+				lowerPosition = cc.pAdd(lowerPosition, cc.p(0, width + this.SMASH_BAR_DASH_LENGTH));
+				upperPosition = cc.pAdd(upperPosition, cc.p(0, width + this.SMASH_BAR_DASH_LENGTH));
+			}
+		*/
+		
+		var number = this.MarkNumber;
+		this.MARK_AND_TRACK_POSITION = cc.p(cc.winSize.width - 20, cc.winSize.height - 40);
+		var upperPosition = this.MARK_AND_TRACK_POSITION;
+		var width = this.MARK_AND_TRACK_LENGTH_BETWEEN_DASHES;
+		var lowerPosition = cc.pAdd(upperPosition, cc.p(0, -this.SMASH_BAR_DASH_LENGTH));
+		
+		for(var i = 0; i < number; i++) {
+			this.DrawNode.drawSegment(lowerPosition, upperPosition, this.SMASH_BAR_LINE_WIDTH, this.MARK_AND_TRACK_COLOR);
+				
+				if(i == 0 && this.MarkNow) {
+					this.DrawNode.drawSegment(lowerPosition, upperPosition,
+													this.MARK_AND_TRACK_LINE_WIDTH, this.MARK_AND_TRACK_COLOR_ON);
+				}
+				
+				lowerPosition = cc.pAdd(lowerPosition, cc.p(0, -(width + this.SMASH_BAR_DASH_LENGTH)));
+				upperPosition = cc.pAdd(upperPosition, cc.p(0, -(width + this.SMASH_BAR_DASH_LENGTH)));
+		}
+	},
+	
+	DrawHealthBar: function() {
+		this.HEALTH_BAR_LENGTH = 100;
+		this.HEALTH_BAR_POSITION = cc.p(cc.winSize.width - this.HEALTH_BAR_LENGTH - 10, cc.winSize.height - 10)
+		
+		var amount = this.Health;
+		var max = this.MaxHealth;
+		
+		if(amount < 0)
+			return;
+		
+		if(amount > max)
+			return;
+		
+		var leftPosition = this.HEALTH_BAR_POSITION;
+		var rightPosition = cc.p(this.HEALTH_BAR_POSITION.x + amount / max * this.HEALTH_BAR_LENGTH,
+																						this.HEALTH_BAR_POSITION.y);
+		var rightPositionFull = cc.p(this.HEALTH_BAR_POSITION.x + this.HEALTH_BAR_LENGTH, this.HEALTH_BAR_POSITION.y);
+		
+		var color = null;
+		var mode = 1;
+		if(amount > max / 3)
+			mode = 2;
+		
+		if(amount > 2 * max / 3) 
+			mode = 3;
+		
+		switch(mode) {
+			case 1: 
+				color = this.DRAW_NODE_SONAR_COLOR_END;
+				break;
+				
+			case 2:
+				color = this.DRAW_NODE_SONAR_COLOR_MID;
+				break;
+				
+			case 3:
+				color = this.DRAW_NODE_SONAR_COLOR_START;
+				break;
+		}
+		
+		// Override Color
+		
+		color = cc.color(150, 0, 0, 255);
+		var backColor = cc.color(200, 200, 200, 255);
+		
+		this.DrawNode.drawSegment(leftPosition, rightPositionFull, this.HEALTH_BAR_LINE_WIDTH, backColor);
+		this.DrawNode.drawSegment(leftPosition, rightPosition, this.HEALTH_BAR_LINE_WIDTH, color);
 	},
 	
 	DrawSmashBar: function() {
@@ -674,8 +834,8 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	},
 	
 	updateTexture: function() {
-		for(var i = 0; i < this.HealthValues.length; i++) {
-			if(this.Health == this.HealthValues[i]) {
+		for(var i = this.HealthValues.length; i > -1; i--) {
+			if(this.Health <= this.HealthValues[i]) {
 				
 				if(this.DetectionType == FriendlySprite.DETECTION_SONAR)
 					this.setTexture(this.SonarTextures[i]);
@@ -924,6 +1084,7 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	updateHealthStatus: function() {
 		if(this.Health <= 0) {
 			this.setVisible(false);
+			this.DrawNode.clear();
 			
 			if(this.DeathNotScheduled) {
 				this.Space.removeShape(this.Shape);

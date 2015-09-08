@@ -27,6 +27,18 @@
 		"src/LevelThree.js",
 		"src/LevelThreeResources.js",
 		"src/LevelFour.js",
-		"src/LevelFourResources.js"
+		"src/LevelFourResources.js",
+		"src/LevelFive.js",
+		"src/LevelFiveResources.js",
+		"src/LevelSix.js",
+		"src/LevelSixResources.js",
+		"src/LevelSeven.js",
+		"src/LevelSevenResources.js",
+		"src/LevelEight.js",
+		"src/LevelEightResources.js",
+		"src/LevelNine.js",
+		"src/LevelNineResources.js",
+		"src/LevelTen.js",
+		"src/LevelTenResources.js"
     ]
 }

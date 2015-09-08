@@ -46,7 +46,7 @@ var Paddle = cc.Sprite.extend({
 	CanAim: false,
 	MousePosition: null,
 	
-	
+	SetFriendlyPosition: false,
 	
 	ctor: function(space, position, state, friendlyWidth, friendlyHeight) {
 		this._super(res.Paddle, cc.Rect(0, 0, 0, 0));
@@ -175,6 +175,11 @@ var Paddle = cc.Sprite.extend({
 				
 				if(keyCode == cc.KEY.shift) {
 					this.MOVEMENT_SPEED = this.SPEED_SLOW;
+					if(this.FriendlyPlayer != null)
+						this.FriendlyPlayer.setPosition(this.PositionOfFriendly);
+					
+					if(this.FriendlyPlayer != null)
+						this.SetFriendlyPosition = true;
 				}
 				
 				if(keyCode == cc.KEY.f) {
@@ -379,6 +384,9 @@ var Paddle = cc.Sprite.extend({
 				
 				if(keyCode == cc.KEY.shift) {
 					this.MOVEMENT_SPEED = this.SPEED_FAST;
+					
+					this.SetFriendlyPosition = false;
+				
 				}
 				
 			}.bind(this)
@@ -436,6 +444,12 @@ var Paddle = cc.Sprite.extend({
 	AimDrawNodeAdded: false,
 	
 	update: function(dt) {
+		
+		if(this.FriendlyPlayer != null) {
+			this.FriendlyPlayer.Health = this.FriendlyPlayer.MaxHealth;
+			if(this.SetFriendlyPosition)
+				this.FriendlyPlayer.setPosition(this.PositionOfFriendly);
+		}
 		
 		if(!this.AimDrawNodeAdded) {
 			this.getParent().addChild(this.AimDrawNode);

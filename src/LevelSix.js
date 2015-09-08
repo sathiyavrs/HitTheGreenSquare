@@ -1,4 +1,4 @@
-var LevelThreeScene = cc.Scene.extend({
+var LevelSixScene = cc.Scene.extend({
     space: null,
 	PhysicsDebug: false,
 	debugDrawNode: null,
@@ -7,6 +7,11 @@ var LevelThreeScene = cc.Scene.extend({
 	updateTheBackground: true,
 	isDay: false,
 	isSonar: false,
+	objective: null,
+	
+	// LevelSpecific stuff
+	
+	thingsToKillUponVictory: [],
 	
 	LIGHT_RADIUS: 120,
 	
@@ -17,7 +22,9 @@ var LevelThreeScene = cc.Scene.extend({
 	FRIENDLY_DEATH_PARTICLE_SIZE: 40,
 	FRIENDLY_DEATH_PARTICLE_SPEED: 30,
 	
-	LEVEL_START_POSITION: cc.p(220, 330),
+	LEVEL_START_POSITION: cc.p(200, 350),
+	
+	VibrationIDs: [27, 28, 29],
 	
 	initPhysics: function() {
 		this.space = new cp.Space();
@@ -43,7 +50,7 @@ var LevelThreeScene = cc.Scene.extend({
 					this.debugDrawNode,
 					[100, 75, 50, 25]);
 		
-		friendlySprite.getBody().applyImpulse(cp.v(-2, -30), cp.v(0, 0));
+		friendlySprite.getBody().applyImpulse(cp.v(2, -10), cp.v(0, 0));
 		
 		
 		this.addChild(friendlySprite, 2);
@@ -61,74 +68,90 @@ var LevelThreeScene = cc.Scene.extend({
     },
 	
 	addObjects: function() {
-		var objects = LevelThreeObjects;
+		var objects = LevelSixObjects;
+		
+		for(var i = 0; i < objects.length; i++) {
+			var position = cc.p(objects[i].width / 2, objects[i].height / 2);
+			position = RotatePositionClockwiseAboutOrigin(position, -1 * objects[i].rotation);
+			objects[i].x += position.x;
+			objects[i].y += position.y;
+		}
 		
 		for(var i = 0; i < objects.length; i++) {
 			objects[i].y *= -1;
 			objects[i].y += cc.winSize.height;
-			
-			if(objects[i].type == "Path") {
-				objects[i].height *= -1;
-				objects[i].height += cc.winSize.height;
-			}
 		}
 		
 		for(var i = 0; i < objects.length; i++) {
 			objects[i].x += this.LEVEL_START_POSITION.x;
 			objects[i].y += this.LEVEL_START_POSITION.y - cc.winSize.height;
-			
-			if(objects[i].type == "Path") {
-				objects[i].width += this.LEVEL_START_POSITION.x;
-				objects[i].height += this.LEVEL_START_POSITION.y - cc.winSize.height;
-			}
 		}
 		
 		var sprite = null;
-		var pointOne = null;
-		var pointTwo = null;
-		var path = null;
+		var greenSprite = null;
+		var points = [];
+		var paths = {};
+		var sprites = {};
 		
 		for(var i = 0; i < objects.length; i++) {
+			
 			switch(objects[i].type) {
 				case "White" :
-					sprite = new EnemySprite(res.WhiteEnemy, res.WhiteEnemyShaded, this.space, 
-											cc.p(objects[i].x, objects[i].y),
-											objects[i].rotation,
-											-1, this.debugDrawNode, EnemySprite.TYPE_WHITE);
-					this.addChild(sprite);
-				
+					
+						sprite = new EnemySprite(res.WhiteEnemy, res.WhiteEnemyShaded, this.space, 
+												cc.p(objects[i].x, objects[i].y),
+												objects[i].rotation,
+												-1, this.debugDrawNode, EnemySprite.TYPE_WHITE);
+						this.addChild(sprite);
+						sprites[objects[i].id] = sprite;
+						
+						for(var j = 0; j < this.VibrationIDs.length; j++) {
+							if(this.VibrationIDs[j] == objects[i].id) {
+								sprites[objects[i].id].VibrationAmplitude = 7;
+							}
+						}
 					break;
 				
 				case "Brown" :
-					sprite = new EnemySprite(res.BrownEnemy, res.BrownEnemyShaded, this.space, 
-											cc.p(objects[i].x, objects[i].y),
-											objects[i].rotation,
-											-1, this.debugDrawNode, EnemySprite.TYPE_BROWN);
-					this.addChild(sprite);
+						sprite = new EnemySprite(res.BrownEnemy, res.BrownEnemyShaded, this.space, 
+												cc.p(objects[i].x, objects[i].y),
+												objects[i].rotation,
+												-1, this.debugDrawNode, EnemySprite.TYPE_BROWN);
+						this.addChild(sprite);
+						sprites[objects[i].id] = sprite;
+						
+						for(var j = 0; j < this.VibrationIDs.length; j++) {
+							if(this.VibrationIDs[j] == objects[i].id) {
+								sprites[objects[i].id].VibrationAmplitude = 7;
+							}
+						}
+						
 					break;
 				
 				case "Green" :
-					sprite = new EnemySprite(res.GreenEnemy, res.GreenEnemyShaded, this.space, 
+					greenSprite = new EnemySprite(res.GreenEnemy, res.GreenEnemyShaded, this.space, 
 											cc.p(objects[i].x, objects[i].y),
 											objects[i].rotation,
 											-1, this.debugDrawNode, EnemySprite.TYPE_GREEN);
-					this.addChild(sprite);
+					this.addChild(greenSprite);
+					this.objective = greenSprite;
+					
+					sprites[objects[i].id] = greenSprite;
+					
+					for(var j = 0; j < this.VibrationIDs.length; j++) {
+						if(this.VibrationIDs[j] == objects[i].id) {
+							sprites[objects[i].id].VibrationAmplitude = 7;
+						}
+					}
+					
 					break;
 					
 				case "Path" :
-					pointOne = cc.p(objects[i].x, objects[i].y);
-					pointTwo = cc.p(objects[i].width, objects[i].height);
+					if(paths[objects[i].width] == undefined) {
+						paths[objects[i].width] = [];
+					}
 					
-					path = new FollowPath([pointOne, pointTwo], FollowPath.PING_PONG, FollowPath.FORWARD);
-					
-					sprite = new EnemySprite(res.WhiteEnemy, res.WhiteEnemyShaded, this.space, 
-											cc.p(objects[i].x, objects[i].y),
-											objects[i].rotation,
-											-1, this.debugDrawNode, EnemySprite.TYPE_WHITE);
-											
-					sprite.setPathToFollow(path, Movement.CONSTANT, 150);
-					this.addChild(sprite);
-					
+					paths[objects[i].width].push(cc.p(objects[i].x, objects[i].y));
 					break;
 					
 				default:
@@ -143,7 +166,19 @@ var LevelThreeScene = cc.Scene.extend({
 			this.addChild(sprite);
 		*/
 		
-		console.log(objects);
+		this.setPathToObjects(paths, objects, sprites);
+},
+	
+	setPathToObjects: function(paths, objects, sprites) {
+
+		for(var i = 0; i < objects.length; i++) {
+			if(paths[objects[i].id] == undefined)
+				continue;
+			
+			console.log(objects[i].id);
+			path = new FollowPath(paths[objects[i].id], FollowPath.PING_PONG, FollowPath.FORWARD);
+			sprites[objects[i].id].setPathToFollow(path,  Movement.CONSTANT, 200);
+		}
 	},
 	
 	doNotUpdateTheBackground: function() {
@@ -163,6 +198,13 @@ var LevelThreeScene = cc.Scene.extend({
 		this.space.step(dt);
 		if(this.updateTheBackground)
 			this.updateBackground(dt);
+		
+		if(this.objective.Health < 0) {
+			console.log("hey");
+			for(var i = 0; i < this.thingsToKillUponVictory.length; i++) {
+				this.thingsToKillUponVictory[i].Health = -1;
+			}
+		}
 		
 	},
 	

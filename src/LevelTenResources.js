@@ -1,4 +1,4 @@
-LevelOneObjects = [
+LevelTenObjects = [
 {
  "height":40,
  "id":2,
@@ -26,8 +26,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":40,
- "y":-10
+ "x":0,
+ "y":40
 }, 
 {
  "height":40,
@@ -41,8 +41,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":80,
- "y":0
+ "x":0,
+ "y":80
 }, 
 {
  "height":40,
@@ -56,8 +56,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":120,
- "y":5
+ "x":0,
+ "y":120
 }, 
 {
  "height":40,
@@ -71,8 +71,23 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":160,
- "y":-10
+ "x":0,
+ "y":160
+}, 
+{
+ "height":40,
+ "id":7,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":100,
+ "y":120
 }, 
 {
  "height":40,
@@ -86,8 +101,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":120,
- "y":160
+ "x":100,
+ "y":80
 }, 
 {
  "height":40,
@@ -101,8 +116,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":80,
- "y":166
+ "x":100,
+ "y":160
 }, 
 {
  "height":40,
@@ -116,8 +131,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":40,
- "y":150
+ "x":100,
+ "y":0
 }, 
 {
  "height":40,
@@ -128,10 +143,115 @@ LevelOneObjects = [
 
 	},
  "rotation":0,
- "type":"Brown",
+ "type":"White",
  "visible":true,
  "width":40,
- "x":-8,
+ "x":100,
+ "y":40
+}, 
+{
+ "height":40,
+ "id":13,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":50,
+ "y":160
+}, 
+{
+ "height":40,
+ "id":14,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":30,
+ "type":"Green",
+ "visible":true,
+ "width":40,
+ "x":60,
+ "y":100
+}, 
+{
+ "height":40,
+ "id":15,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":290,
+ "y":120
+}, 
+{
+ "height":40,
+ "id":16,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":30,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":250,
+ "y":100
+}, 
+{
+ "height":40,
+ "id":17,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":290,
+ "y":160
+}, 
+{
+ "height":40,
+ "id":18,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":240,
+ "y":160
+}, 
+{
+ "height":40,
+ "id":19,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":190,
  "y":120
 }, 
 {
@@ -146,8 +266,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":160,
- "y":166
+ "x":290,
+ "y":0
 }, 
 {
  "height":40,
@@ -161,8 +281,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":200,
- "y":160
+ "x":190,
+ "y":80
 }, 
 {
  "height":40,
@@ -176,8 +296,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":400,
- "y":120
+ "x":190,
+ "y":160
 }, 
 {
  "height":40,
@@ -191,8 +311,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":400,
- "y":40
+ "x":290,
+ "y":80
 }, 
 {
  "height":40,
@@ -206,7 +326,7 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":400,
+ "x":190,
  "y":0
 }, 
 {
@@ -221,8 +341,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":200,
- "y":0
+ "x":290,
+ "y":40
 }, 
 {
  "height":40,
@@ -236,22 +356,7 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":400,
- "y":80
-}, 
-{
- "height":40,
- "id":28,
- "name":"Object",
- "properties":
-	{
-
-	},
- "rotation":0,
- "type":"Brown",
- "visible":true,
- "width":40,
- "x":6,
+ "x":190,
  "y":40
 }, 
 {
@@ -263,11 +368,11 @@ LevelOneObjects = [
 
 	},
  "rotation":0,
- "type":"Brown",
+ "type":"White",
  "visible":true,
  "width":40,
- "x":0,
- "y":80
+ "x":480,
+ "y":120
 }, 
 {
  "height":40,
@@ -277,12 +382,12 @@ LevelOneObjects = [
 	{
 
 	},
- "rotation":0,
+ "rotation":30,
  "type":"White",
  "visible":true,
  "width":40,
- "x":0,
- "y":160
+ "x":440,
+ "y":100
 }, 
 {
  "height":40,
@@ -296,7 +401,7 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":400,
+ "x":480,
  "y":160
 }, 
 {
@@ -308,11 +413,11 @@ LevelOneObjects = [
 
 	},
  "rotation":0,
- "type":"Green",
+ "type":"White",
  "visible":true,
  "width":40,
- "x":320,
- "y":80
+ "x":430,
+ "y":160
 }, 
 {
  "height":40,
@@ -326,8 +431,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":280,
- "y":0
+ "x":380,
+ "y":120
 }, 
 {
  "height":40,
@@ -341,8 +446,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":320,
- "y":-8
+ "x":480,
+ "y":0
 }, 
 {
  "height":40,
@@ -356,8 +461,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":240,
- "y":0
+ "x":380,
+ "y":80
 }, 
 {
  "height":40,
@@ -371,8 +476,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":360,
- "y":0
+ "x":380,
+ "y":160
 }, 
 {
  "height":40,
@@ -386,8 +491,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":240,
- "y":160
+ "x":480,
+ "y":80
 }, 
 {
  "height":40,
@@ -401,8 +506,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":360,
- "y":160
+ "x":380,
+ "y":0
 }, 
 {
  "height":40,
@@ -416,8 +521,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":280,
- "y":160
+ "x":480,
+ "y":40
 }, 
 {
  "height":40,
@@ -431,38 +536,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":320,
- "y":166
-}, 
-{
- "height":40,
- "id":41,
- "name":"Object",
- "properties":
-	{
-
-	},
- "rotation":0,
- "type":"White",
- "visible":true,
- "width":40,
- "x":240,
+ "x":380,
  "y":40
-}, 
-{
- "height":40,
- "id":42,
- "name":"Object",
- "properties":
-	{
-
-	},
- "rotation":0,
- "type":"White",
- "visible":true,
- "width":40,
- "x":240,
- "y":120
 }, 
 {
  "height":40,
@@ -476,8 +551,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":440,
- "y":167
+ "x":80,
+ "y":200
 }, 
 {
  "height":40,
@@ -491,8 +566,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":440,
- "y":120
+ "x":20,
+ "y":200
 }, 
 {
  "height":40,
@@ -506,8 +581,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":440,
- "y":80
+ "x":210,
+ "y":200
 }, 
 {
  "height":40,
@@ -521,8 +596,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":440,
- "y":40
+ "x":270,
+ "y":200
 }, 
 {
  "height":40,
@@ -536,8 +611,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":440,
- "y":10
+ "x":400,
+ "y":200
 }, 
 {
  "height":40,
@@ -551,66 +626,6 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":480,
- "y":160
-}, 
-{
- "height":40,
- "id":49,
- "name":"Object",
- "properties":
-	{
-
-	},
- "rotation":0,
- "type":"White",
- "visible":true,
- "width":40,
- "x":474,
- "y":120
-}, 
-{
- "height":40,
- "id":50,
- "name":"Object",
- "properties":
-	{
-
-	},
- "rotation":0,
- "type":"White",
- "visible":true,
- "width":40,
- "x":490,
- "y":80
-}, 
-{
- "height":40,
- "id":51,
- "name":"Object",
- "properties":
-	{
-
-	},
- "rotation":0,
- "type":"White",
- "visible":true,
- "width":40,
- "x":496,
- "y":40
-}, 
-{
- "height":40,
- "id":52,
- "name":"Object",
- "properties":
-	{
-
-	},
- "rotation":0,
- "type":"White",
- "visible":true,
- "width":40,
- "x":480,
- "y":0
+ "x":460,
+ "y":200
 }];

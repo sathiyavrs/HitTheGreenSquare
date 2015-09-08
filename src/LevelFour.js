@@ -37,13 +37,13 @@ var LevelFourScene = cc.Scene.extend({
 		var friendlySprite = new FriendlySprite(
 					[res.WhiteFriendly, res.WhiteFriendly_1, res.WhiteFriendly_2, res.WhiteFriendly_3],
 					[res.RedFriendly, res.RedFriendly_1, res.RedFriendly_2, res.RedFriendly_3],
-					cc.p(cc.winSize.width/2, 66), 
+					cc.p(cc.winSize.width/2, 76), 
 					this.space, -1, this.LIGHT_RADIUS, 
 					FriendlySprite.DETECTION_OCCLUSION, 
 					this.debugDrawNode,
 					[100, 75, 50, 25]);
 		
-		friendlySprite.getBody().applyImpulse(cp.v(0, -70), cp.v(0, 0));
+		friendlySprite.getBody().applyImpulse(cp.v(2, -20), cp.v(0, 0));
 		
 		
 		this.addChild(friendlySprite, 2);
@@ -81,20 +81,23 @@ var LevelFourScene = cc.Scene.extend({
 		for(var i = 0; i < objects.length; i++) {
 			switch(objects[i].type) {
 				case "White" :
-					sprite = new EnemySprite(res.WhiteEnemy, res.WhiteEnemyShaded, this.space, 
-											cc.p(objects[i].x, objects[i].y),
-											objects[i].rotation,
-											-1, this.debugDrawNode, EnemySprite.TYPE_WHITE);
-					this.addChild(sprite);
-				
+					
+						sprite = new EnemySprite(res.WhiteEnemy, res.WhiteEnemyShaded, this.space, 
+												cc.p(objects[i].x, objects[i].y),
+												objects[i].rotation,
+												-1, this.debugDrawNode, EnemySprite.TYPE_WHITE);
+						this.addChild(sprite);
+					
 					break;
 				
 				case "Brown" :
-					sprite = new EnemySprite(res.BrownEnemy, res.BrownEnemyShaded, this.space, 
-											cc.p(objects[i].x, objects[i].y),
-											objects[i].rotation,
-											-1, this.debugDrawNode, EnemySprite.TYPE_BROWN);
-					this.addChild(sprite);
+					/*
+						sprite = new EnemySprite(res.BrownEnemy, res.BrownEnemyShaded, this.space, 
+												cc.p(objects[i].x, objects[i].y),
+												objects[i].rotation,
+												-1, this.debugDrawNode, EnemySprite.TYPE_BROWN);
+						this.addChild(sprite);
+					*/
 					break;
 				
 				case "Green" :
@@ -116,7 +119,7 @@ var LevelFourScene = cc.Scene.extend({
 		}
 		
 		path = new FollowPath(points, FollowPath.LOOP, FollowPath.FORWARD);
-		greenSprite.setPathToFollow(path, Movement.CONSTANT, 300);
+		greenSprite.setPathToFollow(path, Movement.CONSTANT, 500);
 		/* 
 			sprite = new EnemySprite(res.BrownEnemy, res.BrownEnemyShaded, this.space, 
 											cc.p(cc.winSize.width / 2 - 25, cc.winSize.height / 2 + 50), 25, -1, this.debugDrawNode, EnemySprite.TYPE_BROWN);
