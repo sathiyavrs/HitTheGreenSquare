@@ -203,6 +203,8 @@ var EnemySprite = cc.Sprite.extend({
 		
 		this.currentTransform.position = path.currentPoint;
 		path.goToNextPoint();
+		
+		this.Shape.setElasticity(1.3);
 	},
 	
 	setPermanentDetection: function(value) {
@@ -219,8 +221,6 @@ var EnemySprite = cc.Sprite.extend({
 		if(this.isDay) {
 			this.Detected = true;
 		}
-		
-		
 		
 		if(this.DebugHealth)
 			this.Health -= dt;
@@ -299,6 +299,16 @@ var EnemySprite = cc.Sprite.extend({
 		
 		this.Path = null;
 		
+		if(this.EnemyType == EnemySprite.TYPE_GREEN) {
+					/*****************************************************************************/
+					// MATCH_WIN LOGIC
+					
+					this.getParent().setWin();
+					
+					
+					/*****************************************************************************/
+				}
+		
 		if(this.DeathNotScheduled) {
 			this.DeathParticleSystem.setPosition(this.currentTransform.position);
 			this.getParent().addChild(this.DeathParticleSystem);
@@ -307,14 +317,7 @@ var EnemySprite = cc.Sprite.extend({
 				if(this.LKPShape != null)
 					this.Space.removeShape(this.LKPShape);
 				
-				if(this.EnemyType == EnemySprite.TYPE_GREEN) {
-					/*****************************************************************************/
-					// MATCH_WIN LOGIC
-					
-					alert("You've won!");
-					
-					/*****************************************************************************/
-				}
+				
 				
 				this.Space.removeShape(this.Shape);
 				this.getParent().removeChild(this);
@@ -336,7 +339,7 @@ var EnemySprite = cc.Sprite.extend({
 				var speed = this.Speed;
 				
 				var direction = GetDirection(start, end); // From Start to End
-				var velocity = cc.p(direction.x * speed, direction.y * speed);
+				var velocity = this.Velocity = cc.p(direction.x * speed, direction.y * speed);
 				var deltaMovement = cc.p(velocity.x * dt, velocity.y * dt);
 				
 				var toPosition = cc.p(this.currentTransform.position.x + deltaMovement.x, 

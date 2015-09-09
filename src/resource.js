@@ -3,6 +3,23 @@ var res = {
     CloseNormal_png : "res/CloseNormal.png",
     CloseSelected_png : "res/CloseSelected.png",
 	
+	WhiteStuff: "res/WhiteStuff.png",
+	
+	RetryButtonNormal: "res/ReverseNormal.png",
+	RetryButtonSelected: "res/ReverseSelected.png",
+	
+	MenuNormal: "res/MenuNormal.png",
+	MenuSelected: "res/MenuSelected.png",
+	
+	CrossNormal: "res/CrossNormal_16X16.png",
+	CrossSelected: "res/CrossSelected_16X16.png",
+	
+	ForwardNormal: "res/ForwardNormal.png",
+	ForwardSelected: "res/ForwardSelected.png",
+	
+	RightNormal: "res/RightNormal.png",
+	RightSelected: "res/RightSelected.png",
+	
 	WhiteFriendly : "res/FriendlyBall_34X34.png",
 	WhiteFriendly_1 : "res/FriendlyBall_34X34_1.png",
 	WhiteFriendly_2 : "res/FriendlyBall_34X34_2.png",

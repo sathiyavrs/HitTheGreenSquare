@@ -401,8 +401,8 @@ LevelSixObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":233,
- "y":146
+ "x":230,
+ "y":161
 }, 
 {
  "height":40,

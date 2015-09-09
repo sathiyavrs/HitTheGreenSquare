@@ -73,7 +73,7 @@ var Paddle = cc.Sprite.extend({
 		this.AimDrawNode = new cc.DrawNode();
 	},
 	
-	setInitialPosition(position) {
+	setInitialPosition: function(position) {
 		// Doesn't yet check whether the other values are in place.
 		
 		switch(this.State) {
@@ -143,6 +143,10 @@ var Paddle = cc.Sprite.extend({
 				var str = "Mouse Down detected, Key: " + event.getButton();
 				// do something...
 				
+				if(event.getButton() == 0) {
+					return;
+				}
+				
 				if(this.FriendlyPlayer != null) {
 					var position = cc.p(0, 0);
 					position.y += this.getContentSize().height / 2;
@@ -158,7 +162,7 @@ var Paddle = cc.Sprite.extend({
 					
 					this.getParent().addChild(this.FriendlyCollisionParticleSystem);	
 					
-					var direction = GetDirection(this.PositionOfFriendly, cc.p(event.getLocationX(), event.getLocationY()));
+					var direction = GetDirection(this.PositionOfFriendly, this.MousePosition);
 					direction = cc.p(direction.x * this.FriendlyPlayer.SPEED, direction.y * this.FriendlyPlayer.SPEED);
 					this.FriendlyPlayer.getBody().applyImpulse(direction, cp.v(0, 0));
 					this.FriendlyPlayer.Free();

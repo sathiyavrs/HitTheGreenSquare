@@ -88,7 +88,7 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	
 	HurtAmountPerHit: 17,
 	EnemyHurt: 50,
-	TimeBeforeNextTakeDamage: 0.017,
+	TimeBeforeNextTakeDamage: 0.016,
 	_currentTimeForNext: -0.1,
 	
 	Attraction: false,
@@ -334,6 +334,25 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 		
 		this.getParent().addChild(particleEffect);
 		
+		var sh = null;
+		for(var i = 0; i < shapes.length; i++) {
+			if(shapes[i].Sprite.isEnemy)
+				sh = shapes[i].Sprite;
+		}
+		
+		if(isGreen) {
+			if(this.SmashHit) {
+				sh.TakeDamage(100);
+			}
+			else {
+				sh.TakeDamage();
+			}
+			
+			this.getParent().setWin();
+		}
+		
+			
+		
 		for(var i = 0; i < shapes.length; i++) {
 			if(!shapes[i].Sprite.isEnemy) {
 				
@@ -345,6 +364,13 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 				continue;
 			}
 			
+			if(this.MarkNow) {
+				shapes[i].Sprite.setPermanentDetection(true);
+			}
+			
+			if(isGreen)
+				continue;
+			
 			if(this.SmashHit) {
 				shapes[i].Sprite.TakeDamage(100);
 				
@@ -353,11 +379,6 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 				shapes[i].Sprite.TakeDamage();
 				
 			}
-			
-			if(this.MarkNow) {
-				shapes[i].Sprite.setPermanentDetection(true);
-			}
-			// shapes[i].Sprite.TakeDamage();
 		}
 		
 		if(this.SmashHit) {
@@ -617,6 +638,8 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 			return;
 		}
 		
+		this.EnsureVelocitySpeed();
+		
 		this.DebugDraw.clear();
 		
 		switch(this.DetectionType) {
@@ -659,6 +682,37 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 		
 	},
 	
+	EnsureVelocitySpeed : function() {
+		if(this.Attraction)
+			return;
+		
+		var velocity = this.getBody().getVel();
+		var calculatedSpeed = Math.sqrt(velocity.x * velocity.x + velocity.y * velocity.y);
+		
+		if(calculatedSpeed < 100) {
+			
+			var vector = cp.v(velocity.x, velocity.y);
+			vector.x /= calculatedSpeed;
+			vector.y /= calculatedSpeed;
+			
+			vector.x *= this.SPEED;
+			vector.y *= this.SPEED;
+			
+			this.getBody().setVel(vector);
+		}
+		
+		if(calculatedSpeed > this.SPEED + 50) {
+			var vector = cp.v(velocity.x, velocity.y);
+			vector.x /= calculatedSpeed;
+			vector.y /= calculatedSpeed;
+			
+			vector.x *= this.SPEED;
+			vector.y *= this.SPEED;
+			
+			this.getBody().setVel(vector);
+		}
+	},
+	
 	MARK_AND_TRACK_POSITION: cc.p(40, 40),
 	MARK_AND_TRACK_LENGTH_BETWEEN_DASHES: 20,
 	MARK_AND_TRACK_DASH_LENGTH: 30,
@@ -687,7 +741,7 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 		*/
 		
 		var number = this.MarkNumber;
-		this.MARK_AND_TRACK_POSITION = cc.p(cc.winSize.width - 20, cc.winSize.height - 40);
+		this.MARK_AND_TRACK_POSITION = cc.p(cc.winSize.width - 20, cc.winSize.height / 2 + 60);
 		var upperPosition = this.MARK_AND_TRACK_POSITION;
 		var width = this.MARK_AND_TRACK_LENGTH_BETWEEN_DASHES;
 		var lowerPosition = cc.pAdd(upperPosition, cc.p(0, -this.SMASH_BAR_DASH_LENGTH));
@@ -707,7 +761,7 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 	
 	DrawHealthBar: function() {
 		this.HEALTH_BAR_LENGTH = 100;
-		this.HEALTH_BAR_POSITION = cc.p(cc.winSize.width - this.HEALTH_BAR_LENGTH - 10, cc.winSize.height - 10)
+		this.HEALTH_BAR_POSITION = cc.p(cc.winSize.width - this.HEALTH_BAR_LENGTH - 50, cc.winSize.height - 10)
 		
 		var amount = this.Health;
 		var max = this.MaxHealth;
@@ -1088,6 +1142,7 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 			
 			if(this.DeathNotScheduled) {
 				this.Space.removeShape(this.Shape);
+				this.getParent().setLose();
 				this.Parent = this.getParent();
 				this.getParent().removeChild(this);	
 				
@@ -1102,7 +1157,6 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 				cc.Director._getInstance()._scheduler.scheduleCallbackForTarget(this, function() {
 					this.InitializeForDetection();
 					this.DetectedOnDeath = this.DetectedBodies;
-					alert("You've lost!");
 					for(var i = 0; i < this.DetectedOnDeath.length; i++) {
 						if(this.DetectedOnDeath.Sprite)
 							this.DetectedOnDeath.Sprite.Detected = false;

@@ -9,6 +9,13 @@ var LevelFiveScene = cc.Scene.extend({
 	isSonar: false,
 	objective: null,
 	
+	isPaused: false,
+	hasWon: false,
+	hasEnded: false,
+	
+	hasBeenPaused: false,
+	debugMode: true,
+	
 	// LevelSpecific stuff
 	
 	thingsToKillUponVictory: [],
@@ -25,6 +32,30 @@ var LevelFiveScene = cc.Scene.extend({
 	LEVEL_START_POSITION: cc.p(160, 350),
 	
 	VibrationIDs: [26, 28],
+	
+	setWin: function() {
+		if(this.hasEnded) {
+			
+			return;
+		}
+		
+		this.hasWon = true;
+		this.hasEnded = true;
+		this.isPaused = true;
+		
+		// alert("Victory!");
+	},
+	
+	setLose: function() {
+		if(this.hasEnded) {
+			return;
+		}
+		
+		this.hasWon = false;
+		this.hasEnded = true;
+		this.isPaused = true;
+		// alert("Defeat");
+	},
 	
 	initPhysics: function() {
 		this.space = new cp.Space();
@@ -51,7 +82,7 @@ var LevelFiveScene = cc.Scene.extend({
 					[100, 75, 50, 25]);
 		
 		friendlySprite.getBody().applyImpulse(cp.v(2, -10), cp.v(0, 0));
-		
+		friendlySprite.DisableSmashHit();
 		
 		this.addChild(friendlySprite, 2);
 		this.light = friendlySprite;
@@ -65,10 +96,207 @@ var LevelFiveScene = cc.Scene.extend({
 		var paddle = new Paddle(this.space, cc.p(cc.winSize.width / 2, cc.winSize.height / 2), Paddle.DOWN, 
 												this.light.getContentSize().width, this.light.getContentSize().height);
 		this.addChild(paddle);
+		
+		cc.eventManager.addListener({
+			event: cc.EventListener.KEYBOARD,
+			
+			onKeyPressed:  function(keyCode, event){
+				
+				if(keyCode == cc.KEY.escape) {
+					if(this.isPaused && !this.hasBeenPaused) {
+						
+						if(this.hasEnded) {
+							return;
+						}
+						this.isPaused = false;
+						cc.director.resume();
+						return;
+					}
+					
+					if(this.isPaused && this.hasBeenPaused) {
+						return;
+					}
+					
+					if(!this.isPaused) {
+						this.isPaused = true;
+						this.hasBeenPaused = true;
+						
+						
+					}
+						// this.isPaused = true;
+				}
+				
+			}.bind(this),
+			
+			onKeyReleased: function(keyCode, event){
+				this.IsMoving = false;
+				
+				if(keyCode == cc.KEY.escape) {
+					this.hasBeenPaused = false;
+				}
+				
+			}.bind(this)
+		}, this);
     },
 	
+	pauseButtonAdded: false,
+	pauseObjects: [],
+	
+	updatePauseMenu: function() {
+		if(this.pauseButtonAdded && !this.isPaused) {
+			this.removePauseMenu();
+			this.pauseButtonAdded = false;
+		}
+		
+		if(this.pauseButtonAdded && this.isPaused) {
+			
+		}
+		
+		if(!this.pauseButtonAdded && this.isPaused) {
+			this.initializePauseMenu();
+			this.pauseButtonAdded = true;
+		}
+		
+		if(!this.pauseButtonAdded && !this.isPaused) {
+			
+		}
+	},
+	
+	initializePauseMenu: function() {
+		var width = 200;
+		var height = 300;
+		
+		var widthOffset = 20;
+		var heightOffset = 20;
+		
+		var sprite = new cc.Sprite(res.WhiteStuff, cc.rect(0, 0, width, height));
+		sprite.setAnchorPoint(0.5, 0.5);
+		sprite.setPosition(cc.p(cc.winSize.width / 2, cc.winSize.height / 2));
+		this.addChild(sprite, 1);
+		this.pauseObjects.push(sprite);
+		
+		var retryButton = new cc.MenuItemImage(res.RetryButtonNormal, res.RetryButtonSelected, function() {
+			cc.director.resume();
+			cc.director.runScene(new LevelFiveScene());
+			
+		});
+		
+		var retryPosition = cc.p(cc.winSize.width / 2, cc.winSize.height / 2);
+		retryPosition = cc.pAdd(retryPosition, cc.p(-1 * (width / 2 - widthOffset), -1 * (height / 2 - heightOffset)));
+		retryButton.setPosition(retryPosition);
+		
+		var mainScreenButton = new cc.MenuItemImage(res.MenuNormal, res.MenuSelected, function() {
+			console.log("MainMenu Selected!");
+		});
+		
+		var mainScreenButtonPosition = cc.p(cc.winSize.width / 2, cc.winSize.height / 2);
+		mainScreenButtonPosition = cc.pAdd(mainScreenButtonPosition, 
+								cc.p(-1 * (width / 2 - widthOffset), 1 * (height / 2 - heightOffset)));
+		mainScreenButton.setPosition(mainScreenButtonPosition);
+		
+		var closeButton = new cc.MenuItemImage(res.CrossNormal, res.CrossSelected, function() {
+			this.isPaused = false;
+			this.hasBeenPaused = false;
+			cc.director.resume();
+		}.bind(this));
+		
+		var closeButtonPosition = cc.p(cc.winSize.width / 2, cc.winSize.height / 2);
+		closeButtonPosition = cc.pAdd(closeButtonPosition, 
+								cc.p(1 * (width / 2 - widthOffset), 1 * (height / 2 - heightOffset)));
+		closeButton.setPosition(closeButtonPosition);
+		
+		var forwardButton = new cc.MenuItemImage(res.RightNormal, res.RightSelected, function() {
+			cc.director.resume();
+			cc.director.runScene(new LevelNineScene());
+			
+		});
+		
+		var forwardButtonPosition = cc.p(cc.winSize.width / 2, cc.winSize.height / 2);
+		forwardButtonPosition = cc.pAdd(forwardButtonPosition, 
+								cc.p(1 * (width / 2 - widthOffset), -1 * (height / 2 - heightOffset)));
+		forwardButton.setPosition(forwardButtonPosition);
+		
+		if(this.debugMode) {
+			var menu = new cc.Menu(retryButton, mainScreenButton, closeButton, forwardButton);
+			menu.setPosition(cc.p(0, 0));
+			this.addChild(menu, 2);
+			this.pauseObjects.push(menu);
+		
+		} else {
+			
+			if(this.hasEnded) {
+				
+				if(this.hasWon) {
+					var menu = new cc.Menu(retryButton, mainScreenButton, forwardButton);
+					menu.setPosition(cc.p(0, 0));
+					this.addChild(menu, 2);
+					this.pauseObjects.push(menu);
+				} else {
+					var menu = new cc.Menu(retryButton, mainScreenButton);
+					menu.setPosition(cc.p(0, 0));
+					this.addChild(menu, 2);
+					this.pauseObjects.push(menu);
+				}
+			
+			} else {
+				var menu = new cc.Menu(retryButton, mainScreenButton, closeButton);
+				menu.setPosition(cc.p(0, 0));
+				this.addChild(menu, 2);
+				this.pauseObjects.push(menu);
+				
+			}
+		}
+		
+		var labelHeightOffset = heightOffset + 30;
+		var deathString = "Level Failed";
+		var winString = "Level Cleared";
+		var pauseString = "Game Paused";
+		
+		var stringToSet = "";
+		
+		if(this.isPaused) {
+			stringToSet = pauseString;
+		}
+		
+		if(this.hasEnded) {
+			if(this.hasWon) {
+				stringToSet = winString;
+			} else {
+				stringToSet = deathString;
+			}
+		}
+		
+		var dyDown = 30;
+		var fontSizeTitle = 20;
+		var fontSizeObjective = 12;
+		var typeLeftOffset = 10;
+		
+		var currentY = cc.winSize.height / 2 + height / 2 - labelHeightOffset;
+		
+		var label = new cc.LabelTTF(stringToSet, "Arial");
+		label.setFontSize(fontSizeTitle);
+		label.setColor(255, 255, 255, 255);
+		label.setAnchorPoint(0.5, 0.5);
+		label.setPosition(cc.winSize.width / 2, currentY);
+		this.addChild(label, 2);
+		this.pauseObjects.push(label);
+		currentY -= 10;
+		
+		currentY -= dyDown;
+		
+		cc.director.pause();
+	},
+	
+	removePauseMenu: function() {
+		for(var i = 0; i < this.pauseObjects.length; i++) {
+			this.removeChild(this.pauseObjects[i]);
+		}
+		
+		this.pauseObjects = [];
+	},
+	
 	addObjects: function() {
-		var objects = LevelFiveObjects;
+		var objects = JSON.parse(JSON.stringify(LevelFiveObjects));
 		
 		for(var i = 0; i < objects.length; i++) {
 			var position = cc.p(objects[i].width / 2, objects[i].height / 2);
@@ -197,7 +425,8 @@ var LevelFiveScene = cc.Scene.extend({
 	},
 	
 	update: function(dt) {
-		this.space.step(dt);
+		this.space.step(dt / 2);
+		this.space.step(dt / 2);
 		if(this.updateTheBackground)
 			this.updateBackground(dt);
 		
@@ -207,7 +436,7 @@ var LevelFiveScene = cc.Scene.extend({
 				this.thingsToKillUponVictory[i].Health = -1;
 			}
 		}
-		
+		this.updatePauseMenu();
 	},
 	
 	once: 0,

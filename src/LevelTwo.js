@@ -19,6 +19,29 @@ var LevelTwoScene = cc.Scene.extend({
 	
 	LEVEL_START_POSITION: cc.p(200, 345),
 	
+	setWin: function() {
+		if(this.hasEnded) {
+			
+			return;
+		}
+		
+		this.hasWon = true;
+		this.hasEnded = true;
+		
+		// alert("Victory!");
+	},
+	
+	setLose: function() {
+		if(this.hasEnded) {
+			return;
+		}
+		
+		this.hasWon = false;
+		this.hasEnded = true;
+		
+		// alert("Defeat");
+	},
+	
 	initPhysics: function() {
 		this.space = new cp.Space();
 		this.space.gravity = cp.v(0, 0);

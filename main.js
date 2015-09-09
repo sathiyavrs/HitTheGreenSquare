@@ -61,7 +61,9 @@ cc.game.onStart = function(){
     cc.view.resizeWithBrowserSize(true);
     // load resources
     cc.LoaderScene.preload(g_resources, function () {
-        cc.director.runScene(new LevelSevenScene());
+		var scene = new LevelSevenScene();
+		scene.isPaused = true;
+        cc.director.runScene(scene);
     }, this);
 };
 cc.game.run();
