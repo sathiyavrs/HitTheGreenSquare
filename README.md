@@ -9,9 +9,9 @@ Q & E or Z & C to control the paddle's clockwise and Anti-clockwise movement.
 
 R to activate Sonar for a brief Period of time.
 
-B to Smash Hit through walls (Limited number of times)
+M to Mark and Track objects (Limited number of times)
 
-Any mouse button in the specified Direction will Fire the ball from the paddle.
+Right mouse button in the specified Direction will Fire the ball from the paddle.
 
 The ball loses health as it hits objects.
 The Brown Enemies are destroyed in one hit.
