@@ -689,7 +689,7 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 		var velocity = this.getBody().getVel();
 		var calculatedSpeed = Math.sqrt(velocity.x * velocity.x + velocity.y * velocity.y);
 		
-		if(calculatedSpeed < 100) {
+		if(calculatedSpeed < 200) {
 			
 			var vector = cp.v(velocity.x, velocity.y);
 			vector.x /= calculatedSpeed;
