@@ -19,6 +19,8 @@ var MainMenuScene = cc.Scene.extend({
 	hasBeenPaused: false,
 	debugMode: true,
 	
+	isMainMenu: true,
+	
 	// LevelSpecific stuff
 	
 	thingsToKillUponVictory: [],

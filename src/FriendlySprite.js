@@ -393,23 +393,35 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 			this.MarkNow = false;
 			this.MarkNumber -= 1;
 			
+			var parent = this.getParent();
+			if(parent.isMainMenu) {
+				return true;
+			}
+			
 			if(this.Health < 0) {
 				cc.audioEngine.setEffectsVolume(1);
 				cc.audioEngine.playEffect(res.Explosion);
 				cc.audioEngine.setEffectsVolume(1);
 			} else {
+				cc.audioEngine.setEffectsVolume(0.2);
 				cc.audioEngine.playEffect(res.PlayerHit);
-				
+				cc.audioEngine.setEffectsVolume(0.2);
 			}
 			
 		} else {
+			var parent = this.getParent();
+			if(parent.isMainMenu) {
+				return true;
+			}
+			
 			if(this.Health < 0) {
 				cc.audioEngine.setEffectsVolume(1);
 				cc.audioEngine.playEffect(res.Explosion);
 				cc.audioEngine.setEffectsVolume(1);
 			} else {
+				cc.audioEngine.setEffectsVolume(0.2);
 				cc.audioEngine.playEffect(res.PlayerHit);
-				
+				cc.audioEngine.setEffectsVolume(0.2);
 			}
 		}
 		return true;

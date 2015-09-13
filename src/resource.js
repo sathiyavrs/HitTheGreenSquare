@@ -55,7 +55,7 @@ var res = {
 	Explosion: "res/Explosion.wav",
 	PlayerHit: "res/PlayerHit.wav",
 	BackgroundMusic: "res/Background.mp3",
-	PaddleCollision: "res/PaddleCollision.wav"
+	PaddleCollision: "res/Shoot.wav"
 };
 
 var g_resources = [];

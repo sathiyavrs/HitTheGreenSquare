@@ -173,7 +173,9 @@ var Paddle = cc.Sprite.extend({
 					this.FriendlyPlayer.Free();
 					this.FriendlyPlayer = null;
 					
+					cc.audioEngine.setEffectsVolume(this.EFFECTS_VOLUME);
 					cc.audioEngine.playEffect(res.PaddleCollision);
+					cc.audioEngine.setEffectsVolume(this.EFFECTS_VOLUME);
 				}
 			}.bind(this)
 			
@@ -405,6 +407,8 @@ var Paddle = cc.Sprite.extend({
 		
 	},
 	
+	EFFECTS_VOLUME: 0.3,
+	
 	onCollisionEnter: function(arbiter, shape) {
 		var shapes = arbiter.getShapes();
 		
@@ -412,8 +416,6 @@ var Paddle = cc.Sprite.extend({
 		position.y += this.getContentSize().height / 2;
 		position = RotatePositionClockwiseAboutOrigin(position, this.RotationAngle);
 		position = cc.pAdd(this.getPosition(), position);
-		
-		cc.audioEngine.playEffect(res.PaddleCollision);
 		
 		if(this.FriendlyPlayer == null) {
 			this.FriendlyCollisionParticleSystem = new BurstEffect(res.WhiteParticle, 
@@ -428,7 +430,11 @@ var Paddle = cc.Sprite.extend({
 			
 			this.FriendlyCollisionParticleSystem.setPosition(position);
 			
-			this.getParent().addChild(this.FriendlyCollisionParticleSystem);	
+			this.getParent().addChild(this.FriendlyCollisionParticleSystem);
+			
+			cc.audioEngine.setEffectsVolume(this.EFFECTS_VOLUME);
+			cc.audioEngine.playEffect(res.PaddleCollision);
+			cc.audioEngine.setEffectsVolume(this.EFFECTS_VOLUME);
 		}
 		
 		// this.FriendlyCollisionParticleSystem = new BurstEffect(res.WhiteParticle, 15, position, 
