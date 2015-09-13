@@ -58,6 +58,8 @@ var EnemySprite = cc.Sprite.extend({
 	TakeDamage: function(override) {
 		this.Health -= this.DamagePerHit;
 		
+		
+		
 		if(override == undefined)
 			return;
 		
@@ -230,7 +232,6 @@ var EnemySprite = cc.Sprite.extend({
 		}
 		
 		
-		
 		this.setVisible(true);
 		var path = this.Path;
 		
@@ -317,7 +318,7 @@ var EnemySprite = cc.Sprite.extend({
 				if(this.LKPShape != null)
 					this.Space.removeShape(this.LKPShape);
 				
-				
+				this.NewDrawNode.clear();
 				
 				this.Space.removeShape(this.Shape);
 				this.getParent().removeChild(this);

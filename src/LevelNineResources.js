@@ -248,7 +248,7 @@ LevelNineObjects = [
 
 	},
  "rotation":0,
- "type":"Brown",
+ "type":"White",
  "visible":true,
  "width":40,
  "x":120,
@@ -263,7 +263,7 @@ LevelNineObjects = [
 
 	},
  "rotation":0,
- "type":"Brown",
+ "type":"White",
  "visible":true,
  "width":40,
  "x":160,

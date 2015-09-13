@@ -1,4 +1,4 @@
-var LevelEightScene = cc.Scene.extend({
+var TutorialTwoScene = cc.Scene.extend({
     space: null,
 	PhysicsDebug: false,
 	debugDrawNode: null,
@@ -13,9 +13,9 @@ var LevelEightScene = cc.Scene.extend({
 	hasWon: false,
 	hasEnded: false,
 	
-	hasBeenPaused: false,
-	debugMode: false,
+	debugMode: true,
 	
+	hasBeenPaused: false,
 	// LevelSpecific stuff
 	
 	thingsToKillUponVictory: [],
@@ -29,9 +29,9 @@ var LevelEightScene = cc.Scene.extend({
 	FRIENDLY_DEATH_PARTICLE_SIZE: 40,
 	FRIENDLY_DEATH_PARTICLE_SPEED: 30,
 	
-	LEVEL_START_POSITION: cc.p(200, 350),
+	LEVEL_START_POSITION: cc.p(160, 350),
 	
-	VibrationIDs: [24, 25, 26],
+	VibrationIDs: [32, 26, 25, 15, 31, 30],
 	
 	TimeAfterDeclaringWinner: 0.6,
 	
@@ -69,14 +69,13 @@ var LevelEightScene = cc.Scene.extend({
 		this.space = new cp.Space();
 		this.space.gravity = cp.v(0, 0);
 		this.scheduleUpdate();
-		this.space.step(0.016);
 	},
 	
 	onEnter: function () {
 		this._super();
         this.initPhysics();
 		this.setDebugMode(this.PhysicsDebug);
-		this.isDay = false;
+		this.isDay = true;
 		
 		this.debugDrawNode = new cc.DrawNode();
 		this.addChild(this.debugDrawNode);
@@ -91,7 +90,9 @@ var LevelEightScene = cc.Scene.extend({
 					[100, 75, 50, 25]);
 		
 		friendlySprite.getBody().applyImpulse(cp.v(2, -10), cp.v(0, 0));
-		
+		friendlySprite.DisableSmashHit();
+		friendlySprite.DisableMarkAndTrack();
+		friendlySprite.DisableHealthBar();
 		
 		this.addChild(friendlySprite, 2);
 		this.light = friendlySprite;
@@ -113,10 +114,6 @@ var LevelEightScene = cc.Scene.extend({
 				
 				if(keyCode == cc.KEY.escape) {
 					if(this.isPaused && !this.hasBeenPaused) {
-						
-						if(this.hasEnded) {
-							return;
-						}
 						this.isPaused = false;
 						cc.director.resume();
 						return;
@@ -129,8 +126,6 @@ var LevelEightScene = cc.Scene.extend({
 					if(!this.isPaused) {
 						this.isPaused = true;
 						this.hasBeenPaused = true;
-						
-						
 					}
 						// this.isPaused = true;
 				}
@@ -146,7 +141,81 @@ var LevelEightScene = cc.Scene.extend({
 				
 			}.bind(this)
 		}, this);
+		
+		this.initializeTutorialMessages();
     },
+	
+	TutorialMessageAttributes: null,
+	
+	initializeTutorialAttributes: function() {
+		this.TutorialMessageAttributes = Object.create(Object.prototype);
+		
+		this.TutorialMessageAttributes.AnchorPoint = cc.p(0, 0);
+		this.TutorialMessageAttributes.YOffset = 120;
+		this.TutorialMessageAttributes.PositionOne = cc.p(cc.winSize.width / 2 + 50, cc.winSize.height / 2 + this.TutorialMessageAttributes.YOffset);
+		this.TutorialMessageAttributes.YIncrement = -30;
+		this.TutorialMessageAttributes.PositionTwo = cc.p(cc.winSize.width / 2 + 50, cc.winSize.height / 2 + this.TutorialMessageAttributes.YOffset + this.TutorialMessageAttributes.YIncrement);
+		this.TutorialMessageAttributes.PositionThree = cc.p(cc.winSize.width / 2 + 50, cc.winSize.height / 2 + this.TutorialMessageAttributes.YOffset + this.TutorialMessageAttributes.YIncrement * 2);
+		
+		this.TutorialMessageAttributes.PositionFour = cc.p(cc.winSize.width / 2, cc.winSize.height / 2 - 60 + this.TutorialMessageAttributes.YIncrement * 2);
+		
+		this.TutorialMessageAttributes.Color = cc.color(255, 255, 255, 255);
+		
+		this.TutorialMessageAttributes.FontSize = 18;
+		this.TutorialMessageAttributes.Font = "Comic Sans MS";
+		this.TutorialMessageAttributes.StringOne = "Use the Arrow Keys or WASD to";
+		this.TutorialMessageAttributes.StringTwo = "navigate the platform!";
+		this.TutorialMessageAttributes.StringThree = "hit the Green Square!";
+		
+		this.TutorialMessageAttributes.StringFour = "Do not let the ball leave the Screen!";
+		
+	},
+	
+	TutorialLabel: null,
+	
+	initializeTutorialMessages: function() {
+		this.initializeTutorialAttributes();
+		
+		// var label = new cc.LabelTTF(stringToSet, "Arial");
+		// label.setFontSize(fontSizeTitle);
+		// label.setColor(255, 255, 255, 255);
+		// label.setAnchorPoint(0.5, 0.5);
+		// label.setPosition(cc.winSize.width / 2, currentY);
+		// this.addChild(label, 2);
+		
+		var attributes = this.TutorialMessageAttributes;
+		var label = this.TutorialLabel = new cc.LabelTTF(attributes.StringOne, attributes.Font);
+		label.setFontSize(attributes.FontSize);
+		label.setColor(attributes.Color);
+		label.setAnchorPoint(attributes.AnchorPoint);
+		label.setPosition(attributes.PositionOne);
+		this.addChild(label, 0);
+		
+		label = this.TutorialLabel = new cc.LabelTTF(attributes.StringTwo, attributes.Font);
+		label.setFontSize(attributes.FontSize);
+		label.setColor(attributes.Color);
+		label.setAnchorPoint(attributes.AnchorPoint);
+		label.setPosition(attributes.PositionTwo);
+		this.addChild(label, 0);
+		
+		label = this.TutorialLabel = new cc.LabelTTF(attributes.StringThree, attributes.Font);
+		label.setFontSize(attributes.FontSize);
+		label.setColor(attributes.Color);
+		label.setAnchorPoint(attributes.AnchorPoint);
+		label.setPosition(attributes.PositionThree);
+		// this.addChild(label, 0);
+		
+		label = this.TutorialLabel = new cc.LabelTTF(attributes.StringFour, attributes.Font);
+		label.setFontSize(attributes.FontSize);
+		label.setColor(attributes.Color);
+		label.setAnchorPoint(cc.p(0.5, 0.5));
+		label.setPosition(attributes.PositionFour);
+		
+		if(this.hasRetried)
+			this.addChild(label, 0.5);
+	},
+	
+	hasRetried: false,
 	
 	pauseButtonAdded: false,
 	pauseObjects: [],
@@ -185,9 +254,11 @@ var LevelEightScene = cc.Scene.extend({
 		this.pauseObjects.push(sprite);
 		
 		var retryButton = new cc.MenuItemImage(res.RetryButtonNormal, res.RetryButtonSelected, function() {
-			cc.director.resume();
-			cc.director.runScene(new LevelOneScene());
+			var scene = new TutorialTwoScene();
+			scene.hasRetried = true;
 			
+			cc.director.runScene(scene);
+			cc.director.resume();
 		});
 		
 		var retryPosition = cc.p(cc.winSize.width / 2, cc.winSize.height / 2);
@@ -216,8 +287,7 @@ var LevelEightScene = cc.Scene.extend({
 		
 		var forwardButton = new cc.MenuItemImage(res.RightNormal, res.RightSelected, function() {
 			cc.director.resume();
-			cc.director.runScene(new LevelSixScene());
-			
+			cc.director.runScene(new TutorialThreeScene());
 		});
 		
 		var forwardButtonPosition = cc.p(cc.winSize.width / 2, cc.winSize.height / 2);
@@ -292,7 +362,6 @@ var LevelEightScene = cc.Scene.extend({
 		currentY -= 10;
 		
 		currentY -= dyDown;
-		
 		cc.director.pause();
 	},
 	
@@ -305,7 +374,7 @@ var LevelEightScene = cc.Scene.extend({
 	},
 	
 	addObjects: function() {
-		var objects = JSON.parse(JSON.stringify(LevelEightObjects));
+		var objects = JSON.parse(JSON.stringify(TutorialTwoObjects));
 		
 		for(var i = 0; i < objects.length; i++) {
 			var position = cc.p(objects[i].width / 2, objects[i].height / 2);
@@ -346,7 +415,7 @@ var LevelEightScene = cc.Scene.extend({
 						
 						for(var j = 0; j < this.VibrationIDs.length; j++) {
 							if(this.VibrationIDs[j] == objects[i].id) {
-								sprites[objects[i].id].VibrationAmplitude = 7;
+								sprites[objects[i].id].VibrationAmplitude = 10;
 							}
 						}
 					break;
@@ -416,14 +485,8 @@ var LevelEightScene = cc.Scene.extend({
 			
 			console.log(objects[i].id);
 			path = new FollowPath(paths[objects[i].id], FollowPath.PING_PONG, FollowPath.FORWARD);
-			sprites[objects[i].id].setPathToFollow(path,  Movement.CONSTANT, 650);
-			
-			if(objects[i].id == 1 || objects[i].id == 13) {
-				sprites[1].Path.goToNextPoint();
-				sprites[1].Path.goToNextPoint();
-				sprites[1].Path.goToNextPoint();
-				
-			}
+			speed = 150 + 50 * Math.random();
+			sprites[objects[i].id].setPathToFollow(path,  Movement.CONSTANT, 100);
 		}
 	},
 	
@@ -442,7 +505,6 @@ var LevelEightScene = cc.Scene.extend({
 	
 	update: function(dt) {
 		this.space.step(dt);
-		
 		if(this.updateTheBackground)
 			this.updateBackground(dt);
 		

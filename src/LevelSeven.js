@@ -14,7 +14,7 @@ var LevelSevenScene = cc.Scene.extend({
 	hasEnded: false,
 	
 	hasBeenPaused: false,
-	debugMode: true,
+	debugMode: false,
 	
 	// LevelSpecific stuff
 	
@@ -33,6 +33,8 @@ var LevelSevenScene = cc.Scene.extend({
 	
 	VibrationIDs: [],
 	
+	TimeAfterDeclaringWinner: 0.6,
+	
 	setWin: function() {
 		if(this.hasEnded) {
 			
@@ -41,9 +43,12 @@ var LevelSevenScene = cc.Scene.extend({
 		
 		this.hasWon = true;
 		this.hasEnded = true;
-		this.isPaused = true;
 		
 		// alert("Victory!");
+		
+		cc.Director._getInstance()._scheduler.scheduleCallbackForTarget(this, function () {
+					this.isPaused = true;
+				}, this.TimeAfterDeclaringWinner, false, 0, false);
 	},
 	
 	setLose: function() {
@@ -53,8 +58,11 @@ var LevelSevenScene = cc.Scene.extend({
 		
 		this.hasWon = false;
 		this.hasEnded = true;
-		this.isPaused = true;
+		
 		// alert("Defeat");
+		cc.Director._getInstance()._scheduler.scheduleCallbackForTarget(this, function () {
+					this.isPaused = true;
+				}, this.TimeAfterDeclaringWinner, false, 0, false);
 	},
 	
 	initPhysics: function() {
@@ -162,6 +170,14 @@ var LevelSevenScene = cc.Scene.extend({
 				
 			}.bind(this)
 		}, this);
+		
+		var label = new cc.LabelTTF("Try Marking", "Comic Sans MS");
+		label.setFontSize(16);
+		label.setColor(cc.color(255, 255, 255, 255));
+		label.setAnchorPoint(cc.p(0.5, 0.5));
+		label.setPosition(cc.p(cc.winSize.width / 2, cc.winSize.height - 60));
+		
+		this.addChild(label);
     },
 	
 	pauseButtonAdded: false,
@@ -232,7 +248,7 @@ var LevelSevenScene = cc.Scene.extend({
 		
 		var forwardButton = new cc.MenuItemImage(res.RightNormal, res.RightSelected, function() {
 			cc.director.resume();
-			cc.director.runScene(new LevelFiveScene());
+			cc.director.runScene(new LevelFourteenScene());
 			
 		});
 		

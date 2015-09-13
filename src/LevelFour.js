@@ -19,6 +19,8 @@ var LevelFourScene = cc.Scene.extend({
 	
 	LEVEL_START_POSITION: cc.p(140, 330),
 	
+	TimeAfterDeclaringWinner: 0.6,
+	
 	setWin: function() {
 		if(this.hasEnded) {
 			
@@ -29,6 +31,10 @@ var LevelFourScene = cc.Scene.extend({
 		this.hasEnded = true;
 		
 		// alert("Victory!");
+		
+		cc.Director._getInstance()._scheduler.scheduleCallbackForTarget(this, function () {
+					this.isPaused = true;
+				}, this.TimeAfterDeclaringWinner, false, 0, false);
 	},
 	
 	setLose: function() {
@@ -40,6 +46,9 @@ var LevelFourScene = cc.Scene.extend({
 		this.hasEnded = true;
 		
 		// alert("Defeat");
+		cc.Director._getInstance()._scheduler.scheduleCallbackForTarget(this, function () {
+					this.isPaused = true;
+				}, this.TimeAfterDeclaringWinner, false, 0, false);
 	},
 	
 	

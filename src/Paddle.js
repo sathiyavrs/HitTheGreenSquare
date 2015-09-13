@@ -144,6 +144,11 @@ var Paddle = cc.Sprite.extend({
 				// do something...
 				
 				if(event.getButton() == 0) {
+					// return;
+				}
+				
+				var parent = this.getParent();
+				if(parent.isPaused) {
 					return;
 				}
 				
@@ -167,6 +172,8 @@ var Paddle = cc.Sprite.extend({
 					this.FriendlyPlayer.getBody().applyImpulse(direction, cp.v(0, 0));
 					this.FriendlyPlayer.Free();
 					this.FriendlyPlayer = null;
+					
+					cc.audioEngine.playEffect(res.PaddleCollision);
 				}
 			}.bind(this)
 			
@@ -405,6 +412,8 @@ var Paddle = cc.Sprite.extend({
 		position.y += this.getContentSize().height / 2;
 		position = RotatePositionClockwiseAboutOrigin(position, this.RotationAngle);
 		position = cc.pAdd(this.getPosition(), position);
+		
+		cc.audioEngine.playEffect(res.PaddleCollision);
 		
 		if(this.FriendlyPlayer == null) {
 			this.FriendlyCollisionParticleSystem = new BurstEffect(res.WhiteParticle, 

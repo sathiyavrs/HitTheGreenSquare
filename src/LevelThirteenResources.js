@@ -1,4 +1,19 @@
-LevelOneObjects = [
+LevelThirteenObjects = [
+{
+ "height":40,
+ "id":1,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":45,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":30,
+ "y":14
+}, 
 {
  "height":40,
  "id":2,
@@ -11,7 +26,7 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":0,
+ "x":70,
  "y":0
 }, 
 {
@@ -26,8 +41,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":40,
- "y":-10
+ "x":110,
+ "y":0
 }, 
 {
  "height":40,
@@ -41,7 +56,7 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":80,
+ "x":150,
  "y":0
 }, 
 {
@@ -53,11 +68,11 @@ LevelOneObjects = [
 
 	},
  "rotation":0,
- "type":"White",
+ "type":"Brown",
  "visible":true,
  "width":40,
- "x":120,
- "y":5
+ "x":190,
+ "y":0
 }, 
 {
  "height":40,
@@ -68,60 +83,15 @@ LevelOneObjects = [
 
 	},
  "rotation":0,
- "type":"White",
+ "type":"Brown",
  "visible":true,
  "width":40,
- "x":160,
- "y":-10
+ "x":270,
+ "y":0
 }, 
 {
  "height":40,
- "id":8,
- "name":"Object",
- "properties":
-	{
-
-	},
- "rotation":0,
- "type":"White",
- "visible":true,
- "width":40,
- "x":120,
- "y":160
-}, 
-{
- "height":40,
- "id":9,
- "name":"Object",
- "properties":
-	{
-
-	},
- "rotation":0,
- "type":"White",
- "visible":true,
- "width":40,
- "x":80,
- "y":166
-}, 
-{
- "height":40,
- "id":10,
- "name":"Object",
- "properties":
-	{
-
-	},
- "rotation":0,
- "type":"White",
- "visible":true,
- "width":40,
- "x":40,
- "y":150
-}, 
-{
- "height":40,
- "id":11,
+ "id":7,
  "name":"Object",
  "properties":
 	{
@@ -131,8 +101,128 @@ LevelOneObjects = [
  "type":"Brown",
  "visible":true,
  "width":40,
- "x":-8,
+ "x":230,
+ "y":0
+}, 
+{
+ "height":40,
+ "id":12,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":390,
+ "y":0
+}, 
+{
+ "height":40,
+ "id":13,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":310,
+ "y":0
+}, 
+{
+ "height":40,
+ "id":14,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":350,
+ "y":0
+}, 
+{
+ "height":40,
+ "id":15,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":-30,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":440,
+ "y":40
+}, 
+{
+ "height":40,
+ "id":16,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"Brown",
+ "visible":true,
+ "width":40,
+ "x":0,
  "y":120
+}, 
+{
+ "height":40,
+ "id":17,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":0,
+ "y":160
+}, 
+{
+ "height":40,
+ "id":18,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":0,
+ "y":200
+}, 
+{
+ "height":40,
+ "id":19,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":330,
+ "y":200
 }, 
 {
  "height":40,
@@ -146,8 +236,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":160,
- "y":166
+ "x":290,
+ "y":200
 }, 
 {
  "height":40,
@@ -161,8 +251,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":200,
- "y":160
+ "x":40,
+ "y":200
 }, 
 {
  "height":40,
@@ -176,8 +266,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":400,
- "y":120
+ "x":250,
+ "y":200
 }, 
 {
  "height":40,
@@ -191,8 +281,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":400,
- "y":40
+ "x":170,
+ "y":200
 }, 
 {
  "height":40,
@@ -206,8 +296,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":400,
- "y":0
+ "x":130,
+ "y":200
 }, 
 {
  "height":40,
@@ -218,11 +308,11 @@ LevelOneObjects = [
 
 	},
  "rotation":0,
- "type":"White",
+ "type":"Brown",
  "visible":true,
  "width":40,
- "x":200,
- "y":0
+ "x":80,
+ "y":200
 }, 
 {
  "height":40,
@@ -236,8 +326,23 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":400,
- "y":80
+ "x":210,
+ "y":200
+}, 
+{
+ "height":40,
+ "id":27,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"Brown",
+ "visible":true,
+ "width":40,
+ "x":370,
+ "y":200
 }, 
 {
  "height":40,
@@ -248,11 +353,11 @@ LevelOneObjects = [
 
 	},
  "rotation":0,
- "type":"Brown",
+ "type":"White",
  "visible":true,
  "width":40,
- "x":6,
- "y":40
+ "x":420,
+ "y":200
 }, 
 {
  "height":40,
@@ -266,8 +371,8 @@ LevelOneObjects = [
  "type":"Brown",
  "visible":true,
  "width":40,
- "x":0,
- "y":80
+ "x":460,
+ "y":120
 }, 
 {
  "height":40,
@@ -281,7 +386,7 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":0,
+ "x":460,
  "y":160
 }, 
 {
@@ -296,8 +401,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":400,
- "y":160
+ "x":460,
+ "y":200
 }, 
 {
  "height":40,
@@ -308,11 +413,11 @@ LevelOneObjects = [
 
 	},
  "rotation":0,
- "type":"Green",
+ "type":"White",
  "visible":true,
  "width":40,
- "x":320,
- "y":80
+ "x":200,
+ "y":100
 }, 
 {
  "height":40,
@@ -326,8 +431,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":280,
- "y":0
+ "x":240,
+ "y":100
 }, 
 {
  "height":40,
@@ -341,38 +446,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":320,
- "y":-8
-}, 
-{
- "height":40,
- "id":35,
- "name":"Object",
- "properties":
-	{
-
-	},
- "rotation":0,
- "type":"White",
- "visible":true,
- "width":40,
- "x":240,
- "y":0
-}, 
-{
- "height":40,
- "id":36,
- "name":"Object",
- "properties":
-	{
-
-	},
- "rotation":0,
- "type":"White",
- "visible":true,
- "width":40,
- "x":360,
- "y":0
+ "x":280,
+ "y":100
 }, 
 {
  "height":40,
@@ -386,8 +461,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":240,
- "y":160
+ "x":160,
+ "y":100
 }, 
 {
  "height":40,
@@ -398,41 +473,11 @@ LevelOneObjects = [
 
 	},
  "rotation":0,
- "type":"White",
+ "type":"Green",
  "visible":true,
  "width":40,
- "x":360,
- "y":160
-}, 
-{
- "height":40,
- "id":39,
- "name":"Object",
- "properties":
-	{
-
-	},
- "rotation":0,
- "type":"White",
- "visible":true,
- "width":40,
- "x":280,
- "y":160
-}, 
-{
- "height":40,
- "id":40,
- "name":"Object",
- "properties":
-	{
-
-	},
- "rotation":0,
- "type":"White",
- "visible":true,
- "width":40,
- "x":320,
- "y":166
+ "x":220,
+ "y":150
 }, 
 {
  "height":40,
@@ -442,57 +487,60 @@ LevelOneObjects = [
 	{
 
 	},
- "rotation":0,
- "type":"Brown",
+ "rotation":-12,
+ "type":"White",
  "visible":true,
  "width":40,
- "x":240,
- "y":40
+ "x":170,
+ "y":50
 }, 
 {
- "height":40,
+ "height":0,
  "id":42,
- "name":"Object",
+ "name":"Path",
+ "polyline":[
+		{
+		 "x":0,
+		 "y":0
+		}, 
+		{
+		 "x":280,
+		 "y":0
+		}],
  "properties":
 	{
 
 	},
  "rotation":0,
- "type":"Brown",
+ "type":"Path",
  "visible":true,
- "width":40,
- "x":240,
- "y":120
+ "width":41,
+ "x":62,
+ "y":50
 }, 
 {
- "height":40,
+ "height":0,
  "id":43,
- "name":"Object",
+ "name":"Path",
+ "polyline":[
+		{
+		 "x":0,
+		 "y":0
+		}, 
+		{
+		 "x":-280,
+		 "y":0
+		}],
  "properties":
 	{
 
 	},
  "rotation":0,
- "type":"White",
+ "type":"Path",
  "visible":true,
- "width":40,
- "x":440,
- "y":167
-}, 
-{
- "height":40,
- "id":44,
- "name":"Object",
- "properties":
-	{
-
-	},
- "rotation":0,
- "type":"White",
- "visible":true,
- "width":40,
- "x":440,
- "y":120
+ "width":41,
+ "x":409,
+ "y":50
 }, 
 {
  "height":40,
@@ -506,8 +554,8 @@ LevelOneObjects = [
  "type":"White",
  "visible":true,
  "width":40,
- "x":440,
- "y":80
+ "x":420,
+ "y":160
 }, 
 {
  "height":40,
@@ -518,11 +566,11 @@ LevelOneObjects = [
 
 	},
  "rotation":0,
- "type":"White",
+ "type":"Brown",
  "visible":true,
  "width":40,
- "x":440,
- "y":40
+ "x":460,
+ "y":80
 }, 
 {
  "height":40,
@@ -533,84 +581,57 @@ LevelOneObjects = [
 
 	},
  "rotation":0,
- "type":"White",
+ "type":"Brown",
  "visible":true,
  "width":40,
- "x":440,
- "y":10
-}, 
-{
- "height":40,
- "id":48,
- "name":"Object",
- "properties":
-	{
-
-	},
- "rotation":0,
- "type":"White",
- "visible":true,
- "width":40,
- "x":480,
- "y":160
-}, 
-{
- "height":40,
- "id":49,
- "name":"Object",
- "properties":
-	{
-
-	},
- "rotation":0,
- "type":"White",
- "visible":true,
- "width":40,
- "x":474,
- "y":120
-}, 
-{
- "height":40,
- "id":50,
- "name":"Object",
- "properties":
-	{
-
-	},
- "rotation":0,
- "type":"White",
- "visible":true,
- "width":40,
- "x":490,
+ "x":0,
  "y":80
 }, 
 {
- "height":40,
- "id":51,
- "name":"Object",
+ "height":0,
+ "id":48,
+ "name":"Path",
+ "polyline":[
+		{
+		 "x":0,
+		 "y":0
+		}, 
+		{
+		 "x":240,
+		 "y":0
+		}],
  "properties":
 	{
 
 	},
  "rotation":0,
- "type":"White",
+ "type":"Path",
  "visible":true,
- "width":40,
- "x":496,
- "y":40
+ "width":38,
+ "x":160,
+ "y":150
 }, 
 {
- "height":40,
- "id":52,
- "name":"Object",
+ "height":0,
+ "id":49,
+ "name":"Path",
+ "polyline":[
+		{
+		 "x":0,
+		 "y":0
+		}, 
+		{
+		 "x":-240,
+		 "y":0
+		}],
  "properties":
 	{
 
 	},
  "rotation":0,
- "type":"White",
+ "type":"Path",
  "visible":true,
- "width":40,
- "x":480,
- "y":0
+ "width":38,
+ "x":320,
+ "y":140
 }];

@@ -14,7 +14,7 @@ var LevelSixScene = cc.Scene.extend({
 	hasEnded: false,
 	
 	hasBeenPaused: false,
-	debugMode: true,
+	debugMode: false,
 	
 	// LevelSpecific stuff
 	
@@ -33,6 +33,8 @@ var LevelSixScene = cc.Scene.extend({
 	
 	VibrationIDs: [27, 28, 29],
 	
+	TimeAfterDeclaringWinner: 0.6,
+	
 	setWin: function() {
 		if(this.hasEnded) {
 			
@@ -41,9 +43,12 @@ var LevelSixScene = cc.Scene.extend({
 		
 		this.hasWon = true;
 		this.hasEnded = true;
-		this.isPaused = true;
 		
 		// alert("Victory!");
+		
+		cc.Director._getInstance()._scheduler.scheduleCallbackForTarget(this, function () {
+					this.isPaused = true;
+				}, this.TimeAfterDeclaringWinner, false, 0, false);
 	},
 	
 	setLose: function() {
@@ -53,8 +58,11 @@ var LevelSixScene = cc.Scene.extend({
 		
 		this.hasWon = false;
 		this.hasEnded = true;
-		this.isPaused = true;
+		
 		// alert("Defeat");
+		cc.Director._getInstance()._scheduler.scheduleCallbackForTarget(this, function () {
+					this.isPaused = true;
+				}, this.TimeAfterDeclaringWinner, false, 0, false);
 	},
 	
 	initPhysics: function() {
@@ -83,6 +91,7 @@ var LevelSixScene = cc.Scene.extend({
 		
 		friendlySprite.getBody().applyImpulse(cp.v(2, -10), cp.v(0, 0));
 		friendlySprite.DisableSmashHit();
+		friendlySprite.DisableMarkAndTrack();
 		
 		this.addChild(friendlySprite, 2);
 		this.light = friendlySprite;
@@ -207,7 +216,7 @@ var LevelSixScene = cc.Scene.extend({
 		
 		var forwardButton = new cc.MenuItemImage(res.RightNormal, res.RightSelected, function() {
 			cc.director.resume();
-			cc.director.runScene(new LevelSevenScene());
+			cc.director.runScene(new LevelFiveScene());
 			
 		});
 		

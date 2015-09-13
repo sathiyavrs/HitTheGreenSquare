@@ -1,4 +1,4 @@
-var LevelEightScene = cc.Scene.extend({
+var EndScene = cc.Scene.extend({
     space: null,
 	PhysicsDebug: false,
 	debugDrawNode: null,
@@ -9,12 +9,15 @@ var LevelEightScene = cc.Scene.extend({
 	isSonar: false,
 	objective: null,
 	
+	hasEnded: false,
+	hasWon: false,
+	
 	isPaused: false,
 	hasWon: false,
 	hasEnded: false,
 	
 	hasBeenPaused: false,
-	debugMode: false,
+	debugMode: true,
 	
 	// LevelSpecific stuff
 	
@@ -29,9 +32,11 @@ var LevelEightScene = cc.Scene.extend({
 	FRIENDLY_DEATH_PARTICLE_SIZE: 40,
 	FRIENDLY_DEATH_PARTICLE_SPEED: 30,
 	
-	LEVEL_START_POSITION: cc.p(200, 350),
+	LEVEL_START_POSITION: cc.p(140, 350),
 	
-	VibrationIDs: [24, 25, 26],
+	VibrationIDs: [],
+	
+	Menu: null,
 	
 	TimeAfterDeclaringWinner: 0.6,
 	
@@ -69,7 +74,6 @@ var LevelEightScene = cc.Scene.extend({
 		this.space = new cp.Space();
 		this.space.gravity = cp.v(0, 0);
 		this.scheduleUpdate();
-		this.space.step(0.016);
 	},
 	
 	onEnter: function () {
@@ -84,16 +88,20 @@ var LevelEightScene = cc.Scene.extend({
 		var friendlySprite = new FriendlySprite(
 					[res.WhiteFriendly, res.WhiteFriendly_1, res.WhiteFriendly_2, res.WhiteFriendly_3],
 					[res.RedFriendly, res.RedFriendly_1, res.RedFriendly_2, res.RedFriendly_3],
-					cc.p(cc.winSize.width/2, 66), 
+					cc.p(cc.winSize.width / 2, cc.winSize.height / 2), 
 					this.space, -1, this.LIGHT_RADIUS, 
 					FriendlySprite.DETECTION_OCCLUSION, 
 					this.debugDrawNode,
 					[100, 75, 50, 25]);
 		
-		friendlySprite.getBody().applyImpulse(cp.v(2, -10), cp.v(0, 0));
+		// friendlySprite.getBody().applyImpulse(cp.v(friendlySprite.SPEED, 0), cp.v(0, 0));
+		friendlySprite.setHealth(100, 100);
+		friendlySprite.DisableSmashHit();
+		friendlySprite.DisableSonar();
+		friendlySprite.DisableMarkAndTrack();
+		friendlySprite.DisableHealthBar();
 		
-		
-		this.addChild(friendlySprite, 2);
+		// this.addChild(friendlySprite, 2);
 		this.light = friendlySprite;
 		
 		this.addObjects();
@@ -102,50 +110,62 @@ var LevelEightScene = cc.Scene.extend({
 		this.addChild(background, -1);
 		this.background = background;
 		
-		var paddle = new Paddle(this.space, cc.p(cc.winSize.width / 2, cc.winSize.height / 2), Paddle.DOWN, 
-												this.light.getContentSize().width, this.light.getContentSize().height);
-		this.addChild(paddle);
-		
 		cc.eventManager.addListener({
-			event: cc.EventListener.KEYBOARD,
 			
-			onKeyPressed:  function(keyCode, event){
+			event: cc.EventListener.MOUSE,
+			
+			onMouseMove: function(event){
+				var str = "MousePosition X: " + event.getLocationX() + "  Y:" + event.getLocationY();
+				// do something...
 				
-				if(keyCode == cc.KEY.escape) {
-					if(this.isPaused && !this.hasBeenPaused) {
-						
-						if(this.hasEnded) {
-							return;
-						}
-						this.isPaused = false;
-						cc.director.resume();
-						return;
-					}
-					
-					if(this.isPaused && this.hasBeenPaused) {
-						return;
-					}
-					
-					if(!this.isPaused) {
-						this.isPaused = true;
-						this.hasBeenPaused = true;
-						
-						
-					}
-						// this.isPaused = true;
-				}
-				
+				this.MousePosition = cc.p(event.getLocationX(), event.getLocationY());
 			}.bind(this),
 			
-			onKeyReleased: function(keyCode, event){
-				this.IsMoving = false;
-				
-				if(keyCode == cc.KEY.escape) {
-					this.hasBeenPaused = false;
-				}
-				
+			onMouseUp: function(event){
+				var str = "Mouse Up detected, Key: " + event.getButton();
+				// do something...
+			}.bind(this),
+			
+			onMouseDown: function(event){
+				cc.director.runScene(new MainMenuScene());
 			}.bind(this)
-		}, this);
+			
+		},this);
+		
+		/*
+			var label = this.TutorialLabel = new cc.LabelTTF(attributes.StringOne, attributes.Font);
+			label.setFontSize(attributes.FontSize);
+			label.setColor(attributes.Color);
+			label.setAnchorPoint(attributes.AnchorPoint);
+			label.setPosition(attributes.PositionOne);
+		*/
+		
+		var label = new cc.LabelTTF("Thanks for playing!", "Comic Sans MS");
+		label.setFontSize(20);
+		label.setColor(cc.color(255, 255, 255, 255));
+		label.setAnchorPoint(cc.p(0.5, 0.5));
+		label.setPosition(cc.p(cc.winSize.width / 2, cc.winSize.height / 2));
+		
+		this.addChild(label, 3);
+	
+		label = new cc.LabelTTF("Click anywhere to play again!", "Comic Sans MS");
+		label.setFontSize(18);
+		label.setColor(cc.color(255, 255, 255, 255));
+		label.setAnchorPoint(cc.p(0.5, 0.5));
+		label.setPosition(cc.p(cc.winSize.width / 2, cc.winSize.height / 2 - 40));
+		this.addChild(label, 3);
+		
+		label = new cc.LabelTTF("Made with love, by Delta Force", "Arial");
+		label.setFontSize(10);
+		label.setColor(cc.color(255, 255, 255, 255));
+		label.setAnchorPoint(cc.p(0.5, 0.5));
+		label.setPosition(cc.p(cc.winSize.width / 2, 20));
+		this.addChild(label, 3);
+		
+		var sprite = new cc.Sprite(res.BlackStuff, cc.Rect(0, 0, cc.winSize.width, cc.winSize.height));
+		sprite.setAnchorPoint(0.5, 0.5);
+		sprite.setPosition(cc.winSize.width / 2, cc.winSize.height / 2);
+		this.addChild(sprite, 2);
     },
 	
 	pauseButtonAdded: false,
@@ -186,7 +206,7 @@ var LevelEightScene = cc.Scene.extend({
 		
 		var retryButton = new cc.MenuItemImage(res.RetryButtonNormal, res.RetryButtonSelected, function() {
 			cc.director.resume();
-			cc.director.runScene(new LevelOneScene());
+			cc.director.runScene(new LevelTenScene());
 			
 		});
 		
@@ -216,7 +236,7 @@ var LevelEightScene = cc.Scene.extend({
 		
 		var forwardButton = new cc.MenuItemImage(res.RightNormal, res.RightSelected, function() {
 			cc.director.resume();
-			cc.director.runScene(new LevelSixScene());
+			cc.director.runScene(new LevelFifteenScene());
 			
 		});
 		
@@ -305,7 +325,7 @@ var LevelEightScene = cc.Scene.extend({
 	},
 	
 	addObjects: function() {
-		var objects = JSON.parse(JSON.stringify(LevelEightObjects));
+		var objects = JSON.parse(JSON.stringify(MainMenuObjects));
 		
 		for(var i = 0; i < objects.length; i++) {
 			var position = cc.p(objects[i].width / 2, objects[i].height / 2);
@@ -346,7 +366,7 @@ var LevelEightScene = cc.Scene.extend({
 						
 						for(var j = 0; j < this.VibrationIDs.length; j++) {
 							if(this.VibrationIDs[j] == objects[i].id) {
-								sprites[objects[i].id].VibrationAmplitude = 7;
+								sprites[objects[i].id].VibrationAmplitude = 10;
 							}
 						}
 					break;
@@ -416,14 +436,8 @@ var LevelEightScene = cc.Scene.extend({
 			
 			console.log(objects[i].id);
 			path = new FollowPath(paths[objects[i].id], FollowPath.PING_PONG, FollowPath.FORWARD);
-			sprites[objects[i].id].setPathToFollow(path,  Movement.CONSTANT, 650);
-			
-			if(objects[i].id == 1 || objects[i].id == 13) {
-				sprites[1].Path.goToNextPoint();
-				sprites[1].Path.goToNextPoint();
-				sprites[1].Path.goToNextPoint();
-				
-			}
+			speed = 150 + 50 * Math.random();
+			sprites[objects[i].id].setPathToFollow(path,  Movement.CONSTANT, 100);
 		}
 	},
 	
@@ -442,16 +456,13 @@ var LevelEightScene = cc.Scene.extend({
 	
 	update: function(dt) {
 		this.space.step(dt);
-		
 		if(this.updateTheBackground)
 			this.updateBackground(dt);
 		
-		if(this.objective.Health < 0) {
-			console.log("hey");
-			for(var i = 0; i < this.thingsToKillUponVictory.length; i++) {
-				this.thingsToKillUponVictory[i].Health = -1;
-			}
+		if(this.light != null) {
+			this.light.setHealth(100, 100);
 		}
+		
 		this.updatePauseMenu();
 	},
 	

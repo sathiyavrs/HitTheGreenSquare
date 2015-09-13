@@ -39,6 +39,27 @@
 		"src/LevelNine.js",
 		"src/LevelNineResources.js",
 		"src/LevelTen.js",
-		"src/LevelTenResources.js"
-    ]
+		"src/LevelTenResources.js",
+		"src/TutorialOne.js",
+		"src/TutorialOneResources.js",
+		"src/TutorialTwo.js",
+		"src/TutorialTwoResources.js",
+		"src/TutorialThree.js",
+		"src/TutorialThreeResources.js",
+		"src/TutorialFour.js",
+		"src/TutorialFourResources.js",
+		"src/LevelEleven.js",
+		"src/LevelElevenResources.js",
+		"src/LevelTwelve.js",
+		"src/LevelTwelveResources.js",
+		"src/LevelThirteen.js",
+		"src/LevelThirteenResources.js",
+		"src/LevelFourteen.js",
+		"src/LevelFourteenResources.js",
+		"src/LevelFifteen.js",
+		"src/LevelFifteenResources.js",
+		"src/MainMenu.js",
+		"src/MainMenuResources.js",
+		"src/EndScene.js"
+	]
 }

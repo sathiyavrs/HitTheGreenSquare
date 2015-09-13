@@ -1,0 +1,376 @@
+LevelElevenObjects = [
+{
+ "height":40,
+ "id":2,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":-20,
+ "y":40
+}, 
+{
+ "height":40,
+ "id":3,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"Brown",
+ "visible":true,
+ "width":40,
+ "x":0,
+ "y":80
+}, 
+{
+ "height":40,
+ "id":4,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":-10,
+ "y":120
+}, 
+{
+ "height":40,
+ "id":5,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":0,
+ "y":200
+}, 
+{
+ "height":40,
+ "id":6,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"Brown",
+ "visible":true,
+ "width":40,
+ "x":-20,
+ "y":160
+}, 
+{
+ "height":40,
+ "id":7,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":40,
+ "y":210
+}, 
+{
+ "height":40,
+ "id":8,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":80,
+ "y":190
+}, 
+{
+ "height":40,
+ "id":9,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":120,
+ "y":210
+}, 
+{
+ "height":40,
+ "id":10,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":160,
+ "y":190
+}, 
+{
+ "height":40,
+ "id":11,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":200,
+ "y":200
+}, 
+{
+ "height":40,
+ "id":12,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":60,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":420,
+ "y":-10
+}, 
+{
+ "height":40,
+ "id":15,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":60,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":380,
+ "y":10
+}, 
+{
+ "height":40,
+ "id":16,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":60,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":330,
+ "y":20
+}, 
+{
+ "height":40,
+ "id":17,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":60,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":390,
+ "y":110
+}, 
+{
+ "height":40,
+ "id":18,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":60,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":430,
+ "y":90
+}, 
+{
+ "height":40,
+ "id":19,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":60,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":470,
+ "y":70
+}, 
+{
+ "height":40,
+ "id":20,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":60,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":440,
+ "y":30
+}, 
+{
+ "height":40,
+ "id":21,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":60,
+ "type":"Green",
+ "visible":true,
+ "width":40,
+ "x":400,
+ "y":50
+}, 
+{
+ "height":40,
+ "id":22,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":240,
+ "y":220
+}, 
+{
+ "height":40,
+ "id":23,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":280,
+ "y":200
+}, 
+{
+ "height":40,
+ "id":24,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":320,
+ "y":190
+}, 
+{
+ "height":40,
+ "id":25,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":50,
+ "type":"Brown",
+ "visible":true,
+ "width":40,
+ "x":290,
+ "y":50
+}, 
+{
+ "height":40,
+ "id":26,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":70,
+ "type":"Brown",
+ "visible":true,
+ "width":40,
+ "x":350,
+ "y":130
+}, 
+{
+ "height":40,
+ "id":27,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"Brown",
+ "visible":true,
+ "width":40,
+ "x":360,
+ "y":180
+}, 
+{
+ "height":40,
+ "id":28,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":400,
+ "y":160
+}];

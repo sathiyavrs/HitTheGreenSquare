@@ -4,6 +4,7 @@ var res = {
     CloseSelected_png : "res/CloseSelected.png",
 	
 	WhiteStuff: "res/WhiteStuff.png",
+	BlackStuff: "res/BlackStuff.png",
 	
 	RetryButtonNormal: "res/ReverseNormal.png",
 	RetryButtonSelected: "res/ReverseSelected.png",
@@ -49,13 +50,20 @@ var res = {
 	ShadowShaderVertex: "res/Shadow.vsh",
 	ShadowShaderFragment: "res/Shadow.fsh",
 	LimitationShaderVertex: "res/Limitation.vsh",
-	LimitationShaderFragment: "res/Limitation.fsh"
+	LimitationShaderFragment: "res/Limitation.fsh",
+	
+	Explosion: "res/Explosion.wav",
+	PlayerHit: "res/PlayerHit.wav",
+	BackgroundMusic: "res/Background.mp3",
+	PaddleCollision: "res/PaddleCollision.wav"
 };
 
 var g_resources = [];
 for (var i in res) {
     g_resources.push(res[i]);
 }
+
+cc.audioEngine.playMusic(res.BackgroundMusic, true);
 
 cc.GLNode = cc.Sprite.extend({
     ctor: function(){

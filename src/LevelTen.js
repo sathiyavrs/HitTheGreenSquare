@@ -17,7 +17,7 @@ var LevelTenScene = cc.Scene.extend({
 	hasEnded: false,
 	
 	hasBeenPaused: false,
-	debugMode: true,
+	debugMode: false,
 	
 	// LevelSpecific stuff
 	
@@ -38,6 +38,8 @@ var LevelTenScene = cc.Scene.extend({
 	
 	Menu: null,
 	
+	TimeAfterDeclaringWinner: 0.6,
+	
 	setWin: function() {
 		if(this.hasEnded) {
 			
@@ -46,9 +48,12 @@ var LevelTenScene = cc.Scene.extend({
 		
 		this.hasWon = true;
 		this.hasEnded = true;
-		this.isPaused = true;
 		
 		// alert("Victory!");
+		
+		cc.Director._getInstance()._scheduler.scheduleCallbackForTarget(this, function () {
+					this.isPaused = true;
+				}, this.TimeAfterDeclaringWinner, false, 0, false);
 	},
 	
 	setLose: function() {
@@ -58,8 +63,11 @@ var LevelTenScene = cc.Scene.extend({
 		
 		this.hasWon = false;
 		this.hasEnded = true;
-		this.isPaused = true;
+		
 		// alert("Defeat");
+		cc.Director._getInstance()._scheduler.scheduleCallbackForTarget(this, function () {
+					this.isPaused = true;
+				}, this.TimeAfterDeclaringWinner, false, 0, false);
 	},
 	
 	initPhysics: function() {
@@ -87,7 +95,7 @@ var LevelTenScene = cc.Scene.extend({
 					[100, 75, 50, 25]);
 		
 		friendlySprite.getBody().applyImpulse(cp.v(2, -10), cp.v(0, 0));
-		friendlySprite.MaxHealth = 50;
+		friendlySprite.setHealth(30, 30);
 		friendlySprite.DisableSmashHit();
 		
 		this.addChild(friendlySprite, 2);
@@ -215,7 +223,7 @@ var LevelTenScene = cc.Scene.extend({
 		
 		var forwardButton = new cc.MenuItemImage(res.RightNormal, res.RightSelected, function() {
 			cc.director.resume();
-			cc.director.runScene(new LevelOneScene());
+			cc.director.runScene(new EndScene());
 			
 		});
 		

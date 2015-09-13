@@ -14,7 +14,7 @@ var LevelFiveScene = cc.Scene.extend({
 	hasEnded: false,
 	
 	hasBeenPaused: false,
-	debugMode: true,
+	debugMode: false,
 	
 	// LevelSpecific stuff
 	
@@ -33,6 +33,8 @@ var LevelFiveScene = cc.Scene.extend({
 	
 	VibrationIDs: [26, 28],
 	
+	TimeAfterDeclaringWinner: 0.6,
+	
 	setWin: function() {
 		if(this.hasEnded) {
 			
@@ -41,9 +43,12 @@ var LevelFiveScene = cc.Scene.extend({
 		
 		this.hasWon = true;
 		this.hasEnded = true;
-		this.isPaused = true;
 		
 		// alert("Victory!");
+		
+		cc.Director._getInstance()._scheduler.scheduleCallbackForTarget(this, function () {
+					this.isPaused = true;
+				}, this.TimeAfterDeclaringWinner, false, 0, false);
 	},
 	
 	setLose: function() {
@@ -53,8 +58,11 @@ var LevelFiveScene = cc.Scene.extend({
 		
 		this.hasWon = false;
 		this.hasEnded = true;
-		this.isPaused = true;
+		
 		// alert("Defeat");
+		cc.Director._getInstance()._scheduler.scheduleCallbackForTarget(this, function () {
+					this.isPaused = true;
+				}, this.TimeAfterDeclaringWinner, false, 0, false);
 	},
 	
 	initPhysics: function() {
@@ -137,7 +145,93 @@ var LevelFiveScene = cc.Scene.extend({
 				
 			}.bind(this)
 		}, this);
+		
+		this.initializeTutorialMessages();
     },
+	
+	TutorialMessageAttributes: null,
+	
+	initializeTutorialAttributes: function() {
+		this.TutorialMessageAttributes = Object.create(Object.prototype);
+		
+		this.TutorialMessageAttributes.AnchorPoint = cc.p(0.5, 0.5);
+		this.TutorialMessageAttributes.YOffset = 180;
+		this.TutorialMessageAttributes.PositionOne = cc.p(cc.winSize.width / 2, cc.winSize.height / 2 + this.TutorialMessageAttributes.YOffset);
+		this.TutorialMessageAttributes.YIncrement = -30;
+		this.TutorialMessageAttributes.PositionTwo = cc.p(cc.winSize.width / 2 + 120, cc.winSize.height / 2 - 60);
+		this.TutorialMessageAttributes.PositionThree = cc.p(cc.winSize.width / 2 + 120, cc.winSize.height / 2 - 80);
+		this.TutorialMessageAttributes.PositionFour = cc.p(cc.winSize.width / 2 + 330, cc.winSize.height / 2);
+		
+		this.TutorialMessageAttributes.Color = cc.color(255, 255, 255, 255);
+		
+		this.TutorialMessageAttributes.FontSize = 18;
+		this.TutorialMessageAttributes.Font = "Comic Sans MS";
+		this.TutorialMessageAttributes.StringOne = "Tap M to enter marking mode.";
+		this.TutorialMessageAttributes.StringTwo = "This allows you to track";
+		this.TutorialMessageAttributes.StringThree = "moving enemies!";
+		this.TutorialMessageAttributes.StringSix = "Even in the dark!";
+		this.TutorialMessageAttributes.StringFour = "Look";
+		this.TutorialMessageAttributes.StringFive = "Here";
+	},
+	
+	TutorialLabel: null,
+	
+	initializeTutorialMessages: function() {
+		this.initializeTutorialAttributes();
+		
+		// var label = new cc.LabelTTF(stringToSet, "Arial");
+		// label.setFontSize(fontSizeTitle);
+		// label.setColor(255, 255, 255, 255);
+		// label.setAnchorPoint(0.5, 0.5);
+		// label.setPosition(cc.winSize.width / 2, currentY);
+		// this.addChild(label, 2);
+		
+		var attributes = this.TutorialMessageAttributes;
+		var label = this.TutorialLabel = new cc.LabelTTF(attributes.StringOne, attributes.Font);
+		label.setFontSize(attributes.FontSize);
+		label.setColor(attributes.Color);
+		label.setAnchorPoint(attributes.AnchorPoint);
+		label.setPosition(attributes.PositionOne);
+		this.addChild(label, -0.5);
+		
+		label = this.TutorialLabel = new cc.LabelTTF(attributes.StringTwo, attributes.Font);
+		label.setFontSize(15);
+		label.setColor(attributes.Color);
+		label.setAnchorPoint(attributes.AnchorPoint);
+		label.setPosition(attributes.PositionTwo);
+		this.addChild(label, 0);
+		
+		label = this.TutorialLabel = new cc.LabelTTF(attributes.StringThree, attributes.Font);
+		label.setFontSize(15);
+		label.setColor(attributes.Color);
+		label.setAnchorPoint(cc.p(0.5, 0.5));
+		label.setPosition(attributes.PositionThree);
+		this.addChild(label, 0);
+		
+		label = this.TutorialLabel = new cc.LabelTTF(attributes.StringSix, attributes.Font);
+		label.setFontSize(15);
+		label.setColor(attributes.Color);
+		label.setAnchorPoint(cc.p(0.5, 0.5));
+		label.setPosition(cc.pAdd(attributes.PositionThree, cc.p(0, -20)));
+		this.addChild(label, 0);
+		
+		label = this.TutorialLabel = new cc.LabelTTF(attributes.StringFour, attributes.Font);
+		label.setFontSize(15);
+		label.setColor(attributes.Color);
+		label.setAnchorPoint(cc.p(0.0, 0.0));
+		label.setPosition(attributes.PositionFour);
+		this.addChild(label, 0-0.5);
+		
+		
+		label = this.TutorialLabel = new cc.LabelTTF(attributes.StringFive, attributes.Font);
+		label.setFontSize(15);
+		label.setColor(attributes.Color);
+		label.setAnchorPoint(cc.p(0.0, 0.0));
+		label.setPosition(cc.pAdd(attributes.PositionFour, cc.p(0, -20)));
+		this.addChild(label, 0-0.5);
+	},
+	
+	hasRetried: false,
 	
 	pauseButtonAdded: false,
 	pauseObjects: [],
@@ -207,7 +301,7 @@ var LevelFiveScene = cc.Scene.extend({
 		
 		var forwardButton = new cc.MenuItemImage(res.RightNormal, res.RightSelected, function() {
 			cc.director.resume();
-			cc.director.runScene(new LevelNineScene());
+			cc.director.runScene(new LevelSevenScene());
 			
 		});
 		

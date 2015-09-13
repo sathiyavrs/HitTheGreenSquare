@@ -1,0 +1,91 @@
+TutorialTwoObjects = [
+{
+ "height":40,
+ "id":1,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":10,
+ "y":50
+}, 
+{
+ "height":40,
+ "id":2,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":50,
+ "y":60
+}, 
+{
+ "height":40,
+ "id":3,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":90,
+ "y":70
+}, 
+{
+ "height":40,
+ "id":4,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":100,
+ "y":30
+}, 
+{
+ "height":40,
+ "id":5,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"Green",
+ "visible":true,
+ "width":40,
+ "x":50,
+ "y":0
+}, 
+{
+ "height":40,
+ "id":6,
+ "name":"Object",
+ "properties":
+	{
+
+	},
+ "rotation":0,
+ "type":"White",
+ "visible":true,
+ "width":40,
+ "x":110,
+ "y":-10
+}];

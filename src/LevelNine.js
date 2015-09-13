@@ -13,7 +13,7 @@ var LevelNineScene = cc.Scene.extend({
 	hasWon: false,
 	hasEnded: false,
 	
-	debugMode: true,
+	debugMode: false,
 	
 	hasBeenPaused: false,
 	// LevelSpecific stuff
@@ -33,6 +33,8 @@ var LevelNineScene = cc.Scene.extend({
 	
 	VibrationIDs: [32, 26, 25, 15, 31, 30],
 	
+	TimeAfterDeclaringWinner: 0.6,
+	
 	setWin: function() {
 		if(this.hasEnded) {
 			
@@ -44,7 +46,9 @@ var LevelNineScene = cc.Scene.extend({
 		
 		// alert("Victory!");
 		
-		this.isPaused = true;
+		cc.Director._getInstance()._scheduler.scheduleCallbackForTarget(this, function () {
+					this.isPaused = true;
+				}, this.TimeAfterDeclaringWinner, false, 0, false);
 	},
 	
 	setLose: function() {
@@ -56,7 +60,9 @@ var LevelNineScene = cc.Scene.extend({
 		this.hasEnded = true;
 		
 		// alert("Defeat");
-		this.isPaused = true;
+		cc.Director._getInstance()._scheduler.scheduleCallbackForTarget(this, function () {
+					this.isPaused = true;
+				}, this.TimeAfterDeclaringWinner, false, 0, false);
 	},
 	
 	initPhysics: function() {

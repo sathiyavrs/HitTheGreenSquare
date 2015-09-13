@@ -13,7 +13,7 @@ var LevelOneScene = cc.Scene.extend({
 	hasEnded: false,
 	
 	hasBeenPaused: false,
-	debugMode: true,
+	debugMode: false,
 	
 	LIGHT_RADIUS: 120,
 	
@@ -32,6 +32,8 @@ var LevelOneScene = cc.Scene.extend({
 		this.scheduleUpdate();
 	},
 	
+	TimeAfterDeclaringWinner: 0.6,
+	
 	setWin: function() {
 		if(this.hasEnded) {
 			
@@ -40,9 +42,12 @@ var LevelOneScene = cc.Scene.extend({
 		
 		this.hasWon = true;
 		this.hasEnded = true;
-		this.isPaused = true;
 		
 		// alert("Victory!");
+		
+		cc.Director._getInstance()._scheduler.scheduleCallbackForTarget(this, function () {
+					this.isPaused = true;
+				}, this.TimeAfterDeclaringWinner, false, 0, false);
 	},
 	
 	setLose: function() {
@@ -52,8 +57,11 @@ var LevelOneScene = cc.Scene.extend({
 		
 		this.hasWon = false;
 		this.hasEnded = true;
-		this.isPaused = true;
+		
 		// alert("Defeat");
+		cc.Director._getInstance()._scheduler.scheduleCallbackForTarget(this, function () {
+					this.isPaused = true;
+				}, this.TimeAfterDeclaringWinner, false, 0, false);
 	},
 	
 	onEnter: function () {
@@ -68,13 +76,13 @@ var LevelOneScene = cc.Scene.extend({
 		var friendlySprite = new FriendlySprite(
 					[res.WhiteFriendly, res.WhiteFriendly_1, res.WhiteFriendly_2, res.WhiteFriendly_3],
 					[res.RedFriendly, res.RedFriendly_1, res.RedFriendly_2, res.RedFriendly_3],
-					cc.p(cc.winSize.width/2, cc.winSize.height / 2 - 120), 
+					cc.p(cc.winSize.width/2, cc.winSize.height / 2 - 150), 
 					this.space, -1, this.LIGHT_RADIUS, 
 					FriendlySprite.DETECTION_OCCLUSION, 
 					this.debugDrawNode,
 					[100, 75, 50, 25]);
 		
-		friendlySprite.getBody().applyImpulse(cp.v(0, -70), cp.v(0, 0));
+		friendlySprite.getBody().applyImpulse(cp.v(0, -5), cp.v(0, 0));
 		friendlySprite.DisableSmashHit();
 		
 		this.addChild(friendlySprite, 2);
@@ -130,7 +138,56 @@ var LevelOneScene = cc.Scene.extend({
 				
 			}.bind(this)
 		}, this);
+		
+		this.initializeTutorialMessages();
     },
+	
+	TutorialMessageAttributes: null,
+	
+	initializeTutorialAttributes: function() {
+		this.TutorialMessageAttributes = Object.create(Object.prototype);
+		
+		this.TutorialMessageAttributes.AnchorPoint = cc.p(0.5, 0.5);
+		this.TutorialMessageAttributes.YOffset = 180;
+		this.TutorialMessageAttributes.PositionOne = cc.p(cc.winSize.width / 2, cc.winSize.height / 2 + this.TutorialMessageAttributes.YOffset);
+		this.TutorialMessageAttributes.YIncrement = -30;
+		this.TutorialMessageAttributes.PositionTwo = cc.p(cc.winSize.width / 2, cc.winSize.height / 2 + this.TutorialMessageAttributes.YOffset + this.TutorialMessageAttributes.YIncrement);
+		this.TutorialMessageAttributes.PositionThree = cc.p(cc.winSize.width / 2 + 50, cc.winSize.height / 2 + this.TutorialMessageAttributes.YOffset + this.TutorialMessageAttributes.YIncrement * 2);
+		
+		
+		this.TutorialMessageAttributes.Color = cc.color(255, 255, 255, 255);
+		
+		this.TutorialMessageAttributes.FontSize = 18;
+		this.TutorialMessageAttributes.Font = "Comic Sans MS";
+		this.TutorialMessageAttributes.StringOne = "You know what to do";
+		this.TutorialMessageAttributes.StringTwo = "Unlike White ones!";
+		this.TutorialMessageAttributes.StringThree = "Notice the health bar at the top-right corner of the screen";
+		this.TutorialMessageAttributes.StringFour = "Do not let the ball leave the Screen!";
+		
+		this.TutorialMessageAttributes.StringFive = "Notice the Health bar";
+		this.TutorialMessageAttributes.StringSix = "at the top-right corner";
+	},
+	
+	TutorialLabel: null,
+	
+	initializeTutorialMessages: function() {
+		this.initializeTutorialAttributes();
+		
+		// var label = new cc.LabelTTF(stringToSet, "Arial");
+		// label.setFontSize(fontSizeTitle);
+		// label.setColor(255, 255, 255, 255);
+		// label.setAnchorPoint(0.5, 0.5);
+		// label.setPosition(cc.winSize.width / 2, currentY);
+		// this.addChild(label, 2);
+		
+		var attributes = this.TutorialMessageAttributes;
+		var label = this.TutorialLabel = new cc.LabelTTF(attributes.StringOne, attributes.Font);
+		label.setFontSize(attributes.FontSize);
+		label.setColor(attributes.Color);
+		label.setAnchorPoint(attributes.AnchorPoint);
+		label.setPosition(attributes.PositionOne);
+		this.addChild(label, -0.5);
+	},
 	
 	pauseButtonAdded: false,
 	pauseObjects: [],
@@ -200,7 +257,7 @@ var LevelOneScene = cc.Scene.extend({
 		
 		var forwardButton = new cc.MenuItemImage(res.RightNormal, res.RightSelected, function() {
 			cc.director.resume();
-			cc.director.runScene(new LevelSixScene());
+			cc.director.runScene(new LevelElevenScene());
 			
 		});
 		
