@@ -8,12 +8,12 @@ var Background = cc.GLNode.extend({
 	* HAS A NICE COMIC STYLE AESTHETIC THOUGH. I MAY BE ABLE TO CAPITALIZE ON THAT.
 	********************************************************************************************************/
 	
-	BACKGROUND_COLOR: [0.4, 0, 0.4, 1],
+	BACKGROUND_COLOR: [0.4, 0.0, 0.4, 1],
 	BLURRING_RADIUS: 20,
 	ALPHA_FINAL: 0.7,
 	INNER_COLOR: [0.4, 0.0, 0.4, 1.0],
 	INNER_COLOR_SONAR: [0.4, 0.0, 0.0, 1.0],
-	SHADOW_COLOR: [0.10, 0, 0.10, 1.0],
+	SHADOW_COLOR: [0.10, 0.0, 0.10, 1.0],
 	LIMITATION_BACKGROUND_COLOR: [0.10, 0.0, 0.10, 1.0],
 	BACKGROUND_RADIUS_OFFSET: 8,
 	

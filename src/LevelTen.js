@@ -153,7 +153,21 @@ var LevelTenScene = cc.Scene.extend({
 				
 			}.bind(this)
 		}, this);
+		
+		this.changeBackgroundColor();
     },
+	
+	BACKGROUND_COLOR: [0.2, 0.1, 0.2, 1],
+	INNER_COLOR: [0.2, 0.1, 0.2, 1.0],
+	SHADOW_COLOR: [0.05, 0.025, 0.05, 1.0],
+	LIMITATION_BACKGROUND_COLOR: [0.05, 0.025, 0.05, 1.0],
+	
+	changeBackgroundColor: function() {
+		this.background.BACKGROUND_COLOR = this.BACKGROUND_COLOR;
+		this.background.INNER_COLOR = this.INNER_COLOR;
+		this.background.SHADOW_COLOR = this.SHADOW_COLOR;
+		this.background.LIMITATION_BACKGROUND_COLOR = this.LIMITATION_BACKGROUND_COLOR;
+	},
 	
 	pauseButtonAdded: false,
 	pauseObjects: [],

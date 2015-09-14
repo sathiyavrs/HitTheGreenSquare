@@ -14,7 +14,7 @@ var LevelSevenScene = cc.Scene.extend({
 	hasEnded: false,
 	
 	hasBeenPaused: false,
-	debugMode: false,
+	debugMode: true,
 	
 	// LevelSpecific stuff
 	
@@ -178,7 +178,21 @@ var LevelSevenScene = cc.Scene.extend({
 		label.setPosition(cc.p(cc.winSize.width / 2, cc.winSize.height - 60));
 		
 		this.addChild(label);
+		
+		this.changeBackgroundColor();
     },
+	
+	BACKGROUND_COLOR: [0.1, 0.4, 0.1, 1],
+	INNER_COLOR: [0.1, 0.4, 0.1, 1.0],
+	SHADOW_COLOR: [0.025, 0.1, 0.025, 1.0],
+	LIMITATION_BACKGROUND_COLOR: [0.025, 0.1, 0.025, 1.0],
+	
+	changeBackgroundColor: function() {
+		this.background.BACKGROUND_COLOR = this.BACKGROUND_COLOR;
+		this.background.INNER_COLOR = this.INNER_COLOR;
+		this.background.SHADOW_COLOR = this.SHADOW_COLOR;
+		this.background.LIMITATION_BACKGROUND_COLOR = this.LIMITATION_BACKGROUND_COLOR;
+	},
 	
 	pauseButtonAdded: false,
 	pauseObjects: [],

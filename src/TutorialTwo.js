@@ -114,6 +114,9 @@ var TutorialTwoScene = cc.Scene.extend({
 				
 				if(keyCode == cc.KEY.escape) {
 					if(this.isPaused && !this.hasBeenPaused) {
+						if(this.hasEnded) {
+							return;
+						}
 						this.isPaused = false;
 						cc.director.resume();
 						return;
@@ -142,8 +145,21 @@ var TutorialTwoScene = cc.Scene.extend({
 			}.bind(this)
 		}, this);
 		
+		this.changeBackgroundColor();
 		this.initializeTutorialMessages();
     },
+	
+	BACKGROUND_COLOR: [0.1, 0.3, 0.1, 1],
+	INNER_COLOR: [0.1, 0.3, 0.1, 1.0],
+	SHADOW_COLOR: [0.025, 0.066, 0.025, 1.0],
+	LIMITATION_BACKGROUND_COLOR: [0.025, 0.066, 0.025, 1.0],
+	
+	changeBackgroundColor: function() {
+		this.background.BACKGROUND_COLOR = this.BACKGROUND_COLOR;
+		this.background.INNER_COLOR = this.INNER_COLOR;
+		this.background.SHADOW_COLOR = this.SHADOW_COLOR;
+		this.background.LIMITATION_BACKGROUND_COLOR = this.LIMITATION_BACKGROUND_COLOR;
+	},
 	
 	TutorialMessageAttributes: null,
 	

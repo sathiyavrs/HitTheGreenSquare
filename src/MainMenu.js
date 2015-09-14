@@ -161,7 +161,21 @@ var MainMenuScene = cc.Scene.extend({
 		sprite.setAnchorPoint(0.5, 0.5);
 		sprite.setPosition(cc.winSize.width / 2, cc.winSize.height / 2);
 		this.addChild(sprite, 2);
+		
+		this.changeBackgroundColor(); // sathya@delta
     },
+	
+	BACKGROUND_COLOR: [0.4, 0.0, 0.4, 1],
+	INNER_COLOR: [0.4, 0.0, 0.4, 1.0],
+	SHADOW_COLOR: [0.10, 0.0, 0.10, 1.0],
+	LIMITATION_BACKGROUND_COLOR: [0.10, 0.0, 0.10, 1.0],
+	
+	changeBackgroundColor: function() {
+		this.background.BACKGROUND_COLOR = this.BACKGROUND_COLOR;
+		this.background.INNER_COLOR = this.INNER_COLOR;
+		this.background.SHADOW_COLOR = this.SHADOW_COLOR;
+		this.background.LIMITATION_BACKGROUND_COLOR = this.LIMITATION_BACKGROUND_COLOR;
+	},
 	
 	pauseButtonAdded: false,
 	pauseObjects: [],

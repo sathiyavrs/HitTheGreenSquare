@@ -141,6 +141,12 @@ Movement.SIN_WAVE = 2;
 Movement.AllTypes = [Movement.CONSTANT_SPEED, Movement.LERP, Movement.SIN_WAVE];
 
 var GetDirection = function(start, end) {
+	if(start == null)
+		return;
+	
+	if(end == null)
+		return;
+	
 	var xComponent = end.x - start.x;
 	var yComponent = end.y - start.y;
 	var magnitude = Math.sqrt(xComponent * xComponent + yComponent * yComponent);
