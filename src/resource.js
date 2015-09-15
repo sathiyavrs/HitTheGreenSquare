@@ -55,7 +55,55 @@ var res = {
 	Explosion: "res/Explosion.wav",
 	PlayerHit: "res/PlayerHit.wav",
 	BackgroundMusic: "res/Background.mp3",
-	PaddleCollision: "res/Shoot.wav"
+	PaddleCollision: "res/Shoot.wav",
+	
+	CSFont: {
+		type: "font",
+		name: "CSFont",
+		srcs: ["res/counter_strike.ttf"]
+	},
+	
+	CubenFont: {
+		type: "font",
+		name: "CubenFont",
+		srcs: ["res/gamecuben.ttf"]
+	},
+	
+	StarcraftFont: {
+		type: "font",
+		name: "StarcraftFont",
+		srcs: ["res/starcraft.ttf"]
+	},
+	
+	ZrnicFont: {
+		type: "font",
+		name: "ZrnicFont",
+		srcs: ["res/zrnic.ttf"]
+	},
+	
+	NHFont: {
+		type: "font",
+		name: "NHFont",
+		srcs: ["res/nightmare_hero.ttf"]
+	},
+	
+	QuakeFont: {
+		type: "font",
+		name: "QuakeFont",
+		srcs: ["res/quake.ttf"]
+	},
+	
+	HaloFont: {
+		type: "font",
+		name: "HaloFont",
+		srcs: ["res/halo.ttf"]
+	},
+	
+	AmaticBoldFont: {
+		type: "font",
+		name: "AmaticBoldFont",
+		srcs: ["res/Amatic-Bold.ttf"]
+	}
 };
 
 var g_resources = [];
@@ -141,12 +189,6 @@ Movement.SIN_WAVE = 2;
 Movement.AllTypes = [Movement.CONSTANT_SPEED, Movement.LERP, Movement.SIN_WAVE];
 
 var GetDirection = function(start, end) {
-	if(start == null)
-		return;
-	
-	if(end == null)
-		return;
-	
 	var xComponent = end.x - start.x;
 	var yComponent = end.y - start.y;
 	var magnitude = Math.sqrt(xComponent * xComponent + yComponent * yComponent);

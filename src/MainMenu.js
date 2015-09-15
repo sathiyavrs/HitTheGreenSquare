@@ -142,16 +142,16 @@ var MainMenuScene = cc.Scene.extend({
 			label.setPosition(attributes.PositionOne);
 		*/
 		
-		var label = new cc.LabelTTF("Hit The Green Square!", "Comic Sans MS");
-		label.setFontSize(20);
+		var label = new cc.LabelTTF("Hit The Green Square!", "AmaticBoldFont");
+		label.setFontSize(40);
 		label.setColor(cc.color(255, 255, 255, 255));
 		label.setAnchorPoint(cc.p(0.5, 0.5));
-		label.setPosition(cc.p(cc.winSize.width / 2, cc.winSize.height / 2));
+		label.setPosition(cc.p(cc.winSize.width / 2, cc.winSize.height / 2 + 40));
 		
 		this.addChild(label, 3);
 	
-		label = new cc.LabelTTF("Click anywhere to begin!", "Comic Sans MS");
-		label.setFontSize(18);
+		label = new cc.LabelTTF("Click anywhere to begin!", "AmaticBoldFont");
+		label.setFontSize(26);
 		label.setColor(cc.color(255, 255, 255, 255));
 		label.setAnchorPoint(cc.p(0.5, 0.5));
 		label.setPosition(cc.p(cc.winSize.width / 2, cc.winSize.height / 2 - 40));

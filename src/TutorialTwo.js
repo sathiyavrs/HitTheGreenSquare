@@ -169,7 +169,7 @@ var TutorialTwoScene = cc.Scene.extend({
 		this.TutorialMessageAttributes.AnchorPoint = cc.p(0, 0);
 		this.TutorialMessageAttributes.YOffset = 120;
 		this.TutorialMessageAttributes.PositionOne = cc.p(cc.winSize.width / 2 + 50, cc.winSize.height / 2 + this.TutorialMessageAttributes.YOffset);
-		this.TutorialMessageAttributes.YIncrement = -30;
+		this.TutorialMessageAttributes.YIncrement = -35;
 		this.TutorialMessageAttributes.PositionTwo = cc.p(cc.winSize.width / 2 + 50, cc.winSize.height / 2 + this.TutorialMessageAttributes.YOffset + this.TutorialMessageAttributes.YIncrement);
 		this.TutorialMessageAttributes.PositionThree = cc.p(cc.winSize.width / 2 + 50, cc.winSize.height / 2 + this.TutorialMessageAttributes.YOffset + this.TutorialMessageAttributes.YIncrement * 2);
 		
@@ -177,8 +177,8 @@ var TutorialTwoScene = cc.Scene.extend({
 		
 		this.TutorialMessageAttributes.Color = cc.color(255, 255, 255, 255);
 		
-		this.TutorialMessageAttributes.FontSize = 18;
-		this.TutorialMessageAttributes.Font = "Comic Sans MS";
+		this.TutorialMessageAttributes.FontSize = 30;
+		this.TutorialMessageAttributes.Font = "AmaticBoldFont";
 		this.TutorialMessageAttributes.StringOne = "Use the Arrow Keys or WASD to";
 		this.TutorialMessageAttributes.StringTwo = "navigate the platform!";
 		this.TutorialMessageAttributes.StringThree = "hit the Green Square!";

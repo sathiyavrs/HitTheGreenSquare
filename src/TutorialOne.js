@@ -171,7 +171,7 @@ var TutorialOneScene = cc.Scene.extend({
 		this.TutorialMessageAttributes.Position = cc.p(cc.winSize.width / 2, cc.winSize.height / 2 + this.TutorialMessageAttributes.YOffset);
 		this.TutorialMessageAttributes.Color = cc.color(255, 255, 255, 255);
 		
-		this.TutorialMessageAttributes.FontSize = 18;
+		this.TutorialMessageAttributes.FontSize = 28;
 		this.TutorialMessageAttributes.Font = "Comic Sans MS";
 		this.TutorialMessageAttributes.String = "Use the mouse to fire the ball!";
 		
@@ -190,7 +190,7 @@ var TutorialOneScene = cc.Scene.extend({
 		// this.addChild(label, 2);
 		
 		var attributes = this.TutorialMessageAttributes;
-		var label = this.TutorialLabel = new cc.LabelTTF(attributes.String, attributes.Font);
+		var label = this.TutorialLabel = new cc.LabelTTF(attributes.String, "AmaticBoldFont");
 		label.setFontSize(attributes.FontSize);
 		label.setColor(attributes.Color);
 		label.setAnchorPoint(attributes.AnchorPoint);
