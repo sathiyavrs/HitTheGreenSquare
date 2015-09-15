@@ -206,6 +206,27 @@
                 <file name="src/LevelNineResources.js"/>
                 <file name="src/LevelTen.js"/>
                 <file name="src/LevelTenResources.js"/>
+                <file name="src/TutorialOne.js"/>
+                <file name="src/TutorialOneResources.js"/>
+                <file name="src/TutorialTwo.js"/>
+                <file name="src/TutorialTwoResources.js"/>
+                <file name="src/TutorialThree.js"/>
+                <file name="src/TutorialThreeResources.js"/>
+                <file name="src/TutorialFour.js"/>
+                <file name="src/TutorialFourResources.js"/>
+                <file name="src/LevelEleven.js"/>
+                <file name="src/LevelElevenResources.js"/>
+                <file name="src/LevelTwelve.js"/>
+                <file name="src/LevelTwelveResources.js"/>
+                <file name="src/LevelThirteen.js"/>
+                <file name="src/LevelThirteenResources.js"/>
+                <file name="src/LevelFourteen.js"/>
+                <file name="src/LevelFourteenResources.js"/>
+                <file name="src/LevelFifteen.js"/>
+                <file name="src/LevelFifteenResources.js"/>
+                <file name="src/MainMenu.js"/>
+                <file name="src/MainMenuResources.js"/>
+                <file name="src/EndScene.js"/>
                 <file name="main.js"/>
 
             </sources>

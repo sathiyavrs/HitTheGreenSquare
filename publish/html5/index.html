@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Cocos2d-html5 Hello World test</title>
+    <title>Hit the Green Square</title>
     <link rel="icon" type="image/GIF" href="res/favicon.ico"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="full-screen" content="yes"/>
@@ -18,8 +18,83 @@
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         }
     </style>
+	
+	<style>
+		@font-face {
+			font-family: 'CSFont';
+			src: url(res/counter_strike.ttf) format('ttf');
+		}
+	</style>
+	
+	<style>
+		@font-face {
+			font-family: 'CubenFont';
+			src: url(res/gamecuben.ttf) format('ttf');
+		}
+	</style>
+	
+	<style>
+		@font-face {
+			font-family: 'StarcraftFont';
+			src: url(res/starcraft.ttf) format('ttf');
+		}
+	</style>
+
+	<style>
+		@font-face {
+			font-family: 'ZrnicFont';
+			src: url(res/zrnic.ttf) format('ttf');
+		}
+	</style>
+	
+	<style>
+		@font-face {
+			font-family: 'NHFont';
+			src: url(res/nightmare_hero.ttf) format('ttf');
+		}
+	</style>
+	
+	<style>
+		@font-face {
+			font-family: 'QuakeFont';
+			src: url(res/quake.ttf) format('ttf');
+		}
+	</style>
+	
+	<style>
+		@font-face {
+			font-family: 'HaloFont';
+			src: url(res/halo.ttf) format('ttf');
+		}
+	</style>
+
+	<style>
+		@font-face {
+			font-family: 'AmaticBoldFont';
+			src: url(res/Amatic-Bold.ttf) format('ttf');
+		}
+	</style>
+	
 </head>
 <body style="padding:0; margin: 0; background: #000;">
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1629267680688532',
+      xfbml      : true,
+      version    : 'v2.4'
+    });
+	
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 <script src="res/loading.js"></script>
 <canvas id="gameCanvas" width="800" height="450"></canvas>
 
