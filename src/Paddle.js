@@ -167,6 +167,12 @@ var Paddle = cc.Sprite.extend({
 					
 					this.getParent().addChild(this.FriendlyCollisionParticleSystem);	
 					
+					if(this.PositionOfFriendly == null)
+						return;
+					
+					if(this.MousePosition == null)
+						return;
+					
 					var direction = GetDirection(this.PositionOfFriendly, this.MousePosition);
 					direction = cc.p(direction.x * this.FriendlyPlayer.SPEED, direction.y * this.FriendlyPlayer.SPEED);
 					this.FriendlyPlayer.getBody().applyImpulse(direction, cp.v(0, 0));
@@ -185,6 +191,46 @@ var Paddle = cc.Sprite.extend({
 			event: cc.EventListener.KEYBOARD,
 			
 			onKeyPressed:  function(keyCode, event){
+				
+				if(keyCode == cc.KEY.space) {
+					
+					var parent = this.getParent();
+					if(parent.isPaused) {
+						return;
+					}
+					
+					if(this.FriendlyPlayer != null) {
+						var position = cc.p(0, 0);
+						position.y += this.getContentSize().height / 2;
+						position = RotatePositionClockwiseAboutOrigin(position, this.RotationAngle);
+						position = cc.pAdd(this.getPosition(), position);
+						
+						this.FriendlyCollisionParticleSystem = new BurstEffect(res.WhiteParticle, 
+									this.PARTICLE_SPEED, position, 
+									this.PARTICLE_COLOR, 
+									this.PARTICLE_SIZE);
+				
+						this.FriendlyCollisionParticleSystem.setPosition(position);
+						
+						this.getParent().addChild(this.FriendlyCollisionParticleSystem);	
+						
+						if(this.PositionOfFriendly == null)
+							return;
+						
+						if(this.MousePosition == null)
+							return;
+						
+						var direction = GetDirection(this.PositionOfFriendly, this.MousePosition);
+						direction = cc.p(direction.x * this.FriendlyPlayer.SPEED, direction.y * this.FriendlyPlayer.SPEED);
+						this.FriendlyPlayer.getBody().applyImpulse(direction, cp.v(0, 0));
+						this.FriendlyPlayer.Free();
+						this.FriendlyPlayer = null;
+						
+						cc.audioEngine.setEffectsVolume(this.EFFECTS_VOLUME);
+						cc.audioEngine.playEffect(res.PaddleCollision);
+						cc.audioEngine.setEffectsVolume(this.EFFECTS_VOLUME);
+					}
+				}
 				
 				if(keyCode == cc.KEY.shift) {
 					this.MOVEMENT_SPEED = this.SPEED_SLOW;

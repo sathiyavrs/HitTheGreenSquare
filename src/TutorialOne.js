@@ -173,7 +173,7 @@ var TutorialOneScene = cc.Scene.extend({
 		
 		this.TutorialMessageAttributes.FontSize = 28;
 		this.TutorialMessageAttributes.Font = "Comic Sans MS";
-		this.TutorialMessageAttributes.String = "Use the mouse to fire the ball!";
+		this.TutorialMessageAttributes.String = "Use the mouse or space to fire the ball!";
 		
 	},
 	
