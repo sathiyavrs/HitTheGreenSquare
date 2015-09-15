@@ -9,7 +9,7 @@ Q & E or Z & C to control the paddle's clockwise and Anti-clockwise movement.
 
 M to Mark and Track objects (Limited number of times)
 
-Use the mouse to Fire the ball from the paddle.
+Use the mouse or space to Fire the ball from the paddle.
 
 The ball loses health as it hits objects.
 
