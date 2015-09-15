@@ -13,7 +13,7 @@ var TutorialFourScene = cc.Scene.extend({
 	hasWon: false,
 	hasEnded: false,
 	
-	debugMode: true,
+	debugMode: false,
 	
 	hasBeenPaused: false,
 	// LevelSpecific stuff
@@ -175,8 +175,8 @@ var TutorialFourScene = cc.Scene.extend({
 		
 		this.TutorialMessageAttributes.Color = cc.color(255, 255, 255, 255);
 		
-		this.TutorialMessageAttributes.FontSize = 18;
-		this.TutorialMessageAttributes.Font = "Comic Sans MS";
+		this.TutorialMessageAttributes.FontSize = 26;
+		this.TutorialMessageAttributes.Font = "AmaticBoldFont";
 		this.TutorialMessageAttributes.StringOne = "Brown Blocks can be destroyed!";
 		this.TutorialMessageAttributes.StringTwo = "Unlike White ones!";
 		this.TutorialMessageAttributes.StringThree = "Notice the health bar at the top-right corner of the screen";
@@ -214,7 +214,7 @@ var TutorialFourScene = cc.Scene.extend({
 		this.addChild(label, -0.5);
 		
 		label = this.TutorialLabel = new cc.LabelTTF(attributes.StringFour, attributes.Font);
-		label.setFontSize(attributes.FontSize - 4);
+		label.setFontSize(attributes.FontSize - 8);
 		label.setColor(attributes.Color);
 		label.setAnchorPoint(cc.p(0.5, 0.5));
 		label.setPosition(cc.winSize.width / 2, cc.winSize.height / 2 - 60 + this.TutorialMessageAttributes.YIncrement * 2);
@@ -223,10 +223,10 @@ var TutorialFourScene = cc.Scene.extend({
 			this.addChild(label, 0.5);
 		
 		label = this.TutorialLabel = new cc.LabelTTF(attributes.StringFive, attributes.Font);
-		label.setFontSize(attributes.FontSize - 2);
+		label.setFontSize(attributes.FontSize - 6);
 		label.setColor(attributes.Color);
 		label.setAnchorPoint(cc.p(0.0, 0.0));
-		label.setPosition(cc.winSize.width / 2 + 200, cc.winSize.height / 2  + 180);
+		label.setPosition(cc.winSize.width / 2 + 250, cc.winSize.height / 2  + 180);
 		this.addChild(label);
 		
 		label = this.TutorialLabel = new cc.LabelTTF(attributes.StringSix, attributes.Font);
@@ -328,19 +328,19 @@ var TutorialFourScene = cc.Scene.extend({
 			if(this.hasEnded) {
 				
 				if(this.hasWon) {
-					var menu = new cc.Menu(retryButton, mainScreenButton, forwardButton);
+					var menu = new cc.Menu(retryButton, forwardButton);
 					menu.setPosition(cc.p(0, 0));
 					this.addChild(menu, 2);
 					this.pauseObjects.push(menu);
 				} else {
-					var menu = new cc.Menu(retryButton, mainScreenButton);
+					var menu = new cc.Menu(retryButton);
 					menu.setPosition(cc.p(0, 0));
 					this.addChild(menu, 2);
 					this.pauseObjects.push(menu);
 				}
 			
 			} else {
-				var menu = new cc.Menu(retryButton, mainScreenButton, closeButton);
+				var menu = new cc.Menu(retryButton, closeButton);
 				menu.setPosition(cc.p(0, 0));
 				this.addChild(menu, 2);
 				this.pauseObjects.push(menu);
@@ -368,13 +368,13 @@ var TutorialFourScene = cc.Scene.extend({
 		}
 		
 		var dyDown = 30;
-		var fontSizeTitle = 20;
+		var fontSizeTitle = 36;
 		var fontSizeObjective = 12;
 		var typeLeftOffset = 10;
 		
 		var currentY = cc.winSize.height / 2 + height / 2 - labelHeightOffset;
 		
-		var label = new cc.LabelTTF(stringToSet, "Arial");
+		var label = new cc.LabelTTF(stringToSet, "NHFont");
 		label.setFontSize(fontSizeTitle);
 		label.setColor(255, 255, 255, 255);
 		label.setAnchorPoint(0.5, 0.5);

@@ -13,7 +13,7 @@ var LevelFourteenScene = cc.Scene.extend({
 	hasWon: false,
 	hasEnded: false,
 	
-	debugMode: true,
+	debugMode: false,
 	
 	hasBeenPaused: false,
 	// LevelSpecific stuff
@@ -91,7 +91,7 @@ var LevelFourteenScene = cc.Scene.extend({
 		
 		friendlySprite.getBody().applyImpulse(cp.v(2, -10), cp.v(0, 0));
 		friendlySprite.DisableSmashHit();
-		
+		friendlySprite.MarkNumber = 2;
 		this.addChild(friendlySprite, 2);
 		this.light = friendlySprite;
 		
@@ -145,6 +145,14 @@ var LevelFourteenScene = cc.Scene.extend({
 		
 		this.changeBackgroundColor();
 		// this.initializeTutorialMessages();
+		
+		var label = new cc.LabelTTF("Try Marking", "AmaticBoldFont");
+		label.setFontSize(26);
+		label.setColor(cc.color(255, 255, 255, 255));
+		label.setAnchorPoint(cc.p(0.5, 0.5));
+		label.setPosition(cc.p(cc.winSize.width / 2, cc.winSize.height - 60));
+		
+		this.addChild(label);
     },
 	
 	BACKGROUND_COLOR: [0.4, 0.2, 0.2, 1],
@@ -292,7 +300,7 @@ var LevelFourteenScene = cc.Scene.extend({
 		
 		var forwardButton = new cc.MenuItemImage(res.RightNormal, res.RightSelected, function() {
 			cc.director.resume();
-			cc.director.runScene(new LevelNineScene());
+			cc.director.runScene(new LevelSevenScene());
 		});
 		
 		var forwardButtonPosition = cc.p(cc.winSize.width / 2, cc.winSize.height / 2);
@@ -301,7 +309,7 @@ var LevelFourteenScene = cc.Scene.extend({
 		forwardButton.setPosition(forwardButtonPosition);
 		
 		if(this.debugMode) {
-			var menu = new cc.Menu(retryButton, mainScreenButton, closeButton, forwardButton);
+			var menu = new cc.Menu(retryButton, closeButton, forwardButton);
 			menu.setPosition(cc.p(0, 0));
 			this.addChild(menu, 2);
 			this.pauseObjects.push(menu);
@@ -311,19 +319,19 @@ var LevelFourteenScene = cc.Scene.extend({
 			if(this.hasEnded) {
 				
 				if(this.hasWon) {
-					var menu = new cc.Menu(retryButton, mainScreenButton, forwardButton);
+					var menu = new cc.Menu(retryButton, forwardButton);
 					menu.setPosition(cc.p(0, 0));
 					this.addChild(menu, 2);
 					this.pauseObjects.push(menu);
 				} else {
-					var menu = new cc.Menu(retryButton, mainScreenButton);
+					var menu = new cc.Menu(retryButton);
 					menu.setPosition(cc.p(0, 0));
 					this.addChild(menu, 2);
 					this.pauseObjects.push(menu);
 				}
 			
 			} else {
-				var menu = new cc.Menu(retryButton, mainScreenButton, closeButton);
+				var menu = new cc.Menu(retryButton, closeButton);
 				menu.setPosition(cc.p(0, 0));
 				this.addChild(menu, 2);
 				this.pauseObjects.push(menu);
@@ -351,13 +359,13 @@ var LevelFourteenScene = cc.Scene.extend({
 		}
 		
 		var dyDown = 30;
-		var fontSizeTitle = 20;
+		var fontSizeTitle = 36;
 		var fontSizeObjective = 12;
 		var typeLeftOffset = 10;
 		
 		var currentY = cc.winSize.height / 2 + height / 2 - labelHeightOffset;
 		
-		var label = new cc.LabelTTF(stringToSet, "Arial");
+		var label = new cc.LabelTTF(stringToSet, "NHFont");
 		label.setFontSize(fontSizeTitle);
 		label.setColor(255, 255, 255, 255);
 		label.setAnchorPoint(0.5, 0.5);

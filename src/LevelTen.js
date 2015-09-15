@@ -297,13 +297,13 @@ var LevelTenScene = cc.Scene.extend({
 		}
 		
 		var dyDown = 30;
-		var fontSizeTitle = 20;
+		var fontSizeTitle = 36;
 		var fontSizeObjective = 12;
 		var typeLeftOffset = 10;
 		
 		var currentY = cc.winSize.height / 2 + height / 2 - labelHeightOffset;
 		
-		var label = new cc.LabelTTF(stringToSet, "Arial");
+		var label = new cc.LabelTTF(stringToSet, "NHFont");
 		label.setFontSize(fontSizeTitle);
 		label.setColor(255, 255, 255, 255);
 		label.setAnchorPoint(0.5, 0.5);

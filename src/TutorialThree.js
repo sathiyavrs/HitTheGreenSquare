@@ -13,7 +13,7 @@ var TutorialThreeScene = cc.Scene.extend({
 	hasWon: false,
 	hasEnded: false,
 	
-	debugMode: true,
+	debugMode: false,
 	
 	hasBeenPaused: false,
 	// LevelSpecific stuff
@@ -176,9 +176,9 @@ var TutorialThreeScene = cc.Scene.extend({
 		
 		this.TutorialMessageAttributes.Color = cc.color(255, 255, 255, 255);
 		
-		this.TutorialMessageAttributes.FontSize = 18;
-		this.TutorialMessageAttributes.Font = "Comic Sans MS";
-		this.TutorialMessageAttributes.StringOne = "Sometimes, its a bit dark...";
+		this.TutorialMessageAttributes.FontSize = 24;
+		this.TutorialMessageAttributes.Font = "AmaticBoldFont";
+		this.TutorialMessageAttributes.StringOne = "Sometimes, its a bit dark";
 		this.TutorialMessageAttributes.StringTwo = "You've got to find the objective first!";
 		this.TutorialMessageAttributes.StringThree = "hit the Green Square!";
 		this.TutorialMessageAttributes.StringFour = "Do not let the ball leave the Screen!";
@@ -303,7 +303,7 @@ var TutorialThreeScene = cc.Scene.extend({
 		forwardButton.setPosition(forwardButtonPosition);
 		
 		if(this.debugMode) {
-			var menu = new cc.Menu(retryButton, mainScreenButton, closeButton, forwardButton);
+			var menu = new cc.Menu(retryButton, closeButton, forwardButton);
 			menu.setPosition(cc.p(0, 0));
 			this.addChild(menu, 2);
 			this.pauseObjects.push(menu);
@@ -313,19 +313,19 @@ var TutorialThreeScene = cc.Scene.extend({
 			if(this.hasEnded) {
 				
 				if(this.hasWon) {
-					var menu = new cc.Menu(retryButton, mainScreenButton, forwardButton);
+					var menu = new cc.Menu(retryButton, forwardButton);
 					menu.setPosition(cc.p(0, 0));
 					this.addChild(menu, 2);
 					this.pauseObjects.push(menu);
 				} else {
-					var menu = new cc.Menu(retryButton, mainScreenButton);
+					var menu = new cc.Menu(retryButton);
 					menu.setPosition(cc.p(0, 0));
 					this.addChild(menu, 2);
 					this.pauseObjects.push(menu);
 				}
 			
 			} else {
-				var menu = new cc.Menu(retryButton, mainScreenButton, closeButton);
+				var menu = new cc.Menu(retryButton, closeButton);
 				menu.setPosition(cc.p(0, 0));
 				this.addChild(menu, 2);
 				this.pauseObjects.push(menu);
@@ -353,13 +353,13 @@ var TutorialThreeScene = cc.Scene.extend({
 		}
 		
 		var dyDown = 30;
-		var fontSizeTitle = 20;
+		var fontSizeTitle = 36;
 		var fontSizeObjective = 12;
 		var typeLeftOffset = 10;
 		
 		var currentY = cc.winSize.height / 2 + height / 2 - labelHeightOffset;
 		
-		var label = new cc.LabelTTF(stringToSet, "Arial");
+		var label = new cc.LabelTTF(stringToSet, "NHFont");
 		label.setFontSize(fontSizeTitle);
 		label.setColor(255, 255, 255, 255);
 		label.setAnchorPoint(0.5, 0.5);

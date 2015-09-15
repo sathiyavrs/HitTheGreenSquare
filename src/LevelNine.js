@@ -13,7 +13,7 @@ var LevelNineScene = cc.Scene.extend({
 	hasWon: false,
 	hasEnded: false,
 	
-	debugMode: true,
+	debugMode: false,
 	
 	hasBeenPaused: false,
 	// LevelSpecific stuff
@@ -91,6 +91,7 @@ var LevelNineScene = cc.Scene.extend({
 		
 		friendlySprite.getBody().applyImpulse(cp.v(2, -10), cp.v(0, 0));
 		friendlySprite.DisableSmashHit();
+		friendlySprite.MarkNumber = 3;
 		
 		this.addChild(friendlySprite, 2);
 		this.light = friendlySprite;
@@ -226,7 +227,7 @@ var LevelNineScene = cc.Scene.extend({
 		
 		var forwardButton = new cc.MenuItemImage(res.RightNormal, res.RightSelected, function() {
 			cc.director.resume();
-			cc.director.runScene(new LevelTenScene());
+			cc.director.runScene(new EndScene());
 		});
 		
 		var forwardButtonPosition = cc.p(cc.winSize.width / 2, cc.winSize.height / 2);
@@ -235,7 +236,7 @@ var LevelNineScene = cc.Scene.extend({
 		forwardButton.setPosition(forwardButtonPosition);
 		
 		if(this.debugMode) {
-			var menu = new cc.Menu(retryButton, mainScreenButton, closeButton, forwardButton);
+			var menu = new cc.Menu(retryButton, closeButton, forwardButton);
 			menu.setPosition(cc.p(0, 0));
 			this.addChild(menu, 2);
 			this.pauseObjects.push(menu);
@@ -245,19 +246,19 @@ var LevelNineScene = cc.Scene.extend({
 			if(this.hasEnded) {
 				
 				if(this.hasWon) {
-					var menu = new cc.Menu(retryButton, mainScreenButton, forwardButton);
+					var menu = new cc.Menu(retryButton, forwardButton);
 					menu.setPosition(cc.p(0, 0));
 					this.addChild(menu, 2);
 					this.pauseObjects.push(menu);
 				} else {
-					var menu = new cc.Menu(retryButton, mainScreenButton);
+					var menu = new cc.Menu(retryButton);
 					menu.setPosition(cc.p(0, 0));
 					this.addChild(menu, 2);
 					this.pauseObjects.push(menu);
 				}
 			
 			} else {
-				var menu = new cc.Menu(retryButton, mainScreenButton, closeButton);
+				var menu = new cc.Menu(retryButton, closeButton);
 				menu.setPosition(cc.p(0, 0));
 				this.addChild(menu, 2);
 				this.pauseObjects.push(menu);
@@ -285,13 +286,13 @@ var LevelNineScene = cc.Scene.extend({
 		}
 		
 		var dyDown = 30;
-		var fontSizeTitle = 20;
+		var fontSizeTitle = 36;
 		var fontSizeObjective = 12;
 		var typeLeftOffset = 10;
 		
 		var currentY = cc.winSize.height / 2 + height / 2 - labelHeightOffset;
 		
-		var label = new cc.LabelTTF(stringToSet, "Arial");
+		var label = new cc.LabelTTF(stringToSet, "NHFont");
 		label.setFontSize(fontSizeTitle);
 		label.setColor(255, 255, 255, 255);
 		label.setAnchorPoint(0.5, 0.5);

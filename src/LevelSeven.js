@@ -14,7 +14,7 @@ var LevelSevenScene = cc.Scene.extend({
 	hasEnded: false,
 	
 	hasBeenPaused: false,
-	debugMode: true,
+	debugMode: false,
 	
 	// LevelSpecific stuff
 	
@@ -171,14 +171,6 @@ var LevelSevenScene = cc.Scene.extend({
 			}.bind(this)
 		}, this);
 		
-		var label = new cc.LabelTTF("Try Marking", "Comic Sans MS");
-		label.setFontSize(16);
-		label.setColor(cc.color(255, 255, 255, 255));
-		label.setAnchorPoint(cc.p(0.5, 0.5));
-		label.setPosition(cc.p(cc.winSize.width / 2, cc.winSize.height - 60));
-		
-		this.addChild(label);
-		
 		this.changeBackgroundColor();
     },
 	
@@ -262,7 +254,7 @@ var LevelSevenScene = cc.Scene.extend({
 		
 		var forwardButton = new cc.MenuItemImage(res.RightNormal, res.RightSelected, function() {
 			cc.director.resume();
-			cc.director.runScene(new LevelFourteenScene());
+			cc.director.runScene(new LevelNineScene());
 			
 		});
 		
@@ -282,12 +274,12 @@ var LevelSevenScene = cc.Scene.extend({
 			if(this.hasEnded) {
 				
 				if(this.hasWon) {
-					var menu = new cc.Menu(retryButton, mainScreenButton, forwardButton);
+					var menu = new cc.Menu(retryButton, forwardButton);
 					menu.setPosition(cc.p(0, 0));
 					this.addChild(menu, 2);
 					this.pauseObjects.push(menu);
 				} else {
-					var menu = new cc.Menu(retryButton, mainScreenButton);
+					var menu = new cc.Menu(retryButton);
 					menu.setPosition(cc.p(0, 0));
 					this.addChild(menu, 2);
 					this.pauseObjects.push(menu);
@@ -296,7 +288,7 @@ var LevelSevenScene = cc.Scene.extend({
 				
 			
 			} else {
-				var menu = new cc.Menu(retryButton, mainScreenButton, closeButton);
+				var menu = new cc.Menu(retryButton, closeButton);
 				menu.setPosition(cc.p(0, 0));
 				this.addChild(menu, 2);
 				this.pauseObjects.push(menu);
@@ -324,13 +316,13 @@ var LevelSevenScene = cc.Scene.extend({
 		}
 		
 		var dyDown = 30;
-		var fontSizeTitle = 20;
+		var fontSizeTitle = 36;
 		var fontSizeObjective = 12;
 		var typeLeftOffset = 10;
 		
 		var currentY = cc.winSize.height / 2 + height / 2 - labelHeightOffset;
 		
-		var label = new cc.LabelTTF(stringToSet, "Arial");
+		var label = new cc.LabelTTF(stringToSet, "NHFont");
 		label.setFontSize(fontSizeTitle);
 		label.setColor(255, 255, 255, 255);
 		label.setAnchorPoint(0.5, 0.5);

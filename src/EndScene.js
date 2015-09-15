@@ -140,23 +140,23 @@ var EndScene = cc.Scene.extend({
 			label.setPosition(attributes.PositionOne);
 		*/
 		
-		var label = new cc.LabelTTF("Thanks for playing!", "Comic Sans MS");
-		label.setFontSize(20);
+		var label = new cc.LabelTTF("Thanks for playing!", "AmaticBoldFont");
+		label.setFontSize(40);
 		label.setColor(cc.color(255, 255, 255, 255));
 		label.setAnchorPoint(cc.p(0.5, 0.5));
-		label.setPosition(cc.p(cc.winSize.width / 2, cc.winSize.height / 2));
+		label.setPosition(cc.p(cc.winSize.width / 2, cc.winSize.height / 2 + 20));
 		
 		this.addChild(label, 3);
 	
-		label = new cc.LabelTTF("Click anywhere to play again!", "Comic Sans MS");
-		label.setFontSize(18);
+		label = new cc.LabelTTF("Click anywhere to play again!", "AmaticBoldFont");
+		label.setFontSize(26);
 		label.setColor(cc.color(255, 255, 255, 255));
 		label.setAnchorPoint(cc.p(0.5, 0.5));
 		label.setPosition(cc.p(cc.winSize.width / 2, cc.winSize.height / 2 - 40));
 		this.addChild(label, 3);
 		
-		label = new cc.LabelTTF("Made with love, by Delta Force", "Arial");
-		label.setFontSize(10);
+		label = new cc.LabelTTF("Made with love, by Delta Force", "AmaticBoldFont");
+		label.setFontSize(18);
 		label.setColor(cc.color(255, 255, 255, 255));
 		label.setAnchorPoint(cc.p(0.5, 0.5));
 		label.setPosition(cc.p(cc.winSize.width / 2, 20));
@@ -168,6 +168,14 @@ var EndScene = cc.Scene.extend({
 		this.addChild(sprite, 2);
 		
 		this.changeBackgroundColor();
+		
+		FB.ui(
+			 {
+			  method: 'share',
+			  href: 'https://games.festember.com/hit-the-green-square',
+			  name: "I finished Hit The Green Square!",
+			  description: "Click here to beat my high score!"
+			}, function(response){});
     },
 	
 	BACKGROUND_COLOR: [0.4, 0.0, 0.4, 1],

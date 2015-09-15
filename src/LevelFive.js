@@ -14,7 +14,7 @@ var LevelFiveScene = cc.Scene.extend({
 	hasEnded: false,
 	
 	hasBeenPaused: false,
-	debugMode: true,
+	debugMode: false,
 	
 	// LevelSpecific stuff
 	
@@ -91,6 +91,7 @@ var LevelFiveScene = cc.Scene.extend({
 		
 		friendlySprite.getBody().applyImpulse(cp.v(2, -10), cp.v(0, 0));
 		friendlySprite.DisableSmashHit();
+		friendlySprite.MarkNumber = 2;
 		
 		this.addChild(friendlySprite, 2);
 		this.light = friendlySprite;
@@ -173,12 +174,12 @@ var LevelFiveScene = cc.Scene.extend({
 		this.TutorialMessageAttributes.YIncrement = -30;
 		this.TutorialMessageAttributes.PositionTwo = cc.p(cc.winSize.width / 2 + 120, cc.winSize.height / 2 - 60);
 		this.TutorialMessageAttributes.PositionThree = cc.p(cc.winSize.width / 2 + 120, cc.winSize.height / 2 - 80);
-		this.TutorialMessageAttributes.PositionFour = cc.p(cc.winSize.width / 2 + 330, cc.winSize.height / 2);
+		this.TutorialMessageAttributes.PositionFour = cc.p(cc.winSize.width / 2 + 350, cc.winSize.height / 2);
 		
 		this.TutorialMessageAttributes.Color = cc.color(255, 255, 255, 255);
 		
-		this.TutorialMessageAttributes.FontSize = 18;
-		this.TutorialMessageAttributes.Font = "Comic Sans MS";
+		this.TutorialMessageAttributes.FontSize = 24;
+		this.TutorialMessageAttributes.Font = "AmaticBoldFont";
 		this.TutorialMessageAttributes.StringOne = "Tap M to enter marking mode.";
 		this.TutorialMessageAttributes.StringTwo = "This allows you to track";
 		this.TutorialMessageAttributes.StringThree = "moving enemies!";
@@ -207,29 +208,31 @@ var LevelFiveScene = cc.Scene.extend({
 		label.setPosition(attributes.PositionOne);
 		this.addChild(label, -0.5);
 		
+		var smallFontSize = 20;
+		
 		label = this.TutorialLabel = new cc.LabelTTF(attributes.StringTwo, attributes.Font);
-		label.setFontSize(15);
+		label.setFontSize(smallFontSize);
 		label.setColor(attributes.Color);
 		label.setAnchorPoint(attributes.AnchorPoint);
 		label.setPosition(attributes.PositionTwo);
 		this.addChild(label, 0);
 		
 		label = this.TutorialLabel = new cc.LabelTTF(attributes.StringThree, attributes.Font);
-		label.setFontSize(15);
+		label.setFontSize(smallFontSize);
 		label.setColor(attributes.Color);
 		label.setAnchorPoint(cc.p(0.5, 0.5));
 		label.setPosition(attributes.PositionThree);
 		this.addChild(label, 0);
 		
 		label = this.TutorialLabel = new cc.LabelTTF(attributes.StringSix, attributes.Font);
-		label.setFontSize(15);
+		label.setFontSize(smallFontSize);
 		label.setColor(attributes.Color);
 		label.setAnchorPoint(cc.p(0.5, 0.5));
-		label.setPosition(cc.pAdd(attributes.PositionThree, cc.p(0, -20)));
+		label.setPosition(cc.pAdd(attributes.PositionThree, cc.p(0, -30)));
 		this.addChild(label, 0);
 		
 		label = this.TutorialLabel = new cc.LabelTTF(attributes.StringFour, attributes.Font);
-		label.setFontSize(15);
+		label.setFontSize(smallFontSize);
 		label.setColor(attributes.Color);
 		label.setAnchorPoint(cc.p(0.0, 0.0));
 		label.setPosition(attributes.PositionFour);
@@ -237,14 +240,14 @@ var LevelFiveScene = cc.Scene.extend({
 		
 		
 		label = this.TutorialLabel = new cc.LabelTTF(attributes.StringFive, attributes.Font);
-		label.setFontSize(15);
+		label.setFontSize(smallFontSize);
 		label.setColor(attributes.Color);
 		label.setAnchorPoint(cc.p(0.0, 0.0));
 		label.setPosition(cc.pAdd(attributes.PositionFour, cc.p(0, -20)));
 		this.addChild(label, 0-0.5);
 	},
 	
-	hasRetried: false,
+	hasRetried: false,	
 	
 	pauseButtonAdded: false,
 	pauseObjects: [],
@@ -314,7 +317,7 @@ var LevelFiveScene = cc.Scene.extend({
 		
 		var forwardButton = new cc.MenuItemImage(res.RightNormal, res.RightSelected, function() {
 			cc.director.resume();
-			cc.director.runScene(new LevelSevenScene());
+			cc.director.runScene(new LevelFourteenScene());
 			
 		});
 		
@@ -324,7 +327,7 @@ var LevelFiveScene = cc.Scene.extend({
 		forwardButton.setPosition(forwardButtonPosition);
 		
 		if(this.debugMode) {
-			var menu = new cc.Menu(retryButton, mainScreenButton, closeButton, forwardButton);
+			var menu = new cc.Menu(retryButton, closeButton, forwardButton);
 			menu.setPosition(cc.p(0, 0));
 			this.addChild(menu, 2);
 			this.pauseObjects.push(menu);
@@ -334,19 +337,19 @@ var LevelFiveScene = cc.Scene.extend({
 			if(this.hasEnded) {
 				
 				if(this.hasWon) {
-					var menu = new cc.Menu(retryButton, mainScreenButton, forwardButton);
+					var menu = new cc.Menu(retryButton, forwardButton);
 					menu.setPosition(cc.p(0, 0));
 					this.addChild(menu, 2);
 					this.pauseObjects.push(menu);
 				} else {
-					var menu = new cc.Menu(retryButton, mainScreenButton);
+					var menu = new cc.Menu(retryButton);
 					menu.setPosition(cc.p(0, 0));
 					this.addChild(menu, 2);
 					this.pauseObjects.push(menu);
 				}
 			
 			} else {
-				var menu = new cc.Menu(retryButton, mainScreenButton, closeButton);
+				var menu = new cc.Menu(retryButton, closeButton);
 				menu.setPosition(cc.p(0, 0));
 				this.addChild(menu, 2);
 				this.pauseObjects.push(menu);
@@ -374,13 +377,13 @@ var LevelFiveScene = cc.Scene.extend({
 		}
 		
 		var dyDown = 30;
-		var fontSizeTitle = 20;
+		var fontSizeTitle = 36;
 		var fontSizeObjective = 12;
 		var typeLeftOffset = 10;
 		
 		var currentY = cc.winSize.height / 2 + height / 2 - labelHeightOffset;
 		
-		var label = new cc.LabelTTF(stringToSet, "Arial");
+		var label = new cc.LabelTTF(stringToSet, "NHFont");
 		label.setFontSize(fontSizeTitle);
 		label.setColor(255, 255, 255, 255);
 		label.setAnchorPoint(0.5, 0.5);
