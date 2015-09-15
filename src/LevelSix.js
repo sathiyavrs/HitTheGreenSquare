@@ -425,7 +425,6 @@ var LevelSixScene = cc.Scene.extend({
 			if(paths[objects[i].id] == undefined)
 				continue;
 			
-			console.log(objects[i].id);
 			path = new FollowPath(paths[objects[i].id], FollowPath.PING_PONG, FollowPath.FORWARD);
 			sprites[objects[i].id].setPathToFollow(path,  Movement.CONSTANT, 200);
 		}

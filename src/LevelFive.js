@@ -541,7 +541,6 @@ var LevelFiveScene = cc.Scene.extend({
 			this.updateBackground(dt);
 		
 		if(this.objective.Health < 0) {
-			console.log("hey");
 			for(var i = 0; i < this.thingsToKillUponVictory.length; i++) {
 				this.thingsToKillUponVictory[i].Health = -1;
 			}

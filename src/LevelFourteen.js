@@ -496,7 +496,6 @@ var LevelFourteenScene = cc.Scene.extend({
 			if(paths[objects[i].id] == undefined)
 				continue;
 			
-			console.log(objects[i].id);
 			path = new FollowPath(paths[objects[i].id], FollowPath.PING_PONG, FollowPath.FORWARD);
 			speed = 150 + 50 * Math.random();
 			sprites[objects[i].id].setPathToFollow(path,  Movement.CONSTANT, 250);
@@ -530,7 +529,6 @@ var LevelFourteenScene = cc.Scene.extend({
 			this.updateBackground(dt);
 		
 		if(this.objective.Health < 0) {
-			console.log("hey");
 			for(var i = 0; i < this.thingsToKillUponVictory.length; i++) {
 				this.thingsToKillUponVictory[i].Health = -1;
 			}

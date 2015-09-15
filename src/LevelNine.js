@@ -423,7 +423,6 @@ var LevelNineScene = cc.Scene.extend({
 			if(paths[objects[i].id] == undefined)
 				continue;
 			
-			console.log(objects[i].id);
 			path = new FollowPath(paths[objects[i].id], FollowPath.PING_PONG, FollowPath.FORWARD);
 			speed = 150 + 50 * Math.random();
 			sprites[objects[i].id].setPathToFollow(path,  Movement.CONSTANT, 100);
