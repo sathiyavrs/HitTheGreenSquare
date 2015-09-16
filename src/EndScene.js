@@ -174,7 +174,7 @@ var EndScene = cc.Scene.extend({
 			  method: 'share',
 			  href: 'https://games.festember.com/hit-the-green-square',
 			  name: "I finished Hit The Green Square!",
-			  description: "Click here to beat my high score!"
+			  description: "Click here to play!"
 			}, function(response){});
     },
 	
