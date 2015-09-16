@@ -127,6 +127,7 @@ var EndScene = cc.Scene.extend({
 			}.bind(this),
 			
 			onMouseDown: function(event){
+				ga('send', 'pageview');	
 				cc.director.runScene(new MainMenuScene());
 			}.bind(this)
 			

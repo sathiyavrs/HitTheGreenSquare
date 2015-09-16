@@ -238,6 +238,7 @@ var TutorialOneScene = cc.Scene.extend({
 		var retryButton = new cc.MenuItemImage(res.RetryButtonNormal, res.RetryButtonSelected, function() {
 			cc.director.runScene(new TutorialOneScene());
 			cc.director.resume();
+			
 		});
 		
 		var retryPosition = cc.p(cc.winSize.width / 2, cc.winSize.height / 2);

@@ -252,7 +252,6 @@ var LevelElevenScene = cc.Scene.extend({
 		var retryButton = new cc.MenuItemImage(res.RetryButtonNormal, res.RetryButtonSelected, function() {
 			var scene = new LevelElevenScene();
 			scene.hasRetried = true;
-			
 			cc.director.runScene(scene);
 			cc.director.resume();
 		});

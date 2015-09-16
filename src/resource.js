@@ -302,3 +302,4 @@ var DetermineLowerAndHigherAmongAngles = function(angle1, angle2) {
 var getLayerValueFromLayerMask = function(layerMask) {
 	return -1; // NOT IMPLEMENTED
 }
+
