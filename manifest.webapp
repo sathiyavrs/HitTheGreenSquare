@@ -1,14 +1,14 @@
 {
-  "version": "1.0",
-  "name": "HelloJavascript",
-  "description": "HelloJavascript",
+  "version": "0.5",
+  "name": "Hit The Green Square",
+  "description": "Destroy the Green Square",
   "launch_path": "/index.html",
   "icons": {
     "128": "/res/icon.png"
   },
   "developer": {
-    "name": "Cocos2d-html5",
-    "url": "http://cocos2d-x.org/"
+    "name": "Delta, with the help of Cocos2d-html5",
+    "url": "http://delta.nitt.edu/"
   },
   "default_locale": "en",
   "installs_allowed_from": [

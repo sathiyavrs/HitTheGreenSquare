@@ -41,3 +41,10 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Vim temporary files
+*.gitignore~
+*.webapp~
+*.js~
+*.fsh~
+*.vsh~
