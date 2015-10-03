@@ -21,7 +21,7 @@ Well, Hit The Green Square!
 
 # To Play
 
-games.festember.com/hit-the-green-square
+http://games.festember.com/hit-the-green-square
 
 # Notes
 
