@@ -169,6 +169,9 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 				}
 
 				if (keyCode == cc.KEY.m) {
+					if(!this.MarkAndTrackEnable)
+						return;
+
 					if (this.MarkNumber < 0) {
 
 					} else {
@@ -293,7 +296,7 @@ var FriendlySprite = cc.PhysicsSprite.extend({
 
 		var isWhite = false;
 		var isGreen = false;
-
+		
 		for (var i = 0; i < shapes.length; i++) {
 			if (shapes[i].Sprite) {
 				if (shapes[i].Sprite.EnemyType != null) {
