@@ -29,12 +29,12 @@ You control a paddle and a ball, and your ball has 360 degrees of sight. Hence, 
 [Festember '15 Website](http://games.festember.com/hit-the-green-square)
 
 #### Using the Cocos Console
-* Clone the repository onto your desktop `git clone https://github.com/sathiyavrs/HitTheGreenSquare`.
+* Clone the repo `git clone https://github.com/sathiyavrs/HitTheGreenSquare`.
 * cd to the directory.
 * Run the command `cocos run -p web`.
 
 #### Using Python's Simple HTTP Request Handler
-* Clone the repository onto your desktop `git clone https://github.com/sathiyavrs/HitTheGreenSquare`.
+* Clone the repo `git clone https://github.com/sathiyavrs/HitTheGreenSquare`.
 * cd to the directory.
 * Run the command `python -m SimpleHTTPServer`.
 * Open the localhost at the port serving HTTP in your browser, usually by typing `localhost:8000` in the address bar.
@@ -50,3 +50,5 @@ Chipmunk Pysics was integrated with Cocos2d-JS.
 Includes code for two features which sadly didn't make it into the build because they didn't fit in : 
 * **Sonar** (See through walls)
 * **Smash Hit** (Destroy white objects)
+
+***
