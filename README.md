@@ -1,35 +1,52 @@
 # Hit The Green Square
-Beta Version Source Code
+###### Beta Version Source Code
 
-# Controls
+Puzzle game inspired by [DX Ball](http://www.blitwise.com/superdxb.html) and [Mark of the Ninja](https://www.kleientertainment.com/games/mark-ninja).
 
-WASD or Arrow Keys to control the paddle horizontally and vertically.
+Your objective is to find and hit the green block. There are many obstacles in your path that you'll have to deal with.
 
-Q & E or Z & C to control the paddle's clockwise and Anti-clockwise movement.
+You control a paddle and a ball, and your ball has 360 degrees of sight. Hence, finding the Green block is your first task. Then, all you've got to do is to destroy it!
 
-M to Mark and Track objects (Limited number of times)
+#### Features
+* **360 degrees of sight** for your **ball**. You just can't see through solid objects. 
+* Your ball loses **Health** upon collisions. Health is restored once you reach the paddle. You have only one ball.
+* **Brown blocks** that can be destroyed.
+* **White blocks** that are (for now) indestructible.
+* **Green blocks** are the objective.
+* **Last Known Positions** of blocks are visible on the map.
+* **Marking and tracking** that allow the player to track the movement of blocks.
 
-Use the mouse or space to Fire the ball from the paddle.
+#### Controls
+* `WASD` or `Arrow Keys` to move the paddle horizontally and vertically.
+* `QE` or `ZC` to move the paddle clockwise or Anti-clockwise.
+* `M` to enable Marking.
+* Use the `Mouse` to aim the ball.
+* Use the `Mouse` or press `space` to fire the ball from the paddle.
 
-The ball loses health as it hits objects.
+***
+## To Play
+#### Through the Festember website
+[Festember '15 Website](http://games.festember.com/hit-the-green-square)
 
-The Brown Enemies are destroyed in one hit.
+#### Using the Cocos Console
+* Clone the repository onto your desktop `git clone https://github.com/sathiyavrs/HitTheGreenSquare`.
+* cd to the directory.
+* Run the command `cocos run -p web`.
 
-The White ones are not.
+#### Using Python's Simple HTTP Request Handler
+* Clone the repository onto your desktop `git clone https://github.com/sathiyavrs/HitTheGreenSquare`.
+* cd to the directory.
+* Run the command `python -m SimpleHTTPServer`.
+* Open the localhost at the port serving HTTP in your browser, usually by typing `localhost:8000` in the address bar.
 
-Well, Hit The Green Square!
+## Software Used
+* [Cocos2d-JS v3.6.1](https://github.com/cocos2d/cocos2d-js)
+* [Tiled Map Editor v0.13.0](https://github.com/bjorn/tiled)
+* [Chipmunk Physics](https://github.com/josephg/chipmunk-js)
 
-# To Play
-
-http://games.festember.com/hit-the-green-square
-
-# Notes
-
-Have added a lot of extra features which sadly didn't make it into the game because it didn't fit:
-
-Sonar (See through walls)
-
-Smash Hit (Destroy white objects)
-
-
-Also, I added a bunch of levels that didn't make the final build. :P
+Chipmunk Pysics was integrated with Cocos2d-JS.
+***
+### Miscellaneous Notes
+Includes code for two features which sadly didn't make it into the build because they didn't fit in : 
+* **Sonar** (See through walls)
+* **Smash Hit** (Destroy white objects)
