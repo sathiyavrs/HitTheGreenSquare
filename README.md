@@ -39,6 +39,7 @@ You control a paddle and a ball, and your ball has 360 degrees of sight. Hence, 
 * Run the command `python -m SimpleHTTPServer`.
 * Open the localhost at the port serving HTTP in your browser, usually by typing `localhost:8000` in the address bar.
 
+***
 ## Software Used
 * [Cocos2d-JS v3.6.1](https://github.com/cocos2d/cocos2d-js)
 * [Tiled Map Editor v0.13.0](https://github.com/bjorn/tiled)
