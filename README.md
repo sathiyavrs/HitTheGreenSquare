@@ -30,12 +30,12 @@ You control a paddle and a ball, and your ball has 360 degrees of sight. Hence, 
 
 #### Using the Cocos Console
 * Clone the repo `git clone https://github.com/sathiyavrs/HitTheGreenSquare`.
-* cd to the directory.
+* `cd` to the directory.
 * Run the command `cocos run -p web`.
 
 #### Using Python's Simple HTTP Request Handler
 * Clone the repo `git clone https://github.com/sathiyavrs/HitTheGreenSquare`.
-* cd to the directory.
+* `cd` to the directory.
 * Run the command `python -m SimpleHTTPServer`.
 * Open the localhost at the port serving HTTP in your browser, usually by typing `localhost:8000` in the address bar.
 
