@@ -24,7 +24,7 @@ You control a paddle and a ball, and your ball has 360 degrees of sight. Hence, 
 * Use the `Mouse` or press `Space` to fire the ball from the paddle.
 
 ***
-## To Play
+## Instructions
 #### Through the Festember website
 [Festember '15 Website](http://games.festember.com/hit-the-green-square)
 
