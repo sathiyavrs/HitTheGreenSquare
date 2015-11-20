@@ -1,7 +1,7 @@
 # Hit The Green Square
 ###### Beta Version Source Code
 
-Puzzle game inspired by [DX Ball](http://www.blitwise.com/superdxb.html) and [Mark of the Ninja](https://www.kleientertainment.com/games/mark-ninja). Playable on web browsers supporting WebGL.
+Puzzle game inspired by [DX Ball](http://www.blitwise.com/superdxb.html) and [Mark of the Ninja](https://www.kleientertainment.com/games/mark-ninja). Playable on web browsers that support WebGL.
 
 Your objective is to find and hit the green block. There are many obstacles in your path that you'll have to deal with.
 
